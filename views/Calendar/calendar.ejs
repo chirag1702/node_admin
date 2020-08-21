@@ -1,0 +1,38 @@
+<%- contentFor('HeaderCss') %>
+<!--Chartist Chart CSS -->
+<link rel="stylesheet" href="public/libs/fullcalendar/fullcalendar.min.css" />
+<!-- perticular page css -->
+<%- contentFor('title') %> Calendar <%- contentFor('breadcrumb') %>
+<div class="page-title-box">
+  <h4 class="font-size-18">Calendar</h4>
+  <ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="javascript: void(0);">Veltrix</a></li>
+    <li class="breadcrumb-item active">Calendar</li>
+  </ol>
+</div>
+
+<%- contentFor('body') %>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <div id="calendar"></div>
+
+        <div style="clear:both"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- contentFor('FooterJs') %>
+
+<script src="public/libs/moment/min/moment.min.js"></script>
+<script src="public/libs/jquery-ui/jquery-ui.min.js"></script>
+<script src="public/libs/fullcalendar/fullcalendar.min.js"></script>
+
+<!-- Calendar init -->
+<script src="public/js/pages/calendar.init.js"></script>
+
+<%- contentFor('BottomJs') %>
+<!-- nothing -->

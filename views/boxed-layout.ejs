@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Boxed Layout | Veltrix - Responsive Bootstrap 4 Admin Dashboard
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      content="Premium Multipurpose Admin & Dashboard Template"
+      name="description"
+    />
+    <meta content="Themesbrand" name="author" />
+    <link rel="shortcut icon" href="public/images/favicon.ico" />
+
+    <%- HeaderCss %> <% include ./Partials/HeaderStyle %>
+  </head>
+  <body
+    data-sidebar="dark"
+    data-keep-enlarged="true"
+    class="vertical-collpsed"
+    data-layout-size="boxed"
+  >
+    <div id="layout-wrapper">
+      <% include ./Partials/Vertical/Header %> <% include
+      ./Partials/Vertical/Sidebar %>
+
+      <div class="main-content">
+        <div class="page-content">
+          <div class="container-fluid">
+            <% include ./Partials/Settings %> <%- body %>
+          </div>
+        </div>
+        <% include ./Partials/Footer %>
+      </div>
+    </div>
+    <% include ./Partials/Rightbar %> <% include ./Partials/FooterScript %> <%-
+    FooterJs %>
+    <!-- App js -->
+    <script src="public/js/app.js"></script>
+    <%- BottomJs %>
+  </body>
+</html>
