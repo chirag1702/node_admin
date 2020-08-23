@@ -1,0 +1,328 @@
+<%- contentFor('HeaderCss') %> <%- contentFor('title') %> Form Elements <%-
+contentFor('breadcrumb') %>
+<div class="col-sm-6">
+  <div class="page-title-box">
+    <h4 class="font-size-18">Add Products</h4>
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a href="javascript: void(0);">Veltrix</a>
+      </li>
+      <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+      <li class="breadcrumb-item active"></li>
+    </ol>
+  </div>
+</div>
+
+<%- contentFor('body') %>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4>Store Settings</h4>
+        <hr>
+        <div class="form-group row">
+          <label for="app-name" class="col-sm-2 col-form-label"
+            >App Name:</label
+          >
+          <div class="col-sm-10">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="App Name"
+              id="App-name"
+            />
+          </div>
+        </div>
+        <div class="form-group row">
+            <label for="support-number" class="col-sm-2 col-form-label"
+              >Support Number:</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Support Number"
+                id="support-number"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="support-email" class="col-sm-2 col-form-label"
+              >Support Email:</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Support Email"
+                id="support-email"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="logo" class="col-sm-2 col-form-label"
+              >Logo:</label
+            >
+            <div class="col-sm-10">
+                <input type="file" class="filestyle" data-input="false">
+            </div>
+          </div>
+          <h4>Version Settings</h4>
+          <hr>
+          <div class="form-group row">
+            <label for="current-version" class="col-sm-2 col-form-label"
+              >Current Version of App:</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Version"
+                id="current-version"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="min-version" class="col-sm-2 col-form-label"
+              >Minimum Version Required:</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Version"
+                id="min-version"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="version-system-status" class="col-sm-2 col-form-label"
+              > Version System Status</label
+            >
+            <div class="col-sm-10">
+              <input type="checkbox" id="switch4" switch="success" checked/>
+              <label for="switch4" data-on-label="Yes"
+                      data-off-label="No"></label>
+
+            </div>
+          </div>
+          <hr>
+          <div class="form-group row">
+            <label for="currency" class="col-sm-2 col-form-label"
+              >Store Currency ( Symbol or Code - $ or USD - Anyone ):</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="₹"
+                id="currency"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="tax" class="col-sm-2 col-form-label"
+              >Tax ( in percentage % ):</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="0"
+                id="tax"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="delivery-charge-amt" class="col-sm-2 col-form-label"
+              >Delivery Charge Amount (₹)</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="30"
+                id="devlivery-charge-amt"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="min-free-delivery" class="col-sm-2 col-form-label"
+              >Minimum Amount for Free Delivery (₹) ( Below this user will be charged based on Delivery Charge)</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="300"
+                id="min-free-delivery"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="timezone" class="col-sm-2 col-form-label"
+              >System Time Zone</label
+            >
+            <div class="col-sm-10">
+              <select class="form-control" id="timezone">
+                  <option>Zone 1</option>
+                  <option>Zone 2</option>
+                  <option>Zone 3</option>
+              </select>
+            </div>
+          </div>
+          <h4>Refer & Earn System</h4>
+          <hr>
+          <div class="form-group row">
+            <label for="refer" class="col-sm-2 col-form-label"
+              > Refer and Earn System </label
+            >
+            <div class="col-sm-10">
+              <input type="checkbox" id="refer" switch="success" checked/>
+              <label for="switch4" data-on-label="Yes"
+                      data-off-label="No"></label>
+
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="min-refer-amt" class="col-sm-2 col-form-label"
+              >Minimum Refer & Earn Order Amount (₹)</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="100"
+                id="min-refer-amt"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="refer-bonus" class="col-sm-2 col-form-label"
+              >Refer & Earn Bonus (₹ OR %)</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="10"
+                id="refer-bonus"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="refer-method" class="col-sm-2 col-form-label"
+              >Refer & Earn Method</label
+            >
+            <div class="col-sm-10">
+              <select class="form-control" id="refer-method">
+                  <option>Percentage</option>
+                  <option>Rupees</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="max-refer-amt" class="col-sm-2 col-form-label"
+              >Maximum Refer & Earn Amount (₹)</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="30"
+                id="max-refer-amt"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="min-withdraw-amt" class="col-sm-2 col-form-label"
+              >Minimum Withdrawal Amount</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="30"
+                id="min-withdraw-amt"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="max-days-return" class="col-sm-2 col-form-label"
+              >Max days to return item</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="1500"
+                id="max-days-return"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="delivery-boy-bonus" class="col-sm-2 col-form-label"
+              >Delivery Boy Bonus (%)</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="10"
+                id="delivery-boy-bonus"
+              />
+            </div>
+          </div>
+          <h4>Mail Settings</h4>
+          <hr>
+          <div class="form-group row">
+            <label for="from-email" class="col-sm-2 col-form-label"
+              >From eMail ID: ( This email ID will be used in Mail System )</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="info@ladovegetablesandfruits.in"
+                id="from-email"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="reply-email" class="col-sm-2 col-form-label"
+              >Reply To eMail ID: ( This email ID will be used in Mail System )</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                value="info@ladovegetablesandfruits.in"
+                id="reply-email"
+              />
+            </div>
+          </div>
+          <hr>
+        <form action="/update-settings" method="POST">
+          <button
+          type="su"
+          class="btn btn-primary waves-effect waves-light"
+          id="sa-success"
+        >
+          Update
+        </button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <!-- end col -->
+</div>
+<!-- end row -->
+
+<%- contentFor('FooterJs') %> <%- contentFor('BottomJs') %>
+
+<script src="public/libs/sweetalert2/sweetalert2.min.js"></script>
+
+<script src="public/js/pages/sweet-alerts.init.js"></script>
+
+<script src="public/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>

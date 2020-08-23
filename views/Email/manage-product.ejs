@@ -1,0 +1,95 @@
+<%- contentFor('HeaderCss') %> <%- contentFor('title') %> Email Read <%-
+contentFor('breadcrumb') %>
+<div class="col-sm-6">
+  <div class="page-title-box">
+    <h4 class="font-size-18">Email Read</h4>
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a href="javascript: void(0);">Veltrix</a>
+      </li>
+      <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
+      <li class="breadcrumb-item active">Email Read</li>
+    </ol>
+  </div>
+</div>
+
+<%- contentFor('body') %>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-hover mb-0">
+
+          <thead>
+              <tr>
+                  <th>#</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Username</th>
+                  <th>Action</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                  <td>
+                    <form action="/delete" method="POST">
+                      <button
+                      type="button"
+                      class="btn btn-link waves-effect"
+                      id="sa-warning"
+                    >
+                      Delete
+                    </button>
+                    </form>
+                    
+                  </td>
+              </tr>
+              <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>@fat</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-link waves-effect"
+                      id="sa-warning"
+                    >
+                      Delete
+                    </button>
+                  </td>
+              </tr>
+              <tr>
+                  <th scope="row">3</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>@twitter</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-link waves-effect"
+                      id="sa-warning"
+                    >
+                      Delete
+                    </button>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+  <!-- end col -->
+</div>
+
+<%- contentFor('FooterJs') %> <%- contentFor('BottomJs') %>
+
+<script src="public/libs/sweetalert2/sweetalert2.min.js"></script>
+
+<script src="public/js/pages/sweet-alerts.init.js"></script>
+

@@ -1,0 +1,81 @@
+<%- contentFor('HeaderCss') %> <%- contentFor('title') %> Email Read <%-
+contentFor('breadcrumb') %>
+
+<!-- Responsive Table css -->
+<link href="public/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
+
+<div class="col-sm-6">
+  <div class="page-title-box">
+    <h4 class="font-size-18">Email Read</h4>
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a href="javascript: void(0);">Veltrix</a>
+      </li>
+      <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
+      <li class="breadcrumb-item active">Email Read</li>
+    </ol>
+  </div>
+</div>
+
+<%- contentFor('body') %>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4>Fund Tranasfers</h4>
+        <hr>
+        <div class="table-rep-plugin">
+            <div class="table-responsive mb-0" data-pattern="priority-columns">
+                <table id="tech-companies-1" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th data-priority="1">ID</th>
+                        <th data-priority="3">Delivery Boy ID</th>
+                        <th data-priority="1">Name</th>
+                        <th data-priority="3">Mobile</th>
+                        <th data-priority="3">Address</th>
+                        <th data-priority="6">Opening Balance</th>
+                        <th data-priority="6">Closing Balance</th>
+                        <th data-priority="6">Message</th>
+                        <th data-priority="6">Status</th>
+                        <th data-priority="6">Date Created</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>17</td>
+                        <td>CJ17</td>
+                        <td>Chirag</td>
+                        <td>6375528478</td>
+                        <td>address</td>
+                        <td>2000000</td>
+                        <td>4000000</td>
+                        <td>message</td>
+                        <td>active</td>
+                        <td>date</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- end col -->
+</div>
+
+<%- contentFor('FooterJs') %> <%- contentFor('BottomJs') %>
+
+<script src="public/libs/sweetalert2/sweetalert2.min.js"></script>
+
+<script src="public/js/pages/sweet-alerts.init.js"></script>
+
+<!-- Responsive Table js -->
+<script src="public/libs/admin-resources/rwd-table/rwd-table.min.js"></script>
+
+<!-- Init js -->
+<script src="public/js/pages/table-responsive.init.js"></script>
+

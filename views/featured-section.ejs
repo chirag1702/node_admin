@@ -1,0 +1,99 @@
+<%- contentFor('HeaderCss') %>
+<!--Chartist Chart CSS -->
+<link rel="stylesheet" href="public/libs/fullcalendar/fullcalendar.min.css" />
+<!-- perticular page css -->
+<%- contentFor('title') %> Calendar <%- contentFor('breadcrumb') %>
+<div class="page-title-box">
+  <h4 class="font-size-18">Calendar</h4>
+  <ol class="breadcrumb mb-0">
+    <li class="breadcrumb-item"><a href="javascript: void(0);">Veltrix</a></li>
+    <li class="breadcrumb-item active">Calendar</li>
+  </ol>
+</div>
+
+<%- contentFor('body') %>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+          <h4>Create / Manage featured products section</h4>
+          <hr>
+          <div class="form-group row">
+            <label for="title-section" class="col-sm-2 col-form-label"
+              >Title for section</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Ex : Featured Products / Products on Sale"
+                id="title-section"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="description" class="col-sm-2 col-form-label"
+              >Short Description</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="Ex : Weekends deal goes here"
+                placeholder="Product Name"
+                id="description"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="style" class="col-sm-2 col-form-label"
+              >Section Style</label
+            >
+            <div class="col-sm-10">
+                <select class="form-control">
+                    <option>Style 1</option>
+                    <option>Style 2</option>
+                    <option>Style 3</option>
+                </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="product-ids" class="col-sm-2 col-form-label"
+              >Product IDs ( Ex : 100,205, 360 )</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="type in product name to search"
+                id="product-ids"
+              />
+            </div>
+          </div>
+          <hr>
+          <form action="/add-featured-section" method="POST">
+            <button
+                type="submit"
+                class="btn btn-primary waves-effect waves-light"
+                id="add-featured-section-btn">
+                Create
+            </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- contentFor('FooterJs') %>
+
+<script src="public/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
+
+<!-- <script src="public/libs/moment/min/moment.min.js"></script>
+<script src="public/libs/jquery-ui/jquery-ui.min.js"></script>
+<script src="public/libs/fullcalendar/fullcalendar.min.js"></script> -->
+
+<!-- Calendar init -->
+<!-- <script src="public/js/pages/calendar.init.js"></script> -->
+
+<%- contentFor('BottomJs') %>
+<!-- nothing -->

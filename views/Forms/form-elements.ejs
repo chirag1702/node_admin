@@ -8,7 +8,7 @@ contentFor('breadcrumb') %>
         <a href="javascript: void(0);">Veltrix</a>
       </li>
       <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-      <li class="breadcrumb-item active">Form Elements</li>
+      <li class="breadcrumb-item active"></li>
     </ol>
   </div>
 </div>
@@ -47,74 +47,22 @@ contentFor('breadcrumb') %>
           </div>
         </div>
         <hr>
-        <div class="form-group row">
-          <label for="measurment" class="col-sm-2 col-form-label"
-            >Measurment</label
-          >
-          <div class="col-sm-10">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Measurment"
-              id="measurment"
-            />
+        <div class="form-group-row">
+          <div class="form-group row">
+            <label for="measurment" class="col-sm-2 col-form-label"
+              >Measurment</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Measurment"
+                id="measurment"
+              />
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="measurment-unit" class="col-sm-2 col-form-label"
-            >Unit</label
-          >
-          <div class="col-sm-10">
-            <select class="form-control">
-                <option>Kg</option>
-                <option>Gm</option>
-                <option>Ltr</option>
-                <option>Ml</option>
-                <option>Pack</option>
-                <option>Pc.</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="price" class="col-sm-2 col-form-label"
-        >Price</label>
-          <div class="col-sm-10">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Price"
-              id="price"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="discount-price" class="col-sm-2 col-form-label"
-            >Discount Price</label
-          >
-          <div class="col-sm-10">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Discount Price"
-              id="discount-price"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="stock" class="col-sm-2 col-form-label"
-            >Stock</label
-          >
-          <div class="col-sm-10">
-            <input
-              class="form-control"
-              type="number"
-              placeholder="Stock"
-              id="stock"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-            <label for="stock-unit" class="col-sm-2 col-form-label"
+          <div class="form-group row">
+            <label for="measurment-unit" class="col-sm-2 col-form-label"
               >Unit</label
             >
             <div class="col-sm-10">
@@ -128,28 +76,74 @@ contentFor('breadcrumb') %>
               </select>
             </div>
           </div>
-
           <div class="form-group row">
-            <label for="availability" class="col-sm-2 col-form-label"
-              >Availability</label
-            >
+            <label for="price" class="col-sm-2 col-form-label"
+          >Price</label>
             <div class="col-sm-10">
-              <select class="form-control">
-                  <option>Available</option>
-                  <option>Sold Out</option>
-              </select>
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Price"
+                id="price"
+              />
             </div>
           </div>
+          <div class="form-group row">
+            <label for="discount-price" class="col-sm-2 col-form-label"
+              >Discount Price</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="text"
+                placeholder="Discount Price"
+                id="discount-price"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="stock" class="col-sm-2 col-form-label"
+              >Stock</label
+            >
+            <div class="col-sm-10">
+              <input
+                class="form-control"
+                type="number"
+                placeholder="Stock"
+                id="stock"
+              />
+            </div>
+          </div>
+          <div class="form-group row">
+              <label for="stock-unit" class="col-sm-2 col-form-label"
+                >Unit</label
+              >
+              <div class="col-sm-10">
+                <select class="form-control">
+                    <option>Kg</option>
+                    <option>Gm</option>
+                    <option>Ltr</option>
+                    <option>Ml</option>
+                    <option>Pack</option>
+                    <option>Pc.</option>
+                </select>
+              </div>
+            </div>
+  
+            <div class="form-group row">
+              <label for="availability" class="col-sm-2 col-form-label"
+                >Availability</label
+              >
+              <div class="col-sm-10">
+                <select class="form-control">
+                    <option>Available</option>
+                    <option>Sold Out</option>
+                </select>
+              </div>
+            </div>
+          <hr>
+        </div>
         
-        <!-- <form action="/add-variation">
-            <label for="id-btn" class="col-sm-2 col-form-label">
-                Add Variation
-            </label>
-            <button type="button" class="btn btn-info waves-effect waves-light" id="var-btn">
-                <h4><i class="ion ion-md-add-circle"></i></h4>
-            </button>
-        </form> -->
-        <hr>
 
         <form action="/add-product" method="POST">
             <button

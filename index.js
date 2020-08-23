@@ -26,10 +26,41 @@ app.use(expressLayouts);
 // Add Route file with app
 app.use("/", router);
 app.get("/pages-login-2", router);
+app.get("/home-slider-images", router);
+app.get("/new-offer-images", router);
+app.get("/promo-codes", router);
+app.get("/featured-section", router);
+app.get("/customers", router);
+app.get("/manage-customer-wallet");
+app.get("/payment-requests", router);
+app.get("/return-requests", router);
+app.get("/manage-delivery-boys", router);
+app.get("/fund-transfers", router);
+app.get("/send-notification", router);
+app.get("/transaction", router);
+app.get("/wallet-transactions", router);
+app.get("/store-settings", router);
+app.get("/payment-methods", router);
+app.get("/time-slots", router);
+app.get("/notification-settings", router);
+app.get("/contact-us", router);
+app.get("/privacy-policy", router);
+app.get("/about-us", router);
 app.post("/login", router);
 app.post("/add-variation", router);
 app.post("/add-product", router);
+app.post("/delete", router);
+app.post("/upload-slider-image", router);
+app.post("/upload-offer-image", router);
+app.post("/add-promo-code", router);
+app.post("/add-featured-section", router);
+app.post("/add-wallet", router);
+app.post("/add-delivery-boy", router);
+app.post("/send-message", router);
+app.post("/update-settings", router);
+app.post("/update-payment-methods", router);
 
-http.listen(3000, function() {
-  console.log("listening on *:3000");
+
+http.listen(8000, function() {
+  console.log("listening on *:8000");
 });

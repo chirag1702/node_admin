@@ -16,6 +16,126 @@ router.post("/add-product", (req, res) => {
     res.send("Added!!");
 });
 
+router.post("/upload-slider-image", (req, res) => {
+  res.send("Uploaded!!");
+});
+
+router.post("/upload-offer-image", (req, res) => {
+  res.send("Offer Image Uploaded!!");
+});
+
+router.get("/promo-codes", (req, res) =>{
+  res.render("promo-codes");
+});
+
+router.get("/featured-section", (req, res) => {
+  res.render("featured-section");
+});
+
+router.get("/customers", (req, res) => {
+  res.render("customers/customers");
+});
+
+router.get("/manage-customer-wallet", (req, res) => {
+  res.render("customers/manage-customer-wallet");
+});
+
+router.post("/add-wallet", (req, res) => {
+  res.send("wallet updated!!");
+});
+
+router.post("/delete", (req, res) => {
+  res.send("Deleted!!");
+});
+
+router.post("/add-promo-code", (req, res) => {
+  res.send("promo code added!!");
+});
+
+router.post("/add-featured-section", (req, res) => {
+  res.send("featured section added!!");
+});
+
+router.get("/new-offer-images", (req, res) => {
+  res.render("app-images/new-offer-images");
+});
+
+router.get("/payment-requests", (req, res) => {
+  res.render("payment-requests");
+});
+
+router.get("/return-requests", (req, res) => {
+  res.render("return-requests");
+});
+
+router.post("/add-delivery-boy", (req, res) => {
+  res.send("delivery boy added!!");
+});
+
+router.get("/manage-delivery-boys", (req, res) => {
+  res.render("delivery-boys/manage-delivery-boys");
+});
+
+router.get("/fund-transfers", (req, res) => {
+  res.render("delivery-boys/fund-transfer");
+});
+
+router.get("/send-notification", (req, res) => {
+  res.render("send-notification");
+});
+
+router.post("/send-message", (req, res) => {
+  res.send("message sent!!");
+});
+
+router.get("/transaction", (req, res) => {
+  res.render("transaction");
+});
+
+router.get("/wallet-transactions", (req, res) => {
+  res.render("wallet-transactions");
+});
+
+router.get("/store-settings", (req, res) => {
+  res.render("system/store-settings");
+});
+
+router.get("/payment-methods", (req, res) => {
+  res.render("system/payment-methods");
+});
+
+router.get("/time-slots", (req, res) => {
+  res.render("system/time-slots");
+});
+
+router.get("/notification-settings", (req, res) => {
+  res.render("system/notification-settings");
+});
+
+router.get("/contact-us", (req, res) => {
+  res.render("system/contact-us");
+});
+
+router.get("/privacy-policy", (req, res) => {
+  res.render("system/privacy-policy");
+});
+
+router.get("/about-us", (req, res) => {
+  res.render("system/about-us");
+});
+
+router.post("/update-settings", (req, res) => {
+  res.send("settings updated!!");
+});
+
+router.post("/update-payment-methods", (req, res) => {
+  res.send("payment method updated!!");
+});
+
+// router.get("/home-slider-images", (req, res) => {
+//   res.render("home-slider-images");
+// });
+
 
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -51,22 +171,22 @@ router.get("/", function(req, res) {
   res.render("Dashboard/dashboard");
 });
 
-// Calendar
-router.get("/calendar", function(req, res) {
-  res.render("Calendar/calendar");
+// home-slider-images
+router.get("/home-slider-images", function(req, res) {
+  res.render("app-images/home-slider-images");
 });
 
 // Email
-router.get("/email-inbox", function(req, res) {
-  res.render("Email/email-inbox");
+router.get("/add-product", function(req, res) {
+  res.render("Email/add-product");
 });
 
-router.get("/email-compose", function(req, res) {
-  res.render("Email/email-compose");
+router.get("/product-orders", function(req, res) {
+  res.render("Email/product-orders");
 });
 
-router.get("/email-read", function(req, res) {
-  res.render("Email/email-read");
+router.get("/manage-product", function(req, res) {
+  res.render("Email/manage-product");
 });
 
 // Charts
