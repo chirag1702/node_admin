@@ -25,6 +25,7 @@ app.use(expressLayouts);
 
 // Add Route file with app
 app.use("/", router);
+// app.get("/", router);
 app.get("/pages-login-2", router);
 app.get("/home-slider-images", router);
 app.get("/new-offer-images", router);
@@ -46,6 +47,14 @@ app.get("/notification-settings", router);
 app.get("/contact-us", router);
 app.get("/privacy-policy", router);
 app.get("/about-us", router);
+app.get("/cities", router);
+app.get("/areas", router);
+app.get("/add-cities", router);
+app.get("/add-areas", router);
+app.get("/categories", router);
+app.get("/sub-categories", router);
+app.get("/add-categories", router);
+app.get("/add-sub-categories", router);
 app.post("/login", router);
 app.post("/add-variation", router);
 app.post("/add-product", router);
@@ -59,6 +68,15 @@ app.post("/add-delivery-boy", router);
 app.post("/send-message", router);
 app.post("/update-settings", router);
 app.post("/update-payment-methods", router);
+app.post("/add-time-slots", router);
+app.post("/update-fcm-key", router);
+app.post("/update-contact-info", router);
+app.post("/update-privacy-policy", router);
+app.post("/update-about-us", router);
+app.post("/add-city", router);
+app.post("/add-area", router);
+app.post("/add-category", router);
+app.post("/add-sub-category", router);
 
 
 http.listen(8000, function() {

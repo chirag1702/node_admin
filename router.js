@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var bodyParser = require("body-parser");
-var db = require('./db_operations');
+// var db = require('./db_operations');
 const { route } = require("./Authrouter");
 // var app = express();
 
@@ -23,6 +23,10 @@ router.post("/upload-slider-image", (req, res) => {
 router.post("/upload-offer-image", (req, res) => {
   res.send("Offer Image Uploaded!!");
 });
+
+// router.get("/", (req, res) => {
+//     res.render("Authentication/pages-login-2");
+// });
 
 router.get("/promo-codes", (req, res) =>{
   res.render("promo-codes");
@@ -124,12 +128,80 @@ router.get("/about-us", (req, res) => {
   res.render("system/about-us");
 });
 
+router.get("/cities", (req, res) => {
+    res.render("locations/cities");
+});
+
+router.get("/areas", (req, res) => {
+    res.render("locations/areas");
+});
+
+router.get("/add-cities", (req, res) => {
+    res.render("locations/add-city");
+});
+
+router.get("/add-areas", (req, res) => {
+    res.render("locations/add-area");
+});
+
+router.get("/categories", (req, res) => {
+    res.render("categories");
+});
+
+router.get("/sub-categories", (req, res) => {
+    res.render("sub-categories");
+});
+
+router.get("/add-categories", (req, res) => {
+    res.render("add-categories");
+});
+
+router.get("/add-sub-categories", (req, res) => {
+    res.render("add-sub-categories");
+});
+
 router.post("/update-settings", (req, res) => {
   res.send("settings updated!!");
 });
 
 router.post("/update-payment-methods", (req, res) => {
   res.send("payment method updated!!");
+});
+
+router.post("/add-time-slots", (req, res) => {
+    res.send("time slot added!!");
+});
+
+router.post("/update-fcm-key", (req, res) => {
+    res.send("fcm key updated");
+});
+
+router.post("/update-contact-info", (req, res) => {
+    res.send("contact info updated");
+});
+
+router.post("/update-privacy-policy", (req, res) => {
+    res.send("privacy policy updated");
+});
+
+router.post("/update-about-us", (req, res) => {
+    res.send("about us");
+});
+
+router.post("/add-city", (req, res) => {
+    res.send("city added!!");
+});
+
+router.post("/add-area", (req, res) => {
+    res.send("area added!!");
+});
+
+router.post("/add-category", (req, res) => {
+    res.send("category added!!");
+});
+
+router.post("/add-sub-category", (req, res) => {
+    res.send("sub category added");
 });
 
 // router.get("/home-slider-images", (req, res) => {
@@ -141,29 +213,29 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 
 
-router.get("/admin", (req, res) => {
-    res.render("Authentication/admin", {"title": "Admin"});
-});
+// router.get("/admin", (req, res) => {
+//     res.render("Authentication/pages-login-2");
+// });
 
-router.post("/login", (req, res) => {
-   var username = req.body.username;
-   var password = req.body.userpass;
-   var data = {"username": username, "password": password};
+// router.post("/login", (req, res) => {
+//    var username = req.body.username;
+//    var password = req.body.userpass;
+//    var data = {"username": username, "password": password};
    
-   if (!username || !password) {
-       res.send("Please fill all the fields!!");
-   }
-   else {
-       var loginCheck = db.getRowCount(data, "admin");
-       if (loginCheck == 1) {
-           res.render("Dashboard/dashboard");
-       }
+//    if (!username || !password) {
+//        res.send("Please fill all the fields!!");
+//    }
+//    else {
+//        var loginCheck = db.getRowCount(data, "admin");
+//        if (loginCheck == 1) {
+//            res.render("Dashboard/dashboard");
+//        }
 
-       else {
-           res.send("Login failed!!");
-       }
-   }
-})
+//        else {
+//            res.send("Login failed!!");
+//        }
+//    }
+// })
 
 
 // Dashboard

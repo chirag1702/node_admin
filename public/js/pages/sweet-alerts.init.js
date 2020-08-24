@@ -41,10 +41,10 @@ File: Sweetalert Js File
         $('#sa-success').click(function () {
             Swal.fire(
                 {
-                    title: 'Product Added!',
-                    text: ' ',
+                    title: 'Good job!',
+                    text: 'You clicked the button!',
                     type: 'success',
-                    showCancelButton: false,
+                    showCancelButton: true,
                     confirmButtonColor: '#556ee6',
                     cancelButtonColor: "#f46a6a"
                 }
@@ -63,7 +63,7 @@ File: Sweetalert Js File
                 confirmButtonText: "Yes, delete it!"
               }).then(function (result) {
                 if (result.value) {
-                  Swal.fire("Deleted!");
+                  Swal.fire("Deleted!", "Your file has been deleted.", "success");
                 }
             });
         });
