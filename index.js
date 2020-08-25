@@ -3,7 +3,7 @@ var express = require("express");
 var path = require("path");
 var http = require("http").Server(app);
 var bCrypt = require("bcryptjs");
-var bodyParser = require("body-parser");
+// var bodyParser = require("body-parser");
 
 var router = require("./router.js");
 var Authrouter = require("./Authrouter.js");
@@ -14,6 +14,7 @@ app.get("/layouts/", function(req, res) {
   res.render("view");
 });
 
+// app.use(bodyParser.urlencoded({ extended : true }));
 // Add Authentication Route file with app
 app.use("/", Authrouter);
 

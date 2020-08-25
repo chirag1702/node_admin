@@ -1,12 +1,16 @@
 var express = require("express");
 var router = express.Router();
-var bodyParser = require("body-parser");
+var bodyParser = require('body-parser');
+var parse = require('querystring');
 // var db = require('./db_operations');
 const { route } = require("./Authrouter");
 // var app = express();
 
 
-var variationData = 0;
+
+router.use(bodyParser.urlencoded({ extended : true }));
+
+
 
 router.post("/add-variation", (req, res) => {
     res.render("./views/Forms/form-elements.ejs", { "additionData" : variationData });
@@ -197,7 +201,7 @@ router.post("/add-area", (req, res) => {
 });
 
 router.post("/add-category", (req, res) => {
-    res.send("category added!!");
+    console.log(req.body);
 });
 
 router.post("/add-sub-category", (req, res) => {
@@ -209,7 +213,7 @@ router.post("/add-sub-category", (req, res) => {
 // });
 
 
-router.use(bodyParser.urlencoded({ extended: true }));
+// router.use(bodyParser.urlencoded({ extended: true }));
 
 
 
