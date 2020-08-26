@@ -2,9 +2,28 @@ var express = require("express");
 var router = express.Router();
 var bodyParser = require('body-parser');
 var parse = require('querystring');
+var mongoose = require("mongoose");
+var models = require("./models");
+var fs = require("file-system");
+var multer = require("multer");
 // var db = require('./db_operations');
 const { route } = require("./Authrouter");
+const e = require("express");
+const { rename } = require("fs");
 // var app = express();
+
+
+
+router.use(multer({dest: './uploads/', 
+    rename: function (fieldname, filename) {
+        return filename;
+    },
+}));
+
+
+
+
+mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser : true }).then(console.log("Connected!!"));
 
 
 
@@ -201,7 +220,18 @@ router.post("/add-area", (req, res) => {
 });
 
 router.post("/add-category", (req, res) => {
-    console.log(req.body);
+    var catName = req.body.categoryName;
+    var catSubtitle = req.body.subtitle;
+    var category = new models.category({ "name": catName, "subtitle": catSubtitle, "image": "image" });
+    category.save(function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.redirect("add-categories");
+            console.log(result);
+        }
+    });
 });
 
 router.post("/add-sub-category", (req, res) => {
