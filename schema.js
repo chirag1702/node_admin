@@ -4,19 +4,17 @@ const schema = mongoose.Schema;
 
 const category_schema = new schema({
     name: String,
-    subtitle: String,
     image: String,
+    subtitle: String,
 });
 
 const sub_category_schema = new schema({
     category_id: String,
     name: String,
-    slug: String,
     subtitle: String,
-    image: {
-        data: Buffer,
-        contentType: String,
-    },
+    image: String,
+    main_category: String,
+    
 });
 
 const admin_schema = new schema({

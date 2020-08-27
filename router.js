@@ -1,34 +1,20 @@
-var express = require("express");
-var router = express.Router();
-var bodyParser = require('body-parser');
-var parse = require('querystring');
-var mongoose = require("mongoose");
-var models = require("./models");
-var fs = require("file-system");
-var multer = require("multer");
-// var db = require('./db_operations');
-const { route } = require("./Authrouter");
-const e = require("express");
-const { rename } = require("fs");
-// var app = express();
+const express = require("express");
+const router = express.Router();
+const bodyParser = require('body-parser');
+const parse = require('querystring');
+const mongoose = require("mongoose");
+const models = require("./models");
+const fs = require("file-system");
+const multer = require("multer");
 
-
-
-router.use(multer({dest: './uploads/', 
-    rename: function (fieldname, filename) {
-        return filename;
-    },
-}));
-
+const upload = multer({ dest : "./uploads/", rename: "logo" });
 
 
 
 mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser : true }).then(console.log("Connected!!"));
 
 
-
 router.use(bodyParser.urlencoded({ extended : true }));
-
 
 
 router.post("/add-variation", (req, res) => {
@@ -46,10 +32,6 @@ router.post("/upload-slider-image", (req, res) => {
 router.post("/upload-offer-image", (req, res) => {
   res.send("Offer Image Uploaded!!");
 });
-
-// router.get("/", (req, res) => {
-//     res.render("Authentication/pages-login-2");
-// });
 
 router.get("/promo-codes", (req, res) =>{
   res.render("promo-codes");
@@ -168,11 +150,27 @@ router.get("/add-areas", (req, res) => {
 });
 
 router.get("/categories", (req, res) => {
-    res.render("categories");
+    var categories = models.category.find({}, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        else {
+            res.render("categories", {data: result});
+        }
+    });
 });
 
 router.get("/sub-categories", (req, res) => {
-    res.render("sub-categories");
+    var subCategories = models.subCategory.find({}, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        else {
+            res.render("sub-categories", {data: result});
+        }
+    });
 });
 
 router.get("/add-categories", (req, res) => {
@@ -180,7 +178,15 @@ router.get("/add-categories", (req, res) => {
 });
 
 router.get("/add-sub-categories", (req, res) => {
-    res.render("add-sub-categories");
+    var categories = models.category.find({}, (err, result) => {
+        if (err) {
+            throw err;
+        }
+
+        else {
+            res.render("add-sub-categories", {data: result});
+        }
+    })
 });
 
 router.post("/update-settings", (req, res) => {
@@ -219,10 +225,10 @@ router.post("/add-area", (req, res) => {
     res.send("area added!!");
 });
 
-router.post("/add-category", (req, res) => {
+router.post("/add-category", upload.single("file"), (req, res) => {
     var catName = req.body.categoryName;
     var catSubtitle = req.body.subtitle;
-    var category = new models.category({ "name": catName, "subtitle": catSubtitle, "image": "image" });
+    var category = new models.category({ name: catName, image: "image", subtitle: catSubtitle });
     category.save(function (err, result) {
         if (err) {
             console.log(err);
@@ -232,45 +238,25 @@ router.post("/add-category", (req, res) => {
             console.log(result);
         }
     });
+
+    
 });
 
 router.post("/add-sub-category", (req, res) => {
-    res.send("sub category added");
+    var mainCategory = req.body.mainCategory;
+    var name = req.body.subName;
+    var subtitle = req.body.subSubtitle;
+    var image = "image";
+    var subCategory = models.subCategory({name: name, subtitle: subtitle, image: image, main_category: mainCategory});
+    subCategory.save(function (err, result) {
+        if (err) {
+            throw err;
+        }
+
+        else {
+            res.redirect("add-sub-categories");        }
+    });
 });
-
-// router.get("/home-slider-images", (req, res) => {
-//   res.render("home-slider-images");
-// });
-
-
-// router.use(bodyParser.urlencoded({ extended: true }));
-
-
-
-// router.get("/admin", (req, res) => {
-//     res.render("Authentication/pages-login-2");
-// });
-
-// router.post("/login", (req, res) => {
-//    var username = req.body.username;
-//    var password = req.body.userpass;
-//    var data = {"username": username, "password": password};
-   
-//    if (!username || !password) {
-//        res.send("Please fill all the fields!!");
-//    }
-//    else {
-//        var loginCheck = db.getRowCount(data, "admin");
-//        if (loginCheck == 1) {
-//            res.render("Dashboard/dashboard");
-//        }
-
-//        else {
-//            res.send("Login failed!!");
-//        }
-//    }
-// })
-
 
 // Dashboard
 router.get("/", function(req, res) {

@@ -3,8 +3,6 @@ var express = require("express");
 var path = require("path");
 var http = require("http").Server(app);
 var bCrypt = require("bcryptjs");
-// var bodyParser = require("body-parser");
-
 var router = require("./router.js");
 var Authrouter = require("./Authrouter.js");
 
