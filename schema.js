@@ -232,8 +232,30 @@ const seller_schema = new schema({
 });
 
 const settings_schema = new schema({
-    variable: String,
-    value: String,
+    app_name: String,
+    support_number: Number,
+    support_email: String,
+    current_version: String,
+    min_version: String,
+    version_status_check: Number,
+    store_currency: String,
+    gst: Number,
+    cgst: Number,
+    sgst: Number,
+    igst: Number,
+    delivery_charge: Number,
+    min_free_delivery_amount: Number,
+    system_time_zone: String,
+    refer_and_earn_enable: Number,
+    min_refer_and_earn_amount: Number,
+    refer_and_earn_bonus: Number,
+    refer_and_earn_method: String,
+    max_refer_and_earn_amount: Number,
+    min_withdraw_amount: Number,
+    max_days_to_return_item: Number,
+    delivery_boy_bonus: Number,
+    from_email: String,
+    reply_to_email: String,
 });
 
 const slider_schema = new schema({

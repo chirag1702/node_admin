@@ -54,6 +54,7 @@ app.get("/categories", router);
 app.get("/sub-categories", router);
 app.get("/add-categories", router);
 app.get("/add-sub-categories", router);
+app.get("/units", router);
 app.post("/login", router);
 app.post("/add-variation", router);
 app.post("/add-product", router);
@@ -76,6 +77,7 @@ app.post("/add-city", router);
 app.post("/add-area", router);
 app.post("/add-category", router);
 app.post("/add-sub-category", router);
+app.post("/add-unit", router);
 
 
 http.listen(8000, function() {
