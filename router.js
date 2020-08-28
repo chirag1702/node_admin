@@ -112,7 +112,7 @@ router.get("/store-settings", (req, res) => {
         }
 
         else {
-            res.render("system/store-settings", {data: result});
+            res.render("settings", {data: result});
         }
     })
 });
@@ -276,7 +276,7 @@ router.post("/update-settings", (req, res) => {
         }
 
         else {
-            res.redirect("system/store-settings");
+            res.redirect("store-settings");
         }
     });
 });
