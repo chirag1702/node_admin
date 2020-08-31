@@ -179,8 +179,8 @@ const product_variants_schema = new schema({
 const promo_codes_schema = new schema({
     promo_code: String,
     message: String,
-    start_date: Date,
-    end_date: Date,
+    start_date: String,
+    end_date: String,
     no_of_users: Number,
     minimum_order_amount: Number,
     discount: Number,
