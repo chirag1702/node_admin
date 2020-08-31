@@ -6,12 +6,13 @@ const mongoose = require("mongoose");
 const models = require("./models");
 const fs = require("file-system");
 const multer = require("multer");
+const { count } = require("console");
 
 const upload = multer({ dest: "./uploads/", rename: "logo" });
 
 
 
-mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true }).then(console.log("Connected!!"));
+mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true }).then(console.log("Connected!!"));
 
 
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -34,7 +35,15 @@ router.post("/upload-offer-image", (req, res) => {
 });
 
 router.get("/promo-codes", (req, res) => {
-    res.render("promo-codes");
+    models.promoCode.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("promo-codes", {data: result});
+        }
+    })
 });
 
 router.get("/featured-section", (req, res) => {
@@ -58,7 +67,40 @@ router.post("/delete", (req, res) => {
 });
 
 router.post("/add-promo-code", (req, res) => {
-    res.send("promo code added!!");
+    var code = req.body.promocode;
+    var message = req.body.message;
+    var startDate = req.body.datepickerautoclose;
+    var endDate = req.body.datepickerautocloseend;
+    var noOfUsers = req.body.noofusers;
+    var minOrderAmount = req.body.minorderamount;
+    var discount = req.body.discount;
+    var maxDiscount = req.body.discount;
+    var repeat = req.body.repeat;
+    var status = req.body.status;
+
+    var promoCode = models.promoCode({
+        promo_code: code,
+        message: message,
+        start_date: startDate,
+        end_date: endDate,
+        no_of_users: noOfUsers,
+        minimum_order_amount: minOrderAmount,
+        discount: discount,
+        max_discount_amount: maxDiscount,
+        repeat_usage: repeat,
+        status: status,
+        date_created: Date.now()
+    });
+
+    promoCode.save((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("promo-codes");
+        }
+    });
 });
 
 router.post("/add-featured-section", (req, res) => {
@@ -106,17 +148,16 @@ router.get("/wallet-transactions", (req, res) => {
 });
 
 router.get("/store-settings", (req, res) => {
-    var settings = models.setting.find({}, (err, result) => {
-        if (err) {
-            console.log(err);
-        }
+   models.setting.find({}).sort({_id: -1}).limit(1).exec((err, result) => {
+       if (err) {
+           console.log(err);
+       }
 
-        else {
-            res.render("settings", {data: result});
-        }
-    })
+       else {
+           res.render("settings", {data: result});
+       }
+   });
 });
-
 router.get("/payment-methods", (req, res) => {
     res.render("system/payment-methods");
 });
@@ -182,7 +223,15 @@ router.get("/sub-categories", (req, res) => {
 });
 
 router.get("/add-categories", (req, res) => {
-    res.render("add-categories");
+    models.find((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("Products/add-product", {data: result});
+        }
+    });
 });
 
 router.get("/add-sub-categories", (req, res) => {
@@ -210,6 +259,24 @@ router.get("/units", (req, res) => {
 });
 
 router.post("/update-settings", (req, res) => {
+
+    // models.setting.countDocuments().then(count => {
+    //     if (count >= 1) {
+    //         models.setting.deleteMany({}, (err, result) => {
+    //             if (err) {
+    //                 console.log(err);
+    //             }
+
+    //             else {
+    //                 console.log("cleared!!");
+    //             }
+    //         })
+    //     }
+    // }).catch(err => {
+    //     console.log(err);
+    // });
+
+
     var appName = req.body.appname;
     var supportNumber = req.body.supportnumber;
     var supportEmail = req.body.supportemail;
@@ -232,18 +299,6 @@ router.post("/update-settings", (req, res) => {
     var deliveryboybonus = req.body.deliveryboybonus;
     var fromemail = req.body.fromemail;
     var replyemail = req.body.replyemail;
-    // var row_count = models.setting.count({}, function (err, count) {
-    //     if (err) {
-    //         console.log(err);
-    //     }
-
-    //     else {
-    //         row_count = count;
-    //     }
-    // });
-    // if(row_count >=1) {
-
-    // }
     var setting = models.setting({
         app_name: appName,
         support_number: supportNumber,
@@ -269,7 +324,6 @@ router.post("/update-settings", (req, res) => {
         from_email: fromemail,
         reply_to_email: replyemail
     });
-
     setting.save(function (err, result) {
         if (err) {
             console.log(err);

@@ -151,7 +151,7 @@ const payment_request_schema = new schema({
 });
 
 const product_schema = new schema({
-    row_order: Number,
+    id: Number,
     name: String,
     slug: String,
     category_id: Number,
@@ -186,7 +186,7 @@ const promo_codes_schema = new schema({
     discount: Number,
     discount_type: String,
     max_discount_amount: Number,
-    repeat_usege: Number,
+    repeat_usage: Number,
     no_of_repeat_usage: Number,
     status: Number,
     date_created: Date,
