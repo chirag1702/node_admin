@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const { Timestamp } = require("mongodb");
 const schema = mongoose.Schema;
 
+
 const category_schema = new schema({
     name: String,
     image: String,
@@ -190,6 +191,7 @@ const promo_codes_schema = new schema({
     no_of_repeat_usage: Number,
     status: Number,
     date_created: Date,
+    code_id: Number,
 });
 
 const return_request_schema = new schema({

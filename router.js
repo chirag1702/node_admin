@@ -7,14 +7,13 @@ const models = require("./models");
 const fs = require("file-system");
 const multer = require("multer");
 const { count } = require("console");
-
-const upload = multer({ dest: "./uploads/", rename: "logo" });
-
+const formidable = require("formidable");
+const multiparty = require("multiparty");
 
 
 mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true }).then(console.log("Connected!!"));
 
-
+router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 
@@ -27,7 +26,64 @@ router.post("/add-product", (req, res) => {
 });
 
 router.post("/upload-slider-image", (req, res) => {
-    res.send("Uploaded!!");
+    // var type = req.body.type;
+    // var imagePath;
+    // var form = new formidable.IncomingForm();
+    // form.parse(req);
+    // form.on("fileBegin", (name, file) => {
+    //     file.path = __dirname + "/uploads/" + file.name;
+    //     imagePath = "./uploads/" + file.name;
+    // });
+    // form.on("file", (name, file) => {
+    //     console.log("Uploaded" + imagePath);
+    // });
+
+    // console.log(imagePath);
+
+    // var sliderImage = models.slider({
+    //     type: type,
+    //     type_id: "typeid",
+    //     image: imagePath
+    // });
+
+    // sliderImage.save((err, result) => {
+    //     if (err) {
+    //         console.log(err);
+    //     }
+
+    //     else {
+    //         res.redirect("home-slider-images");
+    //     }
+    // });
+
+    var form = new multiparty.Form();
+    form.parse(req);
+
+    form.on('part', function (part) {
+        // You *must* act on the part by reading it
+        // NOTE: if you want to ignore it, just call "part.resume()"
+
+        if (!part.filename) {
+            // filename is not defined when this is a field and not a file
+            console.log('got field named ' + part.name);
+            // ignore field's content
+
+        }
+
+        if (part.filename) {
+            // filename is defined when this is a file
+            count++;
+            console.log('got file named ' + part.name);
+            // ignore file's content here
+            part.resume();
+        }
+
+        part.on('error', function (err) {
+            // decide what to do
+        });
+    });
+
+    res.send("Under Construnction");
 });
 
 router.post("/upload-offer-image", (req, res) => {
@@ -41,13 +97,21 @@ router.get("/promo-codes", (req, res) => {
         }
 
         else {
-            res.render("promo-codes", {data: result});
+            res.render("promo-codes", { data: result });
         }
     })
 });
 
 router.get("/featured-section", (req, res) => {
-    res.render("featured-section");
+    models.section.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("featured-section", { data: result });
+        }
+    })
 });
 
 router.get("/customers", (req, res) => {
@@ -59,7 +123,70 @@ router.get("/manage-customer-wallet", (req, res) => {
 });
 
 router.post("/add-wallet", (req, res) => {
-    res.send("wallet updated!!");
+    var customerName = req.body.customer;
+    var txnType = req.body.type;
+    var amount = req.body.amount;
+    var message = req.body.message;
+    var newAmount;
+    var oldAmount;
+    models.user.findOne({ name: customerName }).select("balance -_id").exec((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            oldAmount = result.balance;
+            console.log(oldAmount);
+            if (txnType == "credit") {
+                newAmount = (oldAmount - 0) + (amount - 0); //subtraction is done because js don't support addition
+                models.user.updateOne({ name: customerName }, { $set: { balance: newAmount } }, (err, doc) => {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                    else {
+                        console.log(doc);
+                    }
+                });
+            }
+
+            else if (txnType == "debit") {
+                newAmount = oldAmount - amount;
+                models.user.updateOne({ name: customerName }, { $set: { balance: newAmount } }, (err, docu) => {
+                    if (err) {
+                        console.log(err);
+                    }
+
+                    else {
+                        console.log(docu);
+                    }
+                });
+            }
+        }
+
+        var transaction = models.walletTransaction({
+            user_id: result.id,
+            type: txnType,
+            amount: amount,
+            message: message,
+            status: result.status,
+            date_created: Date.now(),
+            last_updated: Date.now(),
+        });
+
+        transaction.save((err, resul) => {
+            if (err) {
+                console.log(err);
+            }
+
+            else {
+                res.redirect("manage-customer-wallet");
+            }
+        });
+
+    });
+
+
 });
 
 router.post("/delete", (req, res) => {
@@ -69,14 +196,43 @@ router.post("/delete", (req, res) => {
 router.post("/add-promo-code", (req, res) => {
     var code = req.body.promocode;
     var message = req.body.message;
-    var startDate = req.body.datepickerautoclose;
-    var endDate = req.body.datepickerautocloseend;
+    var startDate = req.body.startdate;
+    var endDate = req.body.enddate;
     var noOfUsers = req.body.noofusers;
-    var minOrderAmount = req.body.minorderamount;
+    var minOrderAmount = req.body.minorderamt;
     var discount = req.body.discount;
+    var discountType = req.body.discounttype;
     var maxDiscount = req.body.discount;
     var repeat = req.body.repeat;
+    var repeat_code = 0;
+    var status_code = 0;
     var status = req.body.status;
+    var promoCodeID = 0;
+    models.promoCode.find({}).sort({ _id: -1 }).limit(1).exec((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            promoCodeID = result.code_id + 1;
+        }
+    });
+
+    if (repeat == "Allowed") {
+        repeat_code = 1;
+    }
+
+    else if (repeat == "Not Allowed") {
+        repeat_code = 0;
+    }
+
+    if (status == "Active") {
+        status_code = 1;
+    }
+
+    else if (status == "Deactive") {
+        status_code = 0;
+    }
 
     var promoCode = models.promoCode({
         promo_code: code,
@@ -86,10 +242,12 @@ router.post("/add-promo-code", (req, res) => {
         no_of_users: noOfUsers,
         minimum_order_amount: minOrderAmount,
         discount: discount,
+        discount_type: discountType,
         max_discount_amount: maxDiscount,
-        repeat_usage: repeat,
-        status: status,
-        date_created: Date.now()
+        repeat_usage: repeat_code,
+        status: status_code,
+        date_created: Date.now(),
+        code_id: promoCodeID,
     });
 
     promoCode.save((err, result) => {
@@ -104,7 +262,27 @@ router.post("/add-promo-code", (req, res) => {
 });
 
 router.post("/add-featured-section", (req, res) => {
-    res.send("featured section added!!");
+    var sectionTitle = req.body.title;
+    var sectionDescription = req.body.description;
+    var sectionStyle = req.body.style;
+    var productIDS = req.body.productids;
+    var featuredSection = models.section({
+        title: sectionTitle,
+        short_description: sectionDescription,
+        style: sectionStyle,
+        product_ids: productIDS,
+        date_created: Date.now()
+    });
+
+    featuredSection.save((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("featured-section");
+        }
+    });
 });
 
 router.get("/new-offer-images", (req, res) => {
@@ -144,19 +322,27 @@ router.get("/transaction", (req, res) => {
 });
 
 router.get("/wallet-transactions", (req, res) => {
-    res.render("wallet-transactions");
+    models.walletTransaction.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("wallet-transactions", {data: result});
+        }
+    });
 });
 
 router.get("/store-settings", (req, res) => {
-   models.setting.find({}).sort({_id: -1}).limit(1).exec((err, result) => {
-       if (err) {
-           console.log(err);
-       }
+    models.setting.find({}).sort({ _id: -1 }).limit(1).exec((err, result) => {
+        if (err) {
+            console.log(err);
+        }
 
-       else {
-           res.render("settings", {data: result});
-       }
-   });
+        else {
+            res.render("settings", { data: result });
+        }
+    });
 });
 router.get("/payment-methods", (req, res) => {
     res.render("system/payment-methods");
@@ -229,7 +415,7 @@ router.get("/add-categories", (req, res) => {
         }
 
         else {
-            res.render("Products/add-product", {data: result});
+            res.render("Products/add-product", { data: result });
         }
     });
 });
@@ -367,7 +553,7 @@ router.post("/add-area", (req, res) => {
     res.send("area added!!");
 });
 
-router.post("/add-category", upload.single("file"), (req, res) => {
+router.post("/add-category", (req, res) => {
     var catName = req.body.categoryName;
     var catSubtitle = req.body.subtitle;
     var category = new models.category({ name: catName, image: "image", subtitle: catSubtitle });
@@ -424,7 +610,15 @@ router.get("/", function (req, res) {
 
 // home-slider-images
 router.get("/home-slider-images", function (req, res) {
-    res.render("app-images/home-slider-images");
+    models.slider.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("app-images/home-slider-images", { data: result });
+        }
+    })
 });
 
 // Email
@@ -695,3 +889,4 @@ router.get("/pages-pricing", function (req, res) {
 });
 
 module.exports = router;
+

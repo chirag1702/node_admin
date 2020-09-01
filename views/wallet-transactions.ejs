@@ -22,44 +22,41 @@ contentFor('breadcrumb') %>
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <div class="card-body">
-        <h4>Wallet Transactions</h4>
-        <hr>
-        <div class="table-rep-plugin">
-            <div class="table-responsive mb-0" data-pattern="priority-columns">
-                <table id="tech-companies-1" class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th data-priority="1">ID ID</th>
-                        <th data-priority="3">User ID</th>
-                        <th data-priority="1">User Name</th>
-                        <th data-priority="3">Type</th>
-                        <th data-priority="6">Amount</th>
-                        <th data-priority="6">Message</th>
-                        <th data-priority="6">Status</th>
-                        <th data-priority="6">Transaction Date</th>
-                        <th data-priority="6">Last Updated</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>17</td>
-                        <td>CJ17</td>
-                        <td>chirag</td>
-                        <td>type</td>
-                        <td>4000000</td>
-                        <td>message</td>
-                        <td>status</td>
-                        <td>date</td>
-                        <td></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="card-body">
 
+            <% if (data != null) { %>
+
+            <table class="table table-hover mb-0">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>User ID</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Message</th>
+                        <th>Status</th>
+                        <th>Transaction date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% data.forEach(result => { %>
+
+                    <tr>
+                        <td>1</td>
+                        <td><%= result.user_id %></td>
+                        <td><%= result.type %></td>
+                        <td><%= result.amount %></td>
+                        <td><%= result.message %></td>
+                        <td><%= result.status == 1 ? "Active" : "Deactive" %></td>
+                        <td><%= result.date_created %></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+
+            <% } %>
         </div>
-
-      </div>
     </div>
   </div>
   <!-- end col -->

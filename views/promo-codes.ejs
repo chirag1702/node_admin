@@ -41,29 +41,29 @@ contentFor('breadcrumb') %>
                     </div>
 
                     <div class="form-group row">
-                        <label for="datepickerautoclose" class="col-sm-2 col-form-label">Start Date</label>
+                        <label for="startdate" class="col-sm-2 col-form-label">Start Date</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="mm/dd/yyyy" id="datepickerautoclose" />
+                            <input type="text" class="form-control" placeholder="mm/dd/yyyy" name="startdate" />
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="datepickerautocloseend" class="col-sm-2 col-form-label">End Date</label>
+                        <label for="enddate" class="col-sm-2 col-form-label">End Date</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" placeholder="mm/dd/yyyy"
-                                id="datepickerautocloseend" />
+                                name="enddate" />
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="no-of-users" class="col-sm-2 col-form-label">No. of users</label>
+                        <label for="noofusers" class="col-sm-2 col-form-label">No. of users</label>
                         <div class="col-sm-10">
                             <input class="form-control" type="text" placeholder="No. of users" name="noofusers" />
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="min-order-amt" class="col-sm-2 col-form-label">Minimum order amount</label>
+                        <label for="minorderamt" class="col-sm-2 col-form-label">Minimum order amount</label>
                         <div class="col-sm-10">
                             <input class="form-control" type="text" placeholder="Minimum order amount"
                                 name="minorderamt" />
@@ -78,9 +78,9 @@ contentFor('breadcrumb') %>
                     </div>
 
                     <div class="form-group row">
-                        <label for="discount type" class="col-sm-2 col-form-label">Discount Type</label>
+                        <label for="discounttype" class="col-sm-2 col-form-label">Discount Type</label>
                         <div class="col-sm-10">
-                            <select class="form-control">
+                            <select class="form-control" name="discounttype">
                                 <option>Percentage</option>
                                 <option>Amount</option>
                             </select>
@@ -98,7 +98,7 @@ contentFor('breadcrumb') %>
                     <div class="form-group row">
                         <label for="repeat" class="col-sm-2 col-form-label">Repeate Usage</label>
                         <div class="col-sm-10">
-                            <select class="form-control">
+                            <select class="form-control" name="repeat">
                                 <option>Allowed</option>
                                 <option>Not Allowed</option>
                             </select>
@@ -108,7 +108,7 @@ contentFor('breadcrumb') %>
                     <div class="form-group row">
                         <label for="status" class="col-sm-2 col-form-label">Status</label>
                         <div class="col-sm-10">
-                            <select class="form-control">
+                            <select class="form-control" name="status">
                                 <option>Active</option>
                                 <option>Deactive</option>
                             </select>
@@ -150,18 +150,18 @@ contentFor('breadcrumb') %>
                         <% data.forEach(result => { %>
 
                         <tr>
-                            <td>1</td>
+                            <td><%= result.code_id %></td>
                             <td><%= result.promo_code %></td>
                             <td><%= result.message %></td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
-                            <td>null</td>
+                            <td><%= result.start_date %></td>
+                            <td><%= result.end_date %></td>
+                            <td><%= result.no_of_users %></td>
+                            <td><%= result.minimum_order_amount %></td>
+                            <td><%= result.max_discount_amount %></td>
+                            <td><%= result.discount %></td>
+                            <td><%= result.discount_type %></td>
+                            <td><%= result.status == 1 ? "Active" : "Deactive" %></td>
+                            <td><%= result.date_created %></td>
                             <td>Action</td>
                         </tr>
                         <% }); %>
