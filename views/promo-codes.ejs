@@ -162,7 +162,7 @@ contentFor('breadcrumb') %>
                             <td><%= result.discount_type %></td>
                             <td><%= result.status == 1 ? "Active" : "Deactive" %></td>
                             <td><%= result.date_created %></td>
-                            <td>Action</td>
+                            <td><a href="/delete-promo-code?id=<%= result.id %>" onclick="return confirm('Are you sure ?');">Delete</a></td>
                         </tr>
                         <% }); %>
                     </tbody>

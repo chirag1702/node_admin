@@ -9,9 +9,10 @@ const multer = require("multer");
 const { count } = require("console");
 const formidable = require("formidable");
 const multiparty = require("multiparty");
+const url = require("url");
 
 
-mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true }).then(console.log("Connected!!"));
+mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -31,8 +32,8 @@ router.post("/upload-slider-image", (req, res) => {
     var form = new formidable.IncomingForm();
     form.parse(req);
     form.on("fileBegin", (name, file) => {
-        file.path = __dirname + "/uploads/" + file.name;
-        imagePath = "./public/images/uploads/" + file.name;
+        file.path = __dirname + "/public/images/uploads/" + file.name;
+        imagePath = "/public/images/uploads/" + file.name;
     });
     form.on("file", (name, file) => {
         console.log("Uploaded" + imagePath);
@@ -53,42 +54,49 @@ router.post("/upload-slider-image", (req, res) => {
             }
         });
     });
-
-    console.log(imagePath);
-
-    // var form = new multiparty.Form();
-    // form.parse(req);
-
-    // form.on('part', function (part) {
-    //     // You *must* act on the part by reading it
-    //     // NOTE: if you want to ignore it, just call "part.resume()"
-
-    //     if (!part.filename) {
-    //         // filename is not defined when this is a field and not a file
-    //         console.log('got field named ' + part.name);
-    //         // ignore field's content
-
-    //     }
-
-    //     if (part.filename) {
-    //         // filename is defined when this is a file
-    //         count++;
-    //         console.log('got file named ' + part.name);
-    //         // ignore file's content here
-    //         part.resume();
-    //     }
-
-    //     part.on('error', function (err) {
-    //         // decide what to do
-    //     });
-    // });
-
-    // res.send("Under Construnction");
 });
 
 router.post("/upload-offer-image", (req, res) => {
-    res.send("Offer Image Uploaded!!");
+    var imagePath;
+    var form = new formidable.IncomingForm();
+    form.parse(req);
+    form.on("fileBegin", (name, file) => {
+        file.path = __dirname + "/public/images/uploads" + file.name;
+        imagePath = "/public/images/uploads/" + file.name;
+    });
+    form.on("file", (name, file) => {
+        console.log("uploaded" + imagePath);
+        var offerImage = models.offer({
+            image: imagePath,
+            date_added: Date.now()
+        });
+        offerImage.save((err, result) => {
+            if (err) {
+                console.log(err);
+            }
+
+            else {
+                res.redirect("new-offer-images");
+            }
+        });
+    })
 });
+
+router.get("/delete-offer-image", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.offer.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("new-offer-images");
+        }
+
+    });
+})
 
 router.get("/promo-codes", (req, res) => {
     models.promoCode.find({}, (err, result) => {
@@ -115,7 +123,15 @@ router.get("/featured-section", (req, res) => {
 });
 
 router.get("/customers", (req, res) => {
-    res.render("customers/customers");
+    models.user.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("customers/customers", { data: result });
+        }
+    });
 });
 
 router.get("/manage-customer-wallet", (req, res) => {
@@ -286,7 +302,15 @@ router.post("/add-featured-section", (req, res) => {
 });
 
 router.get("/new-offer-images", (req, res) => {
-    res.render("app-images/new-offer-images");
+    models.offer.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("app-images/new-offer-images", {data: result});
+        }
+    });
 });
 
 router.get("/payment-requests", (req, res) => {
@@ -298,11 +322,68 @@ router.get("/return-requests", (req, res) => {
 });
 
 router.post("/add-delivery-boy", (req, res) => {
-    res.send("delivery boy added!!");
+    var deliveryBoyName = req.body.name;
+    var mobileNumber = req.body.mobile;
+    var pass = req.body.password;
+    var confirmPass = req.body.confirmpassword;
+    var address = req.body.address;
+    var bonus = req.body.bonus;
+    if (pass != confirmPass) {
+        res.send("passwords dont match!!");
+    }
+
+    else {
+
+        var deliveryBoy = models.deliveryBoy({
+            name: deliveryBoyName,
+            mobile: mobileNumber,
+            password: pass,
+            address: address,
+            bonus: bonus,
+            balance: 0,
+            status: 1,
+            date_created: Date.now(),
+            fcm_id: "FCM",
+        });
+
+        deliveryBoy.save((err, result) => {
+            if (err) {
+                console.log(err);
+            }
+
+            else {
+                res.redirect("manage-delivery-boys");
+            }
+        });
+    }
 });
 
 router.get("/manage-delivery-boys", (req, res) => {
-    res.render("delivery-boys/manage-delivery-boys");
+    models.deliveryBoy.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("delivery-boys/manage-delivery-boys", {data: result});
+        }
+    });
+});
+
+router.get("/delete-delivery-boy", (req, res) =>{
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.deliveryBoy.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("manage-delivery-boys");
+        }
+
+    });
 });
 
 router.get("/fund-transfers", (req, res) => {
@@ -641,6 +722,86 @@ router.get("/product-orders", function (req, res) {
 router.get("/manage-product", function (req, res) {
     res.render("Products/manage-product");
 });
+
+router.get("/delete-slider-image", (req, res, next) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.slider.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("home-slider-images");
+        }
+
+    });
+});
+
+router.get("/delete-category", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.category.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("categories");
+        }
+
+    });
+});
+
+router.get("/delete-sub-category", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.subCategory.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("sub-categories");
+        }
+
+    });
+});
+
+router.get("/delete-promo-code", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.promoCode.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("promo-codes");
+        }
+
+    });
+});
+
+router.get("/delete-featured-section", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.section.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("featured-section");
+        }
+
+    });
+})
 
 // Charts
 router.get("/charts-chartist", function (req, res) {

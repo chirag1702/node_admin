@@ -5,66 +5,75 @@ contentFor('breadcrumb') %>
 <link href="public/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
 
 <div class="col-sm-6">
-  <div class="page-title-box">
-    <h4 class="font-size-18">Email Read</h4>
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item">
-        <a href="javascript: void(0);">Veltrix</a>
-      </li>
-      <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
-      <li class="breadcrumb-item active">Email Read</li>
-    </ol>
-  </div>
+    <div class="page-title-box">
+        <h4 class="font-size-18">Email Read</h4>
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="javascript: void(0);">Veltrix</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
+            <li class="breadcrumb-item active">Email Read</li>
+        </ol>
+    </div>
 </div>
 
 <%- contentFor('body') %>
 
 <div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <div class="table-rep-plugin">
-            <div class="table-responsive mb-0" data-pattern="priority-columns">
-                <table id="tech-companies-1" class="table table-striped">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <% if (data != null) { %>
+
+                <table class="table table-hover">
                     <thead>
-                    <tr>
-                        <th data-priority="1">ID</th>
-                        <th data-priority="3">Name</th>
-                        <th data-priority="1">Email</th>
-                        <th data-priority="3">M.No.</th>
-                        <th data-priority="3">Balance</th>
-                        <th data-priority="6">Refferal Code</th>
-                        <th data-priority="6">Friend's Code</th>
-                        <th data-priority="6">Street</th>
-                        <th data-priority="6">City</th>
-                        <th data-priority="6">Status</th>
-                        <th data-priority="6">Date & Time</th>
-                    </tr>
+                        <tr>
+                            <th data-priority="1">ID</th>
+                            <th data-priority="3">Name</th>
+                            <th data-priority="1">Email</th>
+                            <th data-priority="3">M.No.</th>
+                            <th data-priority="3">Balance</th>
+                            <th data-priority="6">Refferal Code</th>
+                            <th data-priority="6">Friend's Code</th>
+                            <th data-priority="6">Street</th>
+                            <th data-priority="6">City</th>
+                            <th data-priority="6">Status</th>
+                            <th data-priority="6">Date & Time</th>
+                        </tr>
                     </thead>
+
+                    <% data.forEach(result => { %>
+
+
                     <tbody>
-                    <tr>
-                        <td>17</td>
-                        <td>Chirag</td>
-                        <td>chirag.jangid1702@gmail.com</td>
-                        <td>6375528478</td>
-                        <td>36000000</td>
-                        <td>TPOC17</td>
-                        <td>DIV25</td>
-                        <td>Street</td>
-                        <td>Jaipur</td>
-                        <td>Elite</td>
-                        <td>Unknown</td>
-                    </tr>
+                        <tr>
+                            <td><%= result.id %></td>
+                            <td><%= result.name %></td>
+                            <td><%= result.email %></td>
+                            <td><%= result.mobile %></td>
+                            <td><%= result.balance %></td>
+                            <td><%= result.refferal_code %></td>
+                            <td><%= result.friends_code %></td>
+                            <td><%= result.street %></td>
+                            <td><%= result.city %></td>
+                            <td><%= result.status %></td>
+                            <td><%= result.created_at %></td>
+                        </tr>
                     </tbody>
+
+                    <% }); %>
+
                 </table>
+
+                <% } %>
+
+
+
             </div>
-
         </div>
-
-      </div>
     </div>
-  </div>
-  <!-- end col -->
+    <!-- end col -->
 </div>
 
 <%- contentFor('FooterJs') %> <%- contentFor('BottomJs') %>
@@ -78,4 +87,3 @@ contentFor('breadcrumb') %>
 
 <!-- Init js -->
 <script src="public/js/pages/table-responsive.init.js"></script>
-

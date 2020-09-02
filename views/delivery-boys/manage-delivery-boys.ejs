@@ -7,104 +7,117 @@ contentFor('breadcrumb') %>
 <link href="public/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
 
 <div class="col-sm-6">
-  <div class="page-title-box">
-    <h4 class="font-size-18">Email Read</h4>
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item">
-        <a href="javascript: void(0);">Veltrix</a>
-      </li>
-      <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
-      <li class="breadcrumb-item active">Email Read</li>
-    </ol>
-  </div>
+    <div class="page-title-box">
+        <h4 class="font-size-18">Email Read</h4>
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="javascript: voname(0);">Veltrix</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javascript: voname(0);">Email</a></li>
+            <li class="breadcrumb-item active">Email Read</li>
+        </ol>
+    </div>
 </div>
 
 <%- contentFor('body') %>
 
 <div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h4>Add Delivery Boy</h4>
-        <hr>
-        <div class="form-group row">
-          <label for="name" class="col-sm-2 col-form-label"
-            >Name</label
-          >
-          <div class="col-sm-10">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Name"
-              id="name"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="mobile" class="col-sm-2 col-form-label"
-            >Mobile</label
-          >
-          <div class="col-sm-10">
-            <input
-              class="form-control"
-              type="text"
-              placeholder="Mobile"
-              id="mobile"
-            />
-          </div>
-        </div>
-        <div class="form-group row">
-            <label for="password" class="col-sm-2 col-form-label"
-              >Password</label
-            >
-            <div class="col-sm-10">
-              <input
-                class="form-control"
-                type="password"
-                id="password"
-              />
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>Add Delivery Boy</h4>
+                <hr>
+                <form action="/add-delivery-boy" method="POST">
+                    <div class="form-group row">
+                        <label for="name" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" placeholder="Name" name="name" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" placeholder="Mobile" name="mobile" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="password" name="password" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="confirmpassword" class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="password" name="confirmpassword" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="address" class="col-sm-2 col-form-label">Adddress</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="5" name="address"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="bonus" class="col-sm-2 col-form-label">Bonus (%)</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="bonus" />
+                        </div>
+                    </div>
+                    <hr>
+
+                    <button type="submit" class="btn btn-primary waves-effect waves-light" name="btn-add-delivery-boy">
+                        Add </button>
+                </form>
             </div>
-          </div>
-          <div class="form-group row">
-            <label for="confirmpassword" class="col-sm-2 col-form-label"
-              >Confirm Password</label
-            >
-            <div class="col-sm-10">
-              <input
-                class="form-control"
-                type="password"
-                id="confirmpassword"
-              />
-            </div>
-          </div>
-        <div class="form-group row">
-          <label for="address" class="col-sm-2 col-form-label"
-            >Adddress</label
-          >
-          <div class="col-sm-10">
-            <textarea class="form-control" rows="5" id="address"></textarea>
-          </div>
         </div>
-        <div class="form-group row">
-            <label for="demo0" class="col-sm-2 col-form-label"
-              >Bonus (%)</label
-            >
-            <div class="col-sm-10">
-                <input id="demo0" type="text" value="10" name="demo0" data-bts-min="0" data-bts-max="100" data-bts-init-val="" data-bts-step="1" data-bts-decimal="0" data-bts-step-interval="100" data-bts-force-step-divisibility="round" data-bts-step-interval-delay="500" data-bts-prefix="" data-bts-postfix="" data-bts-prefix-extra-class="" data-bts-postfix-extra-class="" data-bts-booster="true" data-bts-boostat="10" data-bts-max-boosted-step="false" data-bts-mousewheel="true" data-bts-button-down-class="btn btn-default" data-bts-button-up-class="btn btn-default"/>
+
+        <div class="card">
+            <div class="card-body">
+                <h4>Manage Delivery Boy</h4>
+                <hr>
+                <% if (data != null) { %>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th data-priority="1">ID</th>
+                            <th data-priority="3">Name</th>
+                            <th data-priority="1">Mobile</th>
+                            <th data-priority="3">Address</th>
+                            <th data-priority="3">Bonus</th>
+                            <th data-priority="6">Balance</th>
+                            <th data-priority="6">Status</th>
+                            <th data-priority="6">Action</th>
+                        </tr>
+                    </thead>
+
+                    <% data.forEach(result => { %>
+
+
+                    <tbody>
+                        <tr>
+                            <td><%= result.id %></td>
+                            <td><%= result.name %></td>
+                            <td><%= result.mobile %></td>
+                            <td><%= result.address %></td>
+                            <td><%= result.bonus %></td>
+                            <td><%= result.balance %></td>
+                            <td><%= result.status %></td>
+                            <td><a href="/delete-delivery-boy?id=<%= result.id %>" onclick="return confirm('Are you sure ?');">Delete</a></td>
+                        </tr>
+                    </tbody>
+
+                    <% }); %>
+
+                </table>
+
+                <% } %>
             </div>
-          </div>
-        <hr>
-        <form action="/add-delivery-boy" method="POST">
-          <button
-            type="submit"
-            class="btn btn-primary waves-effect waves-light"
-            id="btn-add-delivery-boy"
-          > Add </button>
-        </form>
-      </div>
+        </div>
+
     </div>
-  </div>
-  <!-- end col -->
+    <!-- end col -->
 </div>
 
 <%- contentFor('FooterJs') %> <%- contentFor('BottomJs') %>
@@ -121,6 +134,3 @@ contentFor('breadcrumb') %>
 <script src="public/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
 <script src="public/js/pages/form-advanced.init.js"></script>
-
-
-

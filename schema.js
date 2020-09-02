@@ -42,7 +42,7 @@ const delivery_boys_schema = new schema({
     address: String,
     bonus: Number,
     balance: Number,
-    status: String,
+    status: Number,
     date_created: Date,
     fcm_id: String,
 });

@@ -84,7 +84,7 @@
                             <td><%= result.short_description %></td>
                             <td><%= result.style %></td>
                             <td><%= result.product_ids %></td>
-                            <td>Action</td>
+                            <td><a href="/delete-featured-section?id=<%= result.id %>" onclick="return confirm('Are you sure ?');">Delete</a></td>
                         </tr>
                         <% }); %>
                     </tbody>

@@ -8,8 +8,8 @@ var Authrouter = require("./Authrouter.js");
 
 // Access public folder from root
 app.use("/public", express.static("public"));
-app.get("/layouts/", function(req, res) {
-  res.render("view");
+app.get("/layouts/", function (req, res) {
+    res.render("view");
 });
 
 // app.use(bodyParser.urlencoded({ extended : true }));
@@ -55,6 +55,13 @@ app.get("/sub-categories", router);
 app.get("/add-categories", router);
 app.get("/add-sub-categories", router);
 app.get("/units", router);
+app.get("/delete-slider-image", router);
+app.get("/delete-category", router);
+app.get("/delete-sub-category", router);
+app.get("/delete-promo-code", router);
+app.get("/delete-featured-section", router);
+app.get("/delete-delivery-boy", router);
+app.get("/delete-offer-image", router);
 app.post("/login", router);
 app.post("/add-variation", router);
 app.post("/add-product", router);
@@ -80,6 +87,6 @@ app.post("/add-sub-category", router);
 app.post("/add-unit", router);
 
 
-http.listen(8000, function() {
-  console.log("listening on *:8000");
+http.listen(8000, function () {
+    console.log("listening on *:8000");
 });

@@ -54,6 +54,7 @@
 
                 <% if (data != null) { %>
 
+
                 <table class="table table-hover mb-0">
 
                     <thead>
@@ -69,7 +70,7 @@
                         <tr>
                             <td><%= result.type %></td>
                             <td><img src=<%= result.image %>></td>
-                            <td>Action</td>
+                            <td><a href="/delete-slider-image?id=<%= result.id %>" onclick="return confirm('Are you sure ?');">Delete</a></td>
                         </tr>
                         <% }); %>
                     </tbody>

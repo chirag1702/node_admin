@@ -42,7 +42,7 @@ contentFor('breadcrumb') %>
                             <td><%= result.main_category %></td>
                             <td><%= result.subtitle %></td>
                             <td><%= result.image %></td>
-                            <td>Action</td>
+                            <td><a href="/delete-sub-category?id=<%= result.id %>" onclick="return confirm('Are you sure ?');">Delete</a></td>
                         </tr>
                         <% }); %>
                     </tbody>
