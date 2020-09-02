@@ -26,64 +26,64 @@ router.post("/add-product", (req, res) => {
 });
 
 router.post("/upload-slider-image", (req, res) => {
-    // var type = req.body.type;
-    // var imagePath;
-    // var form = new formidable.IncomingForm();
-    // form.parse(req);
-    // form.on("fileBegin", (name, file) => {
-    //     file.path = __dirname + "/uploads/" + file.name;
-    //     imagePath = "./uploads/" + file.name;
-    // });
-    // form.on("file", (name, file) => {
-    //     console.log("Uploaded" + imagePath);
-    // });
-
-    // console.log(imagePath);
-
-    // var sliderImage = models.slider({
-    //     type: type,
-    //     type_id: "typeid",
-    //     image: imagePath
-    // });
-
-    // sliderImage.save((err, result) => {
-    //     if (err) {
-    //         console.log(err);
-    //     }
-
-    //     else {
-    //         res.redirect("home-slider-images");
-    //     }
-    // });
-
-    var form = new multiparty.Form();
+    var type = req.body.type;
+    var imagePath;
+    var form = new formidable.IncomingForm();
     form.parse(req);
+    form.on("fileBegin", (name, file) => {
+        file.path = __dirname + "/uploads/" + file.name;
+        imagePath = "./public/images/uploads/" + file.name;
+    });
+    form.on("file", (name, file) => {
+        console.log("Uploaded" + imagePath);
+        var sliderImage = models.slider({
+            type: type,
+            type_id: "type_id",
+            image: imagePath,
+            date_added: Date.now(),
+        });
 
-    form.on('part', function (part) {
-        // You *must* act on the part by reading it
-        // NOTE: if you want to ignore it, just call "part.resume()"
+        sliderImage.save((err, result) => {
+            if (err) {
+                console.log(err);
+            }
 
-        if (!part.filename) {
-            // filename is not defined when this is a field and not a file
-            console.log('got field named ' + part.name);
-            // ignore field's content
-
-        }
-
-        if (part.filename) {
-            // filename is defined when this is a file
-            count++;
-            console.log('got file named ' + part.name);
-            // ignore file's content here
-            part.resume();
-        }
-
-        part.on('error', function (err) {
-            // decide what to do
+            else {
+                res.redirect("home-slider-images");
+            }
         });
     });
 
-    res.send("Under Construnction");
+    console.log(imagePath);
+
+    // var form = new multiparty.Form();
+    // form.parse(req);
+
+    // form.on('part', function (part) {
+    //     // You *must* act on the part by reading it
+    //     // NOTE: if you want to ignore it, just call "part.resume()"
+
+    //     if (!part.filename) {
+    //         // filename is not defined when this is a field and not a file
+    //         console.log('got field named ' + part.name);
+    //         // ignore field's content
+
+    //     }
+
+    //     if (part.filename) {
+    //         // filename is defined when this is a file
+    //         count++;
+    //         console.log('got file named ' + part.name);
+    //         // ignore file's content here
+    //         part.resume();
+    //     }
+
+    //     part.on('error', function (err) {
+    //         // decide what to do
+    //     });
+    // });
+
+    // res.send("Under Construnction");
 });
 
 router.post("/upload-offer-image", (req, res) => {
@@ -328,7 +328,7 @@ router.get("/wallet-transactions", (req, res) => {
         }
 
         else {
-            res.render("wallet-transactions", {data: result});
+            res.render("wallet-transactions", { data: result });
         }
     });
 });
