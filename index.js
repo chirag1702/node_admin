@@ -62,6 +62,7 @@ app.get("/delete-promo-code", router);
 app.get("/delete-featured-section", router);
 app.get("/delete-delivery-boy", router);
 app.get("/delete-offer-image", router);
+app.get("/edit-promo-code", router);
 app.post("/login", router);
 app.post("/add-variation", router);
 app.post("/add-product", router);
@@ -85,6 +86,7 @@ app.post("/add-area", router);
 app.post("/add-category", router);
 app.post("/add-sub-category", router);
 app.post("/add-unit", router);
+app.post("/update-promo-code", router);
 
 
 http.listen(8000, function () {

@@ -308,7 +308,7 @@ router.get("/new-offer-images", (req, res) => {
         }
 
         else {
-            res.render("app-images/new-offer-images", {data: result});
+            res.render("app-images/new-offer-images", { data: result });
         }
     });
 });
@@ -365,12 +365,12 @@ router.get("/manage-delivery-boys", (req, res) => {
         }
 
         else {
-            res.render("delivery-boys/manage-delivery-boys", {data: result});
+            res.render("delivery-boys/manage-delivery-boys", { data: result });
         }
     });
 });
 
-router.get("/delete-delivery-boy", (req, res) =>{
+router.get("/delete-delivery-boy", (req, res) => {
     var urlParsed = url.parse(req.url, true);
     var urlQuery = urlParsed.query;
     var id = urlQuery.id;
@@ -395,7 +395,26 @@ router.get("/send-notification", (req, res) => {
 });
 
 router.post("/send-message", (req, res) => {
-    res.send("message sent!!");
+    var notificationType = req.body.type;
+    var notificationTitle = req.body.title;
+    var notificationMessage = req.body.message;
+    var notification = models.notification({
+        title: notificationTitle,
+        message: notificationMessage,
+        type: notificationType,
+        type_id: "type ID",
+        image: "image",
+        date_sent: Date.now()
+    });
+    notification.save((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("/send-notification");
+        }
+    });
 });
 
 router.get("/transaction", (req, res) => {
@@ -425,6 +444,7 @@ router.get("/store-settings", (req, res) => {
         }
     });
 });
+
 router.get("/payment-methods", (req, res) => {
     res.render("system/payment-methods");
 });
@@ -490,15 +510,7 @@ router.get("/sub-categories", (req, res) => {
 });
 
 router.get("/add-categories", (req, res) => {
-    models.find((err, result) => {
-        if (err) {
-            console.log(err);
-        }
-
-        else {
-            res.render("Products/add-product", { data: result });
-        }
-    });
+    res.render("add-categories");
 });
 
 router.get("/add-sub-categories", (req, res) => {
@@ -684,12 +696,10 @@ router.post("/add-unit", (req, res) => {
     })
 });
 
-// Dashboard
 router.get("/", function (req, res) {
     res.render("Dashboard/dashboard");
 });
 
-// home-slider-images
 router.get("/home-slider-images", function (req, res) {
     models.slider.find({}, (err, result) => {
         if (err) {
@@ -702,7 +712,6 @@ router.get("/home-slider-images", function (req, res) {
     })
 });
 
-// Email
 router.get("/add-product", function (req, res) {
     var units = models.unit.find({}, (err, result) => {
         if (err) {
@@ -720,7 +729,15 @@ router.get("/product-orders", function (req, res) {
 });
 
 router.get("/manage-product", function (req, res) {
-    res.render("Products/manage-product");
+    models.product.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("Products/manage-product", { data: result });
+        }
+    });
 });
 
 router.get("/delete-slider-image", (req, res, next) => {
@@ -803,250 +820,88 @@ router.get("/delete-featured-section", (req, res) => {
     });
 })
 
-// Charts
-router.get("/charts-chartist", function (req, res) {
-    res.render("Chart/charts-chartist");
+router.get("/edit-promo-code", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.promoCode.findById(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("edit-promo-code", { data: result });
+        }
+    })
 });
 
-router.get("/charts-chartjs", function (req, res) {
-    res.render("Chart/charts-chartjs");
-});
+router.post("/update-promo-code", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    var promoCode = req.body.promocode;
+    var message = req.body.message;
+    var startDate = req.body.startdate;
+    var endDate = req.body.enddate;
+    var noOfUsers = req.body.noofusers;
+    var minOrderAmt = req.body.minorderamt;
+    var discount = req.body.discount;
+    var discountType = req.body.discounttype;
+    var maxDiscount = req.body.maxdiscount;
+    var repeatUsage = req.body.repeat;
+    var repeatUsageCode;
+    var status = req.body.status;
+    var statusCode;
+    if (repeatUsage == "Allowed") {
+        repeatUsageCode = 1;
+    }
 
-router.get("/charts-flot", function (req, res) {
-    res.render("Chart/charts-flot");
-});
+    else {
+        repeatUsageCode = 0;
+    }
 
-router.get("/charts-knob", function (req, res) {
-    res.render("Chart/charts-knob");
-});
+    if (status == "Active") {
+        statusCode = 1;
+    }
 
-router.get("/charts-morris", function (req, res) {
-    res.render("Chart/charts-morris");
-});
+    else {
+        statusCode = 0;
+    }
 
-router.get("/charts-sparkline", function (req, res) {
-    res.render("Chart/charts-sparkline");
-});
+    var update = {
+        promo_code: promoCode,
+        message: message,
+        start_date: startDate,
+        end_date: endDate,
+        no_of_users: noOfUsers,
+        minimum_order_amount: minOrderAmt,
+        discount: discount,
+        discount_type: discountType,
+        max_discount_amount: maxDiscount,
+        repeat_usage: repeatUsageCode,
+        status: statusCode
+    };
 
-// Email-template
-router.get("/email-template-Alert", function (req, res) {
-    res.render("Email-template/email-template-Alert");
-});
+    // models.promoCode.updateOne({ "_id": id }, { $set: update }, (err, result) => {
+    //     if (err) {
+    //         console.log(err);
+    //     }
 
-router.get("/email-template-basic", function (req, res) {
-    res.render("Email-template/email-template-basic");
-});
+    //     else {
+    //         // res.redirect("/promo-codes");
+    //         console.log(result);
+    //     }
+    // })
 
-router.get("/email-template-Billing", function (req, res) {
-    res.render("Email-template/email-template-Billing");
-});
+    models.promoCode.findOneAndUpdate({_id: id}, update, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
 
-// Forms
-router.get("/form-advanced", function (req, res) {
-    res.render("Forms/form-advanced");
-});
-
-router.get("/form-editors", function (req, res) {
-    res.render("Forms/form-editors");
-});
-
-router.get("/form-elements", function (req, res) {
-    res.render("Forms/form-elements");
-});
-
-router.get("/form-mask", function (req, res) {
-    res.render("Forms/form-mask");
-});
-
-router.get("/form-repeater", function (req, res) {
-    res.render("Forms/form-repeater");
-});
-
-router.get("/form-uploads", function (req, res) {
-    res.render("Forms/form-uploads");
-});
-
-router.get("/form-validation", function (req, res) {
-    res.render("Forms/form-validation");
-});
-
-router.get("/form-wizard", function (req, res) {
-    res.render("Forms/form-wizard");
-});
-
-router.get("/form-xeditable", function (req, res) {
-    res.render("Forms/form-xeditable");
-});
-
-// Icons
-router.get("/icons-dripicons", function (req, res) {
-    res.render("Icons/icons-dripicons");
-});
-router.get("/icons-fontawesome", function (req, res) {
-    res.render("Icons/icons-fontawesome");
-});
-router.get("/icons-ion", function (req, res) {
-    res.render("Icons/icons-ion");
-});
-router.get("/icons-material", function (req, res) {
-    res.render("Icons/icons-material");
-});
-router.get("/icons-themify", function (req, res) {
-    res.render("Icons/icons-themify");
-});
-router.get("/icons-typicons", function (req, res) {
-    res.render("Icons/icons-typicons");
-});
-
-// Maps
-router.get("/maps-google", function (req, res) {
-    res.render("Maps/maps-google");
-});
-router.get("/maps-vector", function (req, res) {
-    res.render("Maps/maps-vector");
-});
-
-// Tables
-router.get("/tables-basic", function (req, res) {
-    res.render("Tables/tables-basic");
-});
-router.get("/tables-datatable", function (req, res) {
-    res.render("Tables/tables-datatable");
-});
-router.get("/tables-editable", function (req, res) {
-    res.render("Tables/tables-editable");
-});
-router.get("/tables-responsive", function (req, res) {
-    res.render("Tables/tables-responsive");
-});
-
-// UI
-router.get("/ui-alerts", function (req, res) {
-    res.render("Ui/ui-alerts");
-});
-router.get("/ui-buttons", function (req, res) {
-    res.render("Ui/ui-buttons");
-});
-router.get("/ui-cards", function (req, res) {
-    res.render("Ui/ui-cards");
-});
-router.get("/ui-carousel", function (req, res) {
-    res.render("Ui/ui-carousel");
-});
-router.get("/ui-colors", function (req, res) {
-    res.render("Ui/ui-colors");
-});
-router.get("/ui-dropdowns", function (req, res) {
-    res.render("Ui/ui-dropdowns");
-});
-router.get("/ui-general", function (req, res) {
-    res.render("Ui/ui-general");
-});
-router.get("/ui-grid", function (req, res) {
-    res.render("Ui/ui-grid");
-});
-router.get("/ui-images", function (req, res) {
-    res.render("Ui/ui-images");
-});
-router.get("/ui-lightbox", function (req, res) {
-    res.render("Ui/ui-lightbox");
-});
-router.get("/ui-modals", function (req, res) {
-    res.render("Ui/ui-modals");
-});
-router.get("/ui-progressbars", function (req, res) {
-    res.render("Ui/ui-progressbars");
-});
-router.get("/ui-rangeslider", function (req, res) {
-    res.render("Ui/ui-rangeslider");
-});
-router.get("/ui-rating", function (req, res) {
-    res.render("Ui/ui-rating");
-});
-router.get("/ui-session-timeout", function (req, res) {
-    res.render("Ui/ui-session-timeout");
-});
-router.get("/ui-sweet-alert", function (req, res) {
-    res.render("Ui/ui-sweet-alert");
-});
-router.get("/ui-tabs-accordions", function (req, res) {
-    res.render("Ui/ui-tabs-accordions");
-});
-router.get("/ui-typography", function (req, res) {
-    res.render("Ui/ui-typography");
-});
-router.get("/ui-video", function (req, res) {
-    res.render("Ui/ui-video");
-});
-
-// Layout related pages
-router.get("/horizontal", function (req, res) {
-    res.render("Dashboard/dashboard-horizontal", { layout: "horizontal-layout" });
-});
-
-router.get("/layouts-compact-sidebar", function (req, res) {
-    res.render("Dashboard/dashboard-compact", { layout: "compact-layout" });
-});
-
-router.get("/layouts-icon-sidebar", function (req, res) {
-    res.render("Dashboard/dashboard-icon", { layout: "icon-layout" });
-});
-
-router.get("/layouts-boxed", function (req, res) {
-    res.render("Dashboard/dashboard-boxed", { layout: "boxed-layout" });
-});
-
-// Color Theme vertical
-router.get("/vertical-dark", function (req, res) {
-    res.render("Dashboard/dashboard", { layout: "vertical-dark-layout" });
-});
-
-router.get("/vertical-rtl", function (req, res) {
-    res.render("Dashboard/dashboard", { layout: "vertical-rtl-layout" });
-});
-
-// Color Theme Horizontal
-router.get("/horizontal-dark", function (req, res) {
-    res.render("Dashboard/dashboard", { layout: "horizontal-dark-layout" });
-});
-
-router.get("/horizontal-rtl", function (req, res) {
-    res.render("Dashboard/dashboard", { layout: "horizontal-rtl-layout" });
-});
-
-router.get("/horizontal-layouts-boxed", function (req, res) {
-    res.render("Dashboard/dashboard", { layout: "horizontal-layouts-boxed" });
-});
-
-router.get("/horizontal-layouts-topbar-light", function (req, res) {
-    res.render("Dashboard/dashboard", {
-        layout: "horizontal-layouts-topbar-light"
+        else {
+            console.log(result);
+        }
     });
-});
-
-// Extra Pages
-router.get("/pages-timeline", function (req, res) {
-    res.render("Authentication/pages-timeline");
-});
-
-router.get("/pages-invoice", function (req, res) {
-    res.render("Authentication/pages-invoice");
-});
-
-router.get("/pages-directory", function (req, res) {
-    res.render("Authentication/pages-directory");
-});
-router.get("/pages-faq", function (req, res) {
-    res.render("Authentication/pages-faq");
-});
-router.get("/pages-gallery", function (req, res) {
-    res.render("Authentication/pages-gallery");
-});
-router.get("/pages-blank", function (req, res) {
-    res.render("Authentication/pages-blank");
-});
-router.get("/pages-pricing", function (req, res) {
-    res.render("Authentication/pages-pricing");
 });
 
 module.exports = router;

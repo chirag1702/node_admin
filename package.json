@@ -1,7 +1,7 @@
 {
-  "name": "veltrix_node",
+  "name": "admin_node",
   "version": "1.0.0",
-  "description": "My Veltrix Nodejs Template",
+  "description": "admin panel in node js",
   "main": "index.js",
   "scripts": {
     "deploy": "node index.js",
@@ -32,7 +32,8 @@
     "multer-gridfs-storage": "^4.2.0",
     "multiparty": "^4.2.2",
     "path": "^0.12.7",
-    "req-flash": "0.0.3"
+    "req-flash": "0.0.3",
+    "sweetalert": "^2.1.2"
   },
   "repository": {},
   "devDependencies": {

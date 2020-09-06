@@ -50,8 +50,7 @@ contentFor('breadcrumb') %>
                     <div class="form-group row">
                         <label for="enddate" class="col-sm-2 col-form-label">End Date</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="mm/dd/yyyy"
-                                name="enddate" />
+                            <input type="text" class="form-control" placeholder="mm/dd/yyyy" name="enddate" />
                         </div>
                     </div>
 
@@ -162,12 +161,14 @@ contentFor('breadcrumb') %>
                             <td><%= result.discount_type %></td>
                             <td><%= result.status == 1 ? "Active" : "Deactive" %></td>
                             <td><%= result.date_created %></td>
-                            <td><a href="/delete-promo-code?id=<%= result.id %>" onclick="return confirm('Are you sure ?');">Delete</a></td>
+                            <td><a href="/delete-promo-code?id=<%= result.id %>"
+                                    onclick="return confirm('Are you sure ?');">Delete</a> <a
+                                    href="/edit-promo-code?id=<%= result.id %>"> Edit </a></td>
                         </tr>
                         <% }); %>
                     </tbody>
                 </table>
-                
+
                 <% } %>
             </div>
 

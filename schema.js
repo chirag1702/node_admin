@@ -152,11 +152,11 @@ const payment_request_schema = new schema({
 });
 
 const product_schema = new schema({
-    id: Number,
+    id: String,
     name: String,
     slug: String,
-    category_id: Number,
-    sub_category_id: Number,
+    category_id: String,
+    sub_category_id: String,
     indicator: Number,
     image: String,
     other_images: String,

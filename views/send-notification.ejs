@@ -27,52 +27,37 @@ contentFor('breadcrumb') %>
       <div class="card-body">
         <h4>Send Notification</h4>
         <hr>
-        <div class="form-group row">
-          <label for="type" class="col-sm-2 col-form-label"
-            >Type :</label
-          >
-          <div class="col-sm-10">
-            <select class="form-control">
+        <form action="/send-message" method="POST">
+          <div class="form-group row">
+            <label for="type" class="col-sm-2 col-form-label">Type :</label>
+            <div class="col-sm-10">
+              <select class="form-control" name="type">
                 <option>category</option>
                 <option>product</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group row">
-            <label for="title" class="col-sm-2 col-form-label"
-              >Title :</label
-            >
-            <div class="col-sm-10">
-              <input
-                class="form-control"
-                type="text"
-                placeholder="Enter title"
-                id="title"/>
+              </select>
             </div>
           </div>
           <div class="form-group row">
-            <label for="message" class="col-sm-2 col-form-label"
-              >Message</label
-            >
+            <label for="title" class="col-sm-2 col-form-label">Title :</label>
             <div class="col-sm-10">
-              <textarea class="form-control" rows="5" id="message" placeholder="Enter your message"></textarea>
+              <input class="form-control" type="text" placeholder="Enter title" name="title" />
             </div>
           </div>
           <div class="form-group row">
-            <label for="image" class="col-sm-2 col-form-label"
-              >Choose Image (optional) : </label
-            >
+            <label for="message" class="col-sm-2 col-form-label">Message</label>
             <div class="col-sm-10">
-              <input type="file" class="filestyle" data-input="false" id="image"/>
+              <textarea class="form-control" rows="5" name="message" placeholder="Enter your message"></textarea>
             </div>
           </div>
-        <hr>
-        <form action="/send-message" method="POST">
-          <button
-            type="submit"
-            class="btn btn-primary waves-effect waves-light"
-            id="btn-add-delivery-boy"
-          > Send </button>
+          <div class="form-group row">
+            <label for="image" class="col-sm-2 col-form-label">Choose Image (optional) : </label>
+            <div class="col-sm-10">
+              <input type="file" class="filestyle" data-input="false" name="image" />
+            </div>
+          </div>
+          <hr>
+          <button type="submit" class="btn btn-primary waves-effect waves-light" name="btn-add-delivery-boy"> Send
+          </button>
         </form>
       </div>
     </div>
@@ -94,6 +79,3 @@ contentFor('breadcrumb') %>
 <script src="public/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
 
 <script src="public/js/pages/form-advanced.init.js"></script>
-
-
-
