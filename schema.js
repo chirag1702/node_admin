@@ -107,7 +107,6 @@ const orders_schema = new schema({
     delivery_boy_id: String,
     mobile: String,
     total: Number,
-    total: Number,
     delivery_charge: Number,
     tax_amount: Number,
     tax_percentage: Number,
@@ -127,8 +126,9 @@ const orders_schema = new schema({
 });
 
 const order_items_schema = new schema({
-    user_id: Number,
-    order_id: Number,
+    user_id: String,
+    order_id: String,
+    item_name: String,
     product_variant_id: Number,
     quantity: Number,
     price: Number,

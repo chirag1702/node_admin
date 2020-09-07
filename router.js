@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const models = require("./models");
 const fs = require("file-system");
 const multer = require("multer");
-const { count } = require("console");
+const { count, info } = require("console");
 const formidable = require("formidable");
 const multiparty = require("multiparty");
 const url = require("url");
@@ -538,24 +538,6 @@ router.get("/units", (req, res) => {
 });
 
 router.post("/update-settings", (req, res) => {
-
-    // models.setting.countDocuments().then(count => {
-    //     if (count >= 1) {
-    //         models.setting.deleteMany({}, (err, result) => {
-    //             if (err) {
-    //                 console.log(err);
-    //             }
-
-    //             else {
-    //                 console.log("cleared!!");
-    //             }
-    //         })
-    //     }
-    // }).catch(err => {
-    //     console.log(err);
-    // });
-
-
     var appName = req.body.appname;
     var supportNumber = req.body.supportnumber;
     var supportEmail = req.body.supportemail;
@@ -835,7 +817,7 @@ router.get("/edit-promo-code", (req, res) => {
     })
 });
 
-router.post("/update-promo-code", (req, res) => {
+router.post("/update-promo-code", (req, res) => { //some work pending in this part
     var urlParsed = url.parse(req.url, true);
     var urlQuery = urlParsed.query;
     var id = urlQuery.id;
@@ -893,13 +875,197 @@ router.post("/update-promo-code", (req, res) => {
     //     }
     // })
 
-    models.promoCode.findOneAndUpdate({_id: id}, update, (err, result) => {
+    models.promoCode.findOneAndUpdate({ _id: id }, update, (err, result) => {
         if (err) {
             console.log(err);
         }
 
         else {
             console.log(result);
+        }
+    });
+});
+
+router.get("/orders", (req, res) => {
+    models.order.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("orders", { data: result });
+        }
+    });
+});
+
+router.get("/testorder", (req, res) => {
+    var order = models.order({
+        user_id: "U_007",
+        delivery_boy_id: "D_007",
+        mobile: "6375528478",
+        total: 200,
+        delivery_charge: 0,
+        tax_amount: 40,
+        tax_percentage: 20,
+        wallet_balance: 500,
+        discount: 0,
+        promo_code: "",
+        promo_discount: 0,
+        final_total: 240,
+        payment_method: "COD",
+        address: "Address",
+        latitude: "Latitude",
+        longitude: "Longitude",
+        delivery_time: "Time",
+        status: "0",
+        active_status: "Recived",
+        date_added: Date.now()
+    });
+
+    order.save((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            console.log(result);
+        }
+    });
+});
+
+router.get("/testorderitem", (req, res) => {
+    var item = models.orderItem({
+        user_id: "Chirag Jangid",
+        order_id: "5f56102a7d01fe1f51f5d990",
+        item_name: "Item 3",
+        product_variant_id: 32,
+        quantity: 50,
+        price: 10,
+        discounted_price: 10,
+        discount: 0,
+        sub_total: 500,
+        deliver_by: "Delivery Boy",
+        status: "Recived",
+        active_status: "Recived",
+        date_added: Date.now()
+    });
+
+    item.save((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.send(result);
+            console.log(result);
+        }
+    });
+});
+
+router.get("/view-order", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.order.findById(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            models.deliveryBoy.find({}, (err, result2) => {
+                if (err) {
+                    console.log(err);
+                }
+
+                else {
+                    var information = {
+                        deliveryBoys: result2,
+                        order: result
+                    };
+                    res.render("order-details", { data: information });
+                }
+            });
+        }
+    });
+});
+
+router.post("/update-order", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    var discount = req.body.discount;
+    var deliverBy = req.body.deliver_by;
+    var status = req.body.status;
+    var totalPayable;
+    var final_total;
+    var update = {};
+    models.order.findById(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            if (discount != result.discount) {
+                totalPayable = result.total + result.tax_amount;
+                final_total = (totalPayable - 0) - (totalPayable * (discount / 100));
+            }
+
+            update = {
+                delivery_boy_id: deliverBy,
+                discount: discount,
+                final_total: final_total,
+                active_status: status
+            };
+
+            models.order.findByIdAndUpdate(id, update, (err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+
+                else {
+                    res.redirect("/orders");
+                }
+            });
+        }
+    });
+});
+
+router.get("/delete-order", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.order.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("orders");
+        }
+    });
+});
+
+router.get("/generate-invoice", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.order.findById(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            models.orderItem.find({ order_id: id }, (err, result2) => {
+                var info = {
+                    order: result,
+                    items: result2
+                };
+
+                res.render("invoice", { data: info });
+            });
         }
     });
 });

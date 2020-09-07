@@ -63,6 +63,12 @@ app.get("/delete-featured-section", router);
 app.get("/delete-delivery-boy", router);
 app.get("/delete-offer-image", router);
 app.get("/edit-promo-code", router);
+app.get("/orders", router);
+app.get("/view-order", router);
+app.get("/testorder", router);
+app.get("/testorderitem", router);
+app.get("/delete-order", router);
+app.get("/generate-invoice", router);
 app.post("/login", router);
 app.post("/add-variation", router);
 app.post("/add-product", router);
@@ -87,6 +93,7 @@ app.post("/add-category", router);
 app.post("/add-sub-category", router);
 app.post("/add-unit", router);
 app.post("/update-promo-code", router);
+app.post("/update-order", router);
 
 
 http.listen(8000, function () {
