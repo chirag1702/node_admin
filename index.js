@@ -94,6 +94,12 @@ app.post("/add-sub-category", router);
 app.post("/add-unit", router);
 app.post("/update-promo-code", router);
 app.post("/update-order", router);
+app.post("/api-firebase/get-categories", router);
+app.post("/api-firebase/get-offer-images", router);
+app.post("/api-firebase/sections", router);
+app.post("/api-firebase/order-process", router);
+app.post("/api-firebase/slider-images", router);
+app.post("/api-firebase/user-registration", router);
 
 
 http.listen(8000, function () {

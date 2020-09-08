@@ -10,6 +10,8 @@ const { count, info } = require("console");
 const formidable = require("formidable");
 const multiparty = require("multiparty");
 const url = require("url");
+const accessKey = 90336;
+const DOMAIN_URL = "http://192.168.1.17:8000/";
 
 
 mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
@@ -1068,6 +1070,109 @@ router.get("/generate-invoice", (req, res) => {
             });
         }
     });
+});
+
+router.post("/api-firebase/get-categories", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var access_key = urlQuery.accesskey;
+    var response = {
+        "error": true,
+        "data": null,
+        "message": null
+    };
+    if (access_key != null) {
+
+        if (access_key == accessKey) {
+
+            models.category.find().lean().exec((err, result) => {
+                if (err) {
+                    console.log(err)
+                }
+
+                else {
+
+                    response.error = false;
+                    response.data = result;
+
+                    console.log(response);
+
+                }
+
+                res.send(response);
+            });
+
+
+
+        }
+
+        else {
+            res.send("accesskey is incorrect.");
+        }
+
+    }
+
+    else {
+        res.send("access key is require.");
+    }
+});
+
+router.post("/api-firebase/offer-images", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var access_key = urlQuery.accesskey;
+    var response = {
+        "error": true,
+        "data": null,
+        "message": null
+    };
+
+    if (access_key != null) {
+
+        if (access_key == accessKey) {
+
+            models.offer.find({}).lean().exec((err, result) => {
+                if (err) {
+                    console.log(err);
+                }
+
+                else {
+
+                    console.log(result);
+                    response.error = false;
+                    response.data = result;
+                }
+
+                res.send(response);
+            });
+
+        }
+
+        else {
+            res.send("invalid accesskey!");
+        }
+
+    }
+
+    else {
+        res.send("Access key is invalid or not passed!");
+    }
+});
+
+router.post("/api-firebase/sections", (req, res) => {
+    res.send("");
+});
+
+router.post("/api-firebase/order-process", (req, res) => {
+    res.send("");
+});
+
+router.post("/api-firebase/slider-images", (req, res) => {
+    res.send("");
+});
+
+router.post("/api-firebase/user-registration", (req, res) => {
+    res.send("");
 });
 
 module.exports = router;
