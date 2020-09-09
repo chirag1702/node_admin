@@ -10,7 +10,7 @@ const { count, info } = require("console");
 const formidable = require("formidable");
 const multiparty = require("multiparty");
 const url = require("url");
-const accessKey = 90336;
+const accessKey = "90336";
 const DOMAIN_URL = "http://192.168.1.17:8000/";
 
 
@@ -1081,40 +1081,22 @@ router.post("/api-firebase/get-categories", (req, res) => {
         "data": null,
         "message": null
     };
-    if (access_key != null) {
-
-        if (access_key == accessKey) {
-
-            models.category.find().lean().exec((err, result) => {
-                if (err) {
-                    console.log(err)
-                }
-
-                else {
-
-                    response.error = false;
-                    response.data = result;
-
-                    console.log(response);
-
-                }
-
-                res.send(response);
-            });
-
-
-
+    models.category.find().lean().exec((err, result) => {
+        if (err) {
+            console.log(err)
         }
 
         else {
-            res.send("accesskey is incorrect.");
+
+            response.error = false;
+            response.data = result;
+
+            console.log(response);
+
         }
 
-    }
-
-    else {
-        res.send("access key is require.");
-    }
+        res.send(response);
+    });
 });
 
 router.post("/api-firebase/offer-images", (req, res) => {
