@@ -152,7 +152,6 @@ const payment_request_schema = new schema({
 });
 
 const product_schema = new schema({
-    id: String,
     name: String,
     slug: String,
     category_id: String,
@@ -263,6 +262,7 @@ const settings_schema = new schema({
 const slider_schema = new schema({
     type: String,
     type_id: String,
+    name: String,
     image: String,
     date_added: Date,
 });

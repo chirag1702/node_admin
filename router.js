@@ -1102,47 +1102,65 @@ router.post("/api-firebase/get-categories", (req, res) => {
 router.post("/api-firebase/offer-images", (req, res) => {
     var urlParsed = url.parse(req.url, true);
     var urlQuery = urlParsed.query;
-    var access_key = urlQuery.accesskey;
     var response = {
         "error": true,
-        "data": null,
-        "message": null
+        "data": null
     };
 
-    if (access_key != null) {
-
-        if (access_key == accessKey) {
-
-            models.offer.find({}).lean().exec((err, result) => {
-                if (err) {
-                    console.log(err);
-                }
-
-                else {
-
-                    console.log(result);
-                    response.error = false;
-                    response.data = result;
-                }
-
-                res.send(response);
-            });
-
+    models.offer.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
         }
 
         else {
-            res.send("invalid accesskey!");
+            response.error = false;
+            response.data = result;
+            console.log(response);
         }
 
-    }
-
-    else {
-        res.send("Access key is invalid or not passed!");
-    }
+        res.send(response);
+    })
 });
 
 router.post("/api-firebase/sections", (req, res) => {
-    res.send("");
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var getVal = urlQuery.getallsections;
+    var response = {
+        "error": true,
+        "sections": null
+    };
+
+    var sections = {
+
+    };
+
+    models.section.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            response.error = false;
+            response.sections = result;
+            for (let i = 0; i < result.length; i++) {
+                var productIDS = result[i].product_ids;
+                var productArray = productIDS.split(",");
+                var productID = productArray[i].trim();
+                for (let i = 0; i < productArray.length; i++) {
+                    models.product.findById(productID, (err, result2) => {
+                        if (err) {
+                            console.log(err);
+                        }
+
+                        else {
+                            console.log(result2);
+                        }
+                    });
+                }
+            }
+        }
+    });
 });
 
 router.post("/api-firebase/order-process", (req, res) => {
@@ -1150,7 +1168,27 @@ router.post("/api-firebase/order-process", (req, res) => {
 });
 
 router.post("/api-firebase/slider-images", (req, res) => {
-    res.send("");
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var getVal = urlQuery.getsliderimages;
+    var response = {
+        "error": true,
+        "data": null
+    };
+
+    models.slider.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            response.error = false;
+            response.data = result;
+            console.log(response);
+        }
+
+        res.send(response);
+    })
 });
 
 router.post("/api-firebase/user-registration", (req, res) => {
