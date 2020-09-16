@@ -10,8 +10,6 @@ const { count, info } = require("console");
 const formidable = require("formidable");
 const multiparty = require("multiparty");
 const url = require("url");
-const accessKey = "90336";
-const DOMAIN_URL = "http://192.168.1.17:8000/";
 
 
 mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
@@ -1126,38 +1124,37 @@ router.post("/api-firebase/sections", (req, res) => {
     var urlParsed = url.parse(req.url, true);
     var urlQuery = urlParsed.query;
     var getVal = urlQuery.getallsections;
-    var response = {
-        "error": true,
-        "sections": null
-    };
-
-    var sections = {
-
-    };
-
-    models.section.find({}, (err, result) => {
+    var productArray;
+    var variantsArray;
+    models.product.find({}, (err, productResult) => {
         if (err) {
             console.log(err);
         }
 
         else {
-            response.error = false;
-            response.sections = result;
-            for (let i = 0; i < result.length; i++) {
-                var productIDS = result[i].product_ids;
-                var productArray = productIDS.split(",");
-                var productID = productArray[i].trim();
-                for (let i = 0; i < productArray.length; i++) {
-                    models.product.findById(productID, (err, result2) => {
-                        if (err) {
-                            console.log(err);
-                        }
+            console.log(productResult);
+            for (let index = 0; index < productResult.length; index++) {
+                models.productVariant.findById({id:productResult[index].id}, (err2, variantsResult) => {
+                    if (err2) {
+                        console.log(err2);
+                    }
 
-                        else {
-                            console.log(result2);
-                        }
-                    });
-                }
+                    
+                });
+                productArray = {
+                    "id": productResult[index].id,
+                    "name": productResult[index].name,
+                    "slug": productResult[index].slug,
+                    "category_id": productResult[index].category_id,
+                    "sub_category_id": productResult[index].sub_category_id,
+                    "indicator": productResult[index].indicator,
+                    "image": productResult[index].image,
+                    "other_images": productResult[index].other_images,
+                    "description": productResult[index].description,
+                    "status": productResult[index].status,
+                    "date_added": productResult[index].date_added,
+                    "variants": variantsArray
+                };
             }
         }
     });
