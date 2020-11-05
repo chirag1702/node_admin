@@ -1,60 +1,59 @@
 <%- contentFor('HeaderCss') %> <%- contentFor('title') %> Form Elements <%-
 contentFor('breadcrumb') %>
-<link
-href="public/libs/sweetalert2/sweetalert2.min.css"
-rel="stylesheet"
-type="text/css"
-/>
+<link href="public/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 <div class="col-sm-6">
-  <div class="page-title-box">
-    <h4 class="font-size-18">Add Products</h4>
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item">
-        <a href="javascript: void(0);">Veltrix</a>
-      </li>
-      <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-      <li class="breadcrumb-item active"></li>
-    </ol>
-  </div>
+    <div class="page-title-box">
+        <h4 class="font-size-18">Add Products</h4>
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="javascript: void(0);">Veltrix</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+            <li class="breadcrumb-item active"></li>
+        </ol>
+    </div>
 </div>
 
 <%- contentFor('body') %>
 <div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Areas</h4>
-        <table class="table table-hover mb-0">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Areas</h4>
+                <form action="/add-areas" method="GET">
+                    <% if (data != null) { %>
+                    <table class="table table-hover mb-0">
 
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Area Name</th>
-                    <th>City Name</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Heerapura</td>
-                    <td>Jaipur</td>
-                    <td>Action</td>
-                </tr>
-            </tbody>
-        </table>
-        <form action="/add-areas" method="GET">
-            <button
-                type="submit"
-                class="btn btn-primary waves-effect waves-light"
-                id="add-cities-button">
-                Add Area
-            </button>
-        </form>
-      </div>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Area Name</th>
+                                <th>City Name</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% data.forEach(result => { %>
+                            <tr>
+                                <th scope="row"><%= result.id %></th>
+                                <td><%= result.name %></td>
+                                <td><%= result.city_name %></td>
+                                <td><a href="/delete-area?id=<%= result.id %>"
+                                        onclick="return confirm('Are you sure ?');">Delete</a></td>
+                            </tr>
+                            <% }); %>
+                        </tbody>
+
+                    </table>
+                    <% } %>
+                    <button type="submit" class="btn btn-primary waves-effect waves-light" id="add-cities-button">
+                        Add Area
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
-  <!-- end col -->
+    <!-- end col -->
 </div>
 <!-- end row -->
 

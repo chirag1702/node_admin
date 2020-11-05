@@ -31,6 +31,7 @@ const transaction = model("transactions", schema.transactionsSchema);
 const unit = model("unit", schema.unitSchema);
 const user = model("users", schema.usersSchema);
 const walletTransaction = model("wallet_transactions", schema.walletTransacionsSchema);
+const taxModel = model("taxes", schema.taxesSchema);
 
 const MODELS = {
     "category": category,
@@ -61,6 +62,7 @@ const MODELS = {
     "unit": unit,
     "user": user,
     "walletTransaction": walletTransaction,
+    "taxes": taxModel
 };
 
 module.exports = MODELS;

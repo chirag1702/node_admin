@@ -28,7 +28,7 @@ const admin_schema = new schema({
 
 const area_schema = new schema({
     name: String,
-    city_id: String,
+    city_name: String,
 });
 
 const city_schema = new schema({
@@ -327,6 +327,12 @@ const wallet_transactions_schema = new schema({
     last_updated: Date,
 });
 
+const taxes_schema = new schema({
+    title: String,
+    percentage: Number,
+    status: Number,
+});
+
 const SCHEMAS = {
     "categotySchema": category_schema,
     "subCategorySchema": sub_category_schema,
@@ -356,6 +362,7 @@ const SCHEMAS = {
     "unitSchema": unit_schema,
     "usersSchema": users_schema,
     "walletTransacionsSchema": wallet_transactions_schema,
+    "taxesSchema": taxes_schema,
 };
 
 

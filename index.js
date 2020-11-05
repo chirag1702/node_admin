@@ -69,6 +69,12 @@ app.get("/testorder", router);
 app.get("/testorderitem", router);
 app.get("/delete-order", router);
 app.get("/generate-invoice", router);
+app.get("/delete-city", router);
+app.get("/delete-area", router);
+app.get("/taxes", router);
+app.get("add-taxes", router);
+app.get("/delete-tax", router);
+app.get("/edit-tax", router);
 app.post("/login", router);
 app.post("/add-variation", router);
 app.post("/add-product", router);
@@ -100,6 +106,11 @@ app.post("/api-firebase/sections", router);
 app.post("/api-firebase/order-process", router);
 app.post("/api-firebase/slider-images", router);
 app.post("/api-firebase/user-registration", router);
+app.post("/add-tax", router);
+app.post("/update-tax", router);
+// app.post("/api-firebase/user-registration", router);
+app.post("/api-firebase/get-cities", router);
+app.post("/api-firebase/get-areas-by-city-id", router);
 
 
 http.listen(8000, function () {

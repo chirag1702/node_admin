@@ -19,32 +19,40 @@ contentFor('breadcrumb') %>
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Cities</h4>
-                <% if (data != null) { %>
+                <h4 class="card-title">Taxes</h4>
                 <table class="table table-hover mb-0">
-
                     <thead>
                         <tr>
-                            <th>No.</th>
-                            <th>Name</th>
+                            <th>Title</th>
+                            <th>Percentage</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <% if (data != null) { %>
+
                         <% data.forEach(result => { %>
+
                         <tr>
-                            <th scope="row"><%= result.id %> </th>
-                            <td><%= result.name %></td>
-                            <td><a href="/delete-city?id=<%= result.id %>" onclick="return confirm('Are you sure ?');">Delete</a></td>
+                            <td><%= result.title %></td>
+                            <td><%= result.percentage %></td>
+                            <td><% if(result.status == 1) { %><span
+                                    class="badge badge-pill badge-success">Active</span><% } else { %><span
+                                    class="badge badge-pill badge-danger">Deactive</span><% } %></td>
+                            <td><i class="ti-pencil"> <a href="/edit-tax?id=<%= result.id %>">Edit</a></i> <i
+                                    class="ti-trash"> <a href="/delete-tax?id=<%= result.id %>"
+                                        onclick="return confirm('Are you sure ?');">Delete</a></i>
+                            </td>
                         </tr>
+
                         <% }); %>
+
+                        <% } %>
                     </tbody>
                 </table>
-                <% } %>
-                <form action="/add-cities" method="GET">
-                    <button type="submit" class="btn btn-primary waves-effect waves-light" id="add-cities-button">
-                        Add City
-                    </button>
+                <form action="/add-taxes" method="GET">
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Add taxes</button>
                 </form>
             </div>
         </div>

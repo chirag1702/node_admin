@@ -471,11 +471,29 @@ router.get("/about-us", (req, res) => {
 });
 
 router.get("/cities", (req, res) => {
-    res.render("locations/cities");
+    models.city.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("locations/cities", { data: result });
+            console.log(result);
+        }
+    });
 });
 
 router.get("/areas", (req, res) => {
-    res.render("locations/areas");
+    models.area.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("locations/areas", { data: result });
+            console.log(result);
+        }
+    });
 });
 
 router.get("/add-cities", (req, res) => {
@@ -483,7 +501,15 @@ router.get("/add-cities", (req, res) => {
 });
 
 router.get("/add-areas", (req, res) => {
-    res.render("locations/add-area");
+    models.city.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.render("locations/add-area", { data: result });
+        }
+    });
 });
 
 router.get("/categories", (req, res) => {
@@ -622,11 +648,32 @@ router.post("/update-about-us", (req, res) => {
 });
 
 router.post("/add-city", (req, res) => {
-    res.send("city added!!");
+    var cityName = req.body.cityname;
+    var city = new models.city({ name: cityName });
+    city.save((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("/cities");
+        }
+    });
 });
 
 router.post("/add-area", (req, res) => {
-    res.send("area added!!");
+    var areaname = req.body.areaname;
+    var cityName = req.body.city;
+    var area = new models.area({ name: areaname, city_name: cityName });
+    area.save((err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("/areas");
+        }
+    });
 });
 
 router.post("/add-category", (req, res) => {
@@ -702,7 +749,13 @@ router.get("/add-product", function (req, res) {
         }
 
         else {
-            res.render("Products/add-product", { data: result });
+            models.taxes.find({ status: 1 }, (err, result2) => {
+                var information = {
+                    unit: result,
+                    tax: result2
+                }
+                res.render("Products/add-product", { data: information });
+            });
         }
     })
 });
@@ -1071,6 +1124,36 @@ router.get("/generate-invoice", (req, res) => {
     });
 });
 
+router.get("/delete-city", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.city.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("/cities");
+        }
+    });
+});
+
+router.get("/delete-area", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.area.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        }
+
+        else {
+            res.redirect("/areas");
+        }
+    });
+});
+
 router.post("/api-firebase/get-categories", (req, res) => {
     var urlParsed = url.parse(req.url, true);
     var urlQuery = urlParsed.query;
@@ -1137,7 +1220,7 @@ router.post("/api-firebase/sections", (req, res) => {
         }
 
         else {
-            
+
             for (let index = 0; index < productResult.length; index++) {
                 models.productVariant.findOne({}, (err2, variantsResult) => {
                     if (err2) {
@@ -1182,7 +1265,7 @@ router.post("/api-firebase/sections", (req, res) => {
                 };
                 productArray.push(productObject);
             }
-            
+
             models.section.find({}, (err3, sectionsResult) => {
                 if (err3) {
                     console.log(err3);
@@ -1236,8 +1319,252 @@ router.post("/api-firebase/slider-images", (req, res) => {
 });
 
 router.post("/api-firebase/user-registration", (req, res) => {
-    res.send("");
+
+    console.log("api accessed!!");
+
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var requestType = req.body.type;
+    var mobileNumber = req.body.mobile;
+
+    console.log(requestType);
+    console.log(mobileNumber);
+
+    var response = {
+        "error": true,
+        "id": null,
+        "message": null,
+    };
+
+    if (requestType == "verify-user") {
+        models.user.find({ mobile: mobileNumber }, (err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!";
+            } else {
+
+                console.log(result);
+
+                if (Array.isArray(result) && Array.length == 0) {
+                    response.error = true;
+                    response.id = result.id;
+                    response.message = "This mobile is already registered. Please login!";
+                    res.send(response);
+                } else {
+                    response.error = false;
+                    response.message = "Ready to sent firebase OTP request!";
+                    res.send(response);
+                }
+            }
+        });
+    } else if (requestType == "register") {
+
+    }
+
+});
+
+router.get("/taxes", (req, res) => {
+    models.taxes.find({}, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.render("taxes.ejs", { data: result });
+        }
+    });
+});
+
+router.get("/add-taxes", (req, res) => {
+    res.render("add-taxes.ejs");
+});
+
+router.post("/add-tax", (req, res) => {
+    var name = req.body.taxname;
+    console.log(name);
+    var percentage = req.body.percentage;
+    var tax = models.taxes({
+        title: name,
+        percentage: percentage,
+        status: 1
+    });
+    tax.save((err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/taxes");
+        }
+    });
+});
+
+router.get("/delete-tax", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.taxes.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/taxes");
+        }
+    });
+});
+
+router.get("/edit-tax", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.taxes.findById(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("edit-tax.ejs", { data: result });
+        }
+    });
+});
+
+router.post("/update-tax", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    var name = req.body.taxname;
+    var percentage = req.body.percentage;
+    var statusString = req.body.status;
+    var status = statusString == "Active" ? 1 : 0;
+    var document = {
+        title: name,
+        percentage: percentage,
+        status: status
+    };
+
+    console.log(id);
+
+    models.taxes.findByIdAndUpdate(id, document, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(document);
+            console.log(result);
+            res.redirect("/taxes");
+        }
+    });
+});
+
+router.post("/user-registration", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var requestType = req.body.type;
+    var mobileNumber = req.body.mobile;
+
+    var response = {
+        "error": true,
+        "id": null,
+        "message": null,
+    };
+
+    if (requestType == "verify-user") {
+        models.user.find({ mobile: mobileNumber }, (err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!";
+            } else {
+                if (result != null) {
+                    response.error = true;
+                    response.id = result.id;
+                    response.message = "This mobile is already registered. Please login!";
+                    res.send(response);
+                } else {
+                    response.error = false;
+                    response.message = "Ready to sent firebase OTP request!";
+                    res.send(response);
+                }
+            }
+        });
+    } else if (requestType == "register") {
+
+    }
+
+});
+
+router.post("/api-firebase/get-cities", (req, res) => {
+    var response = {
+        "error": true,
+        "data": null,
+        "message": null
+    };
+
+    models.city.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+            response.error = true;
+            response.message = "some error occoured!!"
+            res.send(response);
+        } else {
+            if (result != null) {
+                response.error = false;
+                response.data = result;
+                res.send(response);
+            } else {
+                response.error = true;
+                response.message = "no data found!!";
+                res.send(response);
+            }
+        }
+    });
+
+});
+
+router.post("/api-firebase/get-areas-by-city-id", (req, res) => {
+    var cityID = req.body.city_id
+
+    var response = {
+        "error": false,
+        "data": null,
+        "message": null
+    };
+
+
+    if (cityID == "0") {
+
+        response.message = "no data found!!";
+        res.send(response);
+    } else {
+        
+        models.city.findById(cityID, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+                console.log(result);
+
+                models.area.find({ city_name: result.name }, (err2, result2) => {
+                    if (err2) {
+                        console.log(err2);
+                        response.error = true;
+                        response.message = "some error occoured!!";
+                        res.send(response);
+                    } else {
+
+                        console.log(result2);
+
+                        if (result2 != null) {
+                            response.error = false;
+                            response.data = result2;
+                            res.send(response);
+                        } else {
+                            response.error = true;
+                            response.message = "no data found!!";
+                            res.send(response);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+
+
 });
 
 module.exports = router;
-
