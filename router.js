@@ -929,13 +929,13 @@ router.post("/update-promo-code", (req, res) => { //some work pending in this pa
     //     }
     // })
 
-    models.promoCode.findOneAndUpdate({ _id: id }, update, (err, result) => {
+    models.promoCode.findByIdAndUpdate(id, update, (err, result) => {
         if (err) {
             console.log(err);
         }
 
         else {
-            console.log(result);
+            res.redirect("/promo-codes");
         }
     });
 });
@@ -1318,6 +1318,9 @@ router.post("/api-firebase/slider-images", (req, res) => {
     })
 });
 
+
+//World's most annoying code below: (from line 1324 to 1494)
+
 router.post("/api-firebase/user-registration", (req, res) => {
 
     console.log("api accessed!!");
@@ -1360,6 +1363,131 @@ router.post("/api-firebase/user-registration", (req, res) => {
         });
     } else if (requestType == "register") {
 
+        console.log("registration in process!!");
+
+        var name = req.body.name;
+        var email = req.body.email;
+        var mno = req.body.mobile;
+        var password = req.body.password;
+        var pincode = req.body.pincode;
+        var cityID = req.body.city_id;
+        var areaID = req.body.area_id;
+        var street = req.body.street;
+        var longitude = req.body.longitude;
+        var latitude = req.body.latitude;
+        var country_code = req.body.country_code;
+        var refferal_code = req.body.referral_code;
+        var friends_code = req.body.friends_code;
+        var fcm_id = req.body.fcm_id;
+
+        var response = {
+            "error": true,
+            "message": null,
+            "user_id": null,
+            "name": null,
+            "email": null,
+            "mobile": null,
+            "country_code": null,
+            "fcm_id": null,
+            "dob": null,
+            "city_id": null,
+            "city_name": null,
+            "area_id": null,
+            "area_name": null,
+            "street": null,
+            "pincode": null,
+            "referral_code": null,
+            "friends_code": null,
+            "latitude": null,
+            "longitude": null,
+            "apikey": null,
+            "status": null,
+            "created_at": null
+        };
+
+        models.city.findById(cityID, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                models.area.findById(areaID, (err2, result2) => {
+                    if (err2) {
+                        console.log(err);
+                    } else {
+                        var user = models.user({
+                            name: name,
+                            email: email,
+                            country_code: country_code,
+                            mobile: mno,
+                            dob: "",
+                            city: result.name,
+                            area: result2.name,
+                            street: street,
+                            pincode: pincode,
+                            apikey: "",
+                            balance: "",
+                            refferal_code: refferal_code,
+                            friends_code: friends_code,
+                            fcm_id: fcm_id,
+                            latitude: latitude,
+                            longitude: longitude,
+                            password: password,
+                            status: 1,
+                            created_at: Date.now(),
+                        });
+
+                        user.save((err3, result3) => {
+                            if (err3) {
+                                console.log(err);
+                                response.error = true;
+                                response.message = "some error occoured!!";
+                                res.send(response);
+                            } else {
+                                console.log("saved!!");
+                                response.error = false;
+                                response.message = "User registered successfully";
+                                response.user_id = result3.id;
+                                response.name = name;
+                                response.email = email;
+                                response.mobile = mno;
+                                response.country_code = country_code;
+                                response.fcm_id = fcm_id;
+                                response.dob = "";
+                                response.city_id = cityID;
+                                response.city_name = result.name;
+                                response.area_id = areaID;
+                                response.area_name = result2.name;
+                                response.street = street;
+                                response.pincode = pincode;
+                                response.referral_code = refferal_code;
+                                response.friends_code = friends_code;
+                                response.latitude = latitude;
+                                response.longitude = longitude;
+                                response.apikey = "";
+                                response.status = 1;
+                                response.created_at = Date.now();
+                                console.log(response);
+                                res.send(response);
+                            }
+                        });
+                    }
+                })
+            }
+        });
+
+
+
+
+    } else {
+        console.log("none");
+
+        var response = {
+            "error": true,
+            "message": null
+        };
+
+        res.send(response);
+
+        console.log(response);
     }
 
 });
@@ -1449,43 +1577,6 @@ router.post("/update-tax", (req, res) => {
     });
 });
 
-router.post("/user-registration", (req, res) => {
-    var urlParsed = url.parse(req.url, true);
-    var urlQuery = urlParsed.query;
-    var requestType = req.body.type;
-    var mobileNumber = req.body.mobile;
-
-    var response = {
-        "error": true,
-        "id": null,
-        "message": null,
-    };
-
-    if (requestType == "verify-user") {
-        models.user.find({ mobile: mobileNumber }, (err, result) => {
-            if (err) {
-                console.log(err);
-                response.error = true;
-                response.message = "some error occoured!!";
-            } else {
-                if (result != null) {
-                    response.error = true;
-                    response.id = result.id;
-                    response.message = "This mobile is already registered. Please login!";
-                    res.send(response);
-                } else {
-                    response.error = false;
-                    response.message = "Ready to sent firebase OTP request!";
-                    res.send(response);
-                }
-            }
-        });
-    } else if (requestType == "register") {
-
-    }
-
-});
-
 router.post("/api-firebase/get-cities", (req, res) => {
     var response = {
         "error": true,
@@ -1529,7 +1620,7 @@ router.post("/api-firebase/get-areas-by-city-id", (req, res) => {
         response.message = "no data found!!";
         res.send(response);
     } else {
-        
+
         models.city.findById(cityID, (err, result) => {
             if (err) {
                 console.log(err);
@@ -1565,6 +1656,98 @@ router.post("/api-firebase/get-areas-by-city-id", (req, res) => {
 
 
 
+});
+
+router.post("/api-firebase/login", (req, res) => {
+    var mobileNumber = req.body.mobile;
+    var password = req.body.password;
+    var fcm_id = req.body.fcm_id;
+    var query = {
+        "mobile": mobileNumber,
+        "password": password,
+        "fcm_id": fcm_id
+    };
+    var response = {
+        "error": true,
+        "message": null,
+        "user_id": null,
+        "name": null,
+        "email": null,
+        "mobile": null,
+        "country_code": null,
+        "fcm_id": null,
+        "dob": null,
+        "city_id": null,
+        "city_name": null,
+        "area_id": null,
+        "area_name": null,
+        "street": null,
+        "pincode": null,
+        "referral_code": null,
+        "friends_code": null,
+        "latitude": null,
+        "longitude": null,
+        "apikey": null,
+        "status": null,
+        "created_at": null
+    };
+    models.user.find(query, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+
+            if (Array.isArray(result) && result.length == 1) {
+
+                console.log(result);
+
+                response.error = false;
+                response.message = "User logged in successfully";
+                response.user_id = result[0].id;
+                response.name = result[0].name;
+                response.email = result[0].email;
+                response.mobile = result[0].mobile;
+                response.country_code = result[0].country_code;
+                response.fcm_id = result[0].fcm_id;
+                response.dob = result[0].dob;
+                // response.city = result3.id;
+                response.city_name = result[0].city;
+                // response.area_id = result2.id;
+                response.area_name = result[0].area;
+                response.street = result[0].street;
+                response.pincode = result[0].pincode;
+                response.referral_code = result[0].refferal_code;
+                response.friends_code = result[0].friends_code;
+                response.latitude = result[0].latitude;
+                response.longitude = result[0].longitude;
+                response.apikey = result[0].apikey;
+                response.status = result[0].status;
+                response.created_at = result[0].created_at;
+                console.log(response);
+                res.send(response);
+
+                // models.area.findOne({ name: result.area }, (err2, result2) => {
+                //     if (err2) {
+                //         console.log(err);
+                //     } else {
+                //         models.city.findOne({ name: result.city }, (err3, result3) => {
+                //             if (err3) {
+                //                 console.log(err3);
+                //             } else {
+
+                //             }
+                //         });
+                //     }
+                // });
+
+            } else {
+                response.error = true;
+                response.message = "incorrect credentials";
+                res.send(response);
+            }
+
+
+        }
+    });
 });
 
 module.exports = router;

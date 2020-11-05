@@ -314,7 +314,7 @@ const users_schema = new schema({
     longitude: String,
     password: String,
     status: Number,
-    created_at: Number,
+    created_at: Date,
 });
 
 const wallet_transactions_schema = new schema({

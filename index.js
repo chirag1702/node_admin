@@ -108,9 +108,9 @@ app.post("/api-firebase/slider-images", router);
 app.post("/api-firebase/user-registration", router);
 app.post("/add-tax", router);
 app.post("/update-tax", router);
-// app.post("/api-firebase/user-registration", router);
 app.post("/api-firebase/get-cities", router);
 app.post("/api-firebase/get-areas-by-city-id", router);
+app.post("/api-firebase/login", router);
 
 
 http.listen(8000, function () {
