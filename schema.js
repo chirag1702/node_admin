@@ -15,6 +15,7 @@ const sub_category_schema = new schema({
     subtitle: String,
     image: String,
     main_category: String,
+    slug: String,
     
 });
 

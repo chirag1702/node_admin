@@ -11,6 +11,7 @@ const formidable = require("formidable");
 // const multiparty = require("multiparty");
 const url = require("url");
 const util = require('util');
+const { response } = require("express");
 
 
 mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
@@ -678,8 +679,9 @@ router.post("/add-area", (req, res) => {
 
 router.post("/add-category", (req, res) => {
     var catName = req.body.categoryName;
+    var catImage = req.body.image;
     var catSubtitle = req.body.subtitle;
-    var category = new models.category({ name: catName, image: "image", subtitle: catSubtitle });
+    var category = new models.category({ name: catName, image: catImage, subtitle: catSubtitle });
     category.save(function (err, result) {
         if (err) {
             console.log(err);
@@ -697,17 +699,21 @@ router.post("/add-sub-category", (req, res) => {
     var mainCategory = req.body.mainCategory;
     var name = req.body.subName;
     var subtitle = req.body.subSubtitle;
-    var image = "image";
-    var subCategory = models.subCategory({ name: name, subtitle: subtitle, image: image, main_category: mainCategory });
-    subCategory.save(function (err, result) {
-        if (err) {
-            console.log(err);
-        }
-
-        else {
-            res.redirect("add-sub-categories");
-        }
+    var image = req.body.image;
+    
+    models.category.find({name: mainCategory}, (err, result) => {
+        var subCategory = models.subCategory({ category_id: result[0].id, name: name, subtitle: subtitle, image: image, main_category: mainCategory, slug: name });
+        subCategory.save(function (err2, result2) {
+            if (err) {
+                console.log(err2);
+            }
+    
+            else {
+                res.redirect("add-sub-categories");
+            }
+        });
     });
+    
 });
 
 router.post("/add-unit", (req, res) => {
@@ -1173,7 +1179,7 @@ router.post("/api-firebase/get-categories", (req, res) => {
             response.error = false;
             response.data = result;
 
-            console.log(response);
+            // console.log(response);
 
         }
 
@@ -1197,7 +1203,7 @@ router.post("/api-firebase/offer-images", (req, res) => {
         else {
             response.error = false;
             response.data = result;
-            console.log(response);
+            // console.log(response);
         }
 
         res.send(response);
@@ -1311,7 +1317,7 @@ router.post("/api-firebase/slider-images", (req, res) => {
         else {
             response.error = false;
             response.data = result;
-            console.log(response);
+            // console.log(response);
         }
 
         res.send(response);
@@ -1319,7 +1325,7 @@ router.post("/api-firebase/slider-images", (req, res) => {
 });
 
 
-//World's most annoying code below: (from line 1324 to 1494)
+//World's most annoying code below: (from line 1324 to 1556)
 
 router.post("/api-firebase/user-registration", (req, res) => {
 
@@ -1335,7 +1341,7 @@ router.post("/api-firebase/user-registration", (req, res) => {
 
     var response = {
         "error": true,
-        "id": null,
+        "_id": null,
         "message": null,
     };
 
@@ -1350,14 +1356,16 @@ router.post("/api-firebase/user-registration", (req, res) => {
                 console.log(result);
 
                 if (Array.isArray(result) && Array.length == 0) {
-                    response.error = true;
-                    response.id = result.id;
-                    response.message = "This mobile is already registered. Please login!";
-                    res.send(response);
-                } else {
                     response.error = false;
                     response.message = "Ready to sent firebase OTP request!";
                     res.send(response);
+                } else {
+
+                    response.error = true;
+                    response._id = result[0].id;
+                    response.message = "This mobile is already registered. Please login!";
+                    res.send(response);
+                    console.log(response);
                 }
             }
         });
@@ -1476,6 +1484,66 @@ router.post("/api-firebase/user-registration", (req, res) => {
 
 
 
+
+    } else if (requestType == "change-password") {
+
+        var newPassword = req.body.password;
+        var userID = req.body._id;
+
+        var update = {
+            password: newPassword,
+        };
+
+        var response = {
+            "error": true,
+            "message": null,
+        };
+
+        models.user.findByIdAndUpdate(userID, update, (err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!"
+                res.send(response);
+                console.log(response);
+            } else {
+                response.error = false;
+                response.message = "profile updated successfully!!";
+                res.send(response);
+                console.log(response);
+            }
+        });
+
+    } else if (requestType == "edit-profile") {
+
+        var body = req.body;
+
+        var userID = req.body._id;
+
+        delete body['type'];
+        delete body['_id'];
+
+        var update = body;
+
+        var response = {
+            "error": true,
+            "message": null,
+        };
+
+        models.user.findByIdAndUpdate(userID, update, (err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!";
+                res.send(response);
+                console.log(response);
+            } else {
+                response.error = false;
+                response.message = "profile updated successfully!!";
+                res.send(response);
+                console.log(response);
+            }
+        });
 
     } else {
         console.log("none");
@@ -1636,7 +1704,7 @@ router.post("/api-firebase/get-areas-by-city-id", (req, res) => {
                         res.send(response);
                     } else {
 
-                        console.log(result2);
+                        // console.log(result2);
 
                         if (result2 != null) {
                             response.error = false;
@@ -1662,10 +1730,10 @@ router.post("/api-firebase/login", (req, res) => {
     var mobileNumber = req.body.mobile;
     var password = req.body.password;
     var fcm_id = req.body.fcm_id;
+    console.log(fcm_id);
     var query = {
         "mobile": mobileNumber,
         "password": password,
-        "fcm_id": fcm_id
     };
     var response = {
         "error": true,
@@ -1695,6 +1763,8 @@ router.post("/api-firebase/login", (req, res) => {
         if (err) {
             console.log(err);
         } else {
+
+            console.log("response" + result.length);
 
             if (Array.isArray(result) && result.length == 1) {
 
@@ -1740,12 +1810,126 @@ router.post("/api-firebase/login", (req, res) => {
                 // });
 
             } else {
+                console.log(result);
                 response.error = true;
                 response.message = "incorrect credentials";
                 res.send(response);
             }
 
 
+        }
+    });
+});
+
+router.post("/api-firebase/get-user-data", (req, res) => {
+
+
+
+    console.log(req.body);
+
+    var userID = req.body.user_id;
+    var response = {
+        "error": true,
+        "name": null,
+        "email": null,
+        "country_code": null,
+        "mobile": null,
+        "dob": null,
+        "city": null,
+        "area": null,
+        "street": null,
+        "pincode": null,
+        "apikey": null,
+        "balance": null,
+        "refferal_code": null,
+        "friends_code": null,
+        "fcm_id": null,
+        "latitude": null,
+        "longitude": null,
+        "password": null,
+        "status": null,
+        "created_at": null,
+    };
+
+    models.user.findById(userID, (err, result) => {
+        if (err) {
+            console.log(err);
+            response.error = true;
+            res.send(response);
+            console.log(response);
+        } else {
+            console.log("done!!");
+            response.error = false;
+            response.name = result.name;
+            response.email = result.email;
+            response.country_code = result.country_code;
+            response.mobile = result.mobile;
+            response.dob = result.dob;
+            response.city = result.city;
+            response.area = result.area;
+            response.street = result.street;
+            response.pincode = result.pincode;
+            response.apikey = result.apikey;
+            response.balance = result.balance;
+            response.refferal_code = result.refferal_code;
+            response.friends_code = result.friends_code;
+            response.latitude = result.latitude;
+            response.longitude = result.longitude;
+            response.password = result.password;
+            response.status = result.status;
+            response.created_at = result.created_at;
+            res.send(response);
+            console.log(response);
+        }
+    });
+
+});
+
+router.post("/api-firebase/get-subcategories-by-category-id", (req, res) => {
+    var category_id = req.body.category_id;
+
+    var response = {
+        "error": true,
+        "message": null,
+        "data": null,
+    };
+
+    models.subCategory.find({category_id: category_id}, (err, result) => {
+        if (err) {
+            console.log(err);
+            response.error = true;
+            response.message = "some error occoured!!";
+            res.send(response);
+        } else {
+            response.error = false;
+            response.data = result;
+            res.send(response);
+        }
+    });
+});
+
+router.post("/api-firebase/get-products-by-subcategory-id", (req, res) => {
+    var subcategoryid = req.body.subcategory_id;
+    console.log(subcategoryid);
+    var response = {
+        "error": true,
+        "total": null,
+        "data": null,
+
+        // 9828012129
+    };
+    
+    models.product.find({sub_category_id: subcategoryid}, (err, result) => {
+        if (err) {
+            console.log(err);
+            response.error = true;
+            response.message = "some error occoured!!";
+            res.send(response);
+        } else {
+            response.error = false;
+            response.total = result.length;
+            response.data = result;
+            res.send(response);
         }
     });
 });

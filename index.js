@@ -111,6 +111,9 @@ app.post("/update-tax", router);
 app.post("/api-firebase/get-cities", router);
 app.post("/api-firebase/get-areas-by-city-id", router);
 app.post("/api-firebase/login", router);
+app.post("/api-firebase/get-user-data", router);
+app.post("/api-firebase/get-subcategories-by-category-id", router);
+app.post("/api-firebase/get-products-by-subcategory-id", router);
 
 
 http.listen(8000, function () {
