@@ -57,7 +57,10 @@ contentFor('breadcrumb') %>
                             <td><%= result.friends_code %></td>
                             <td><%= result.street %></td>
                             <td><%= result.city %></td>
-                            <td><%= result.status %></td>
+                            <td><% if (result.status == 1) { %> <span
+                                class="badge badge-pill badge-success">Active</span>
+                            <% } else if (result.status == 0) { %> <span
+                                class="badge badge-pill badge-danger">Inactive</span> <% } %> </td>
                             <td><%= result.created_at %></td>
                         </tr>
                     </tbody>

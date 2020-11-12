@@ -16,7 +16,7 @@ const sub_category_schema = new schema({
     image: String,
     main_category: String,
     slug: String,
-    
+
 });
 
 const admin_schema = new schema({
@@ -163,18 +163,18 @@ const product_schema = new schema({
     description: String,
     status: Number,
     date_added: Date,
-});
+}, { toJSON: true });
 
 const product_variants_schema = new schema({
-    product_id: Number,
+    product_id: String,
     type: String,
     measurment: Number,
-    measurment_unit_id: Number,
+    measurment_unit_id: String,
     price: Number,
     discounted_price: Number,
     serve_for: String,
     stock: Number,
-    stock_unit_id: Number,
+    stock_unit_id: String,
 });
 
 const promo_codes_schema = new schema({

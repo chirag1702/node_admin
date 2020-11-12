@@ -700,20 +700,20 @@ router.post("/add-sub-category", (req, res) => {
     var name = req.body.subName;
     var subtitle = req.body.subSubtitle;
     var image = req.body.image;
-    
-    models.category.find({name: mainCategory}, (err, result) => {
+
+    models.category.find({ name: mainCategory }, (err, result) => {
         var subCategory = models.subCategory({ category_id: result[0].id, name: name, subtitle: subtitle, image: image, main_category: mainCategory, slug: name });
         subCategory.save(function (err2, result2) {
             if (err) {
                 console.log(err2);
             }
-    
+
             else {
                 res.redirect("add-sub-categories");
             }
         });
     });
-    
+
 });
 
 router.post("/add-unit", (req, res) => {
@@ -1164,6 +1164,7 @@ router.post("/api-firebase/get-categories", (req, res) => {
     var urlParsed = url.parse(req.url, true);
     var urlQuery = urlParsed.query;
     var access_key = urlQuery.accesskey;
+    console.log("api accessed");
     var response = {
         "error": true,
         "data": null,
@@ -1325,7 +1326,7 @@ router.post("/api-firebase/slider-images", (req, res) => {
 });
 
 
-//World's most annoying code below: (from line 1324 to 1556)
+//World's most annoying code below: (from line 1324 to 1562)
 
 router.post("/api-firebase/user-registration", (req, res) => {
 
@@ -1355,7 +1356,7 @@ router.post("/api-firebase/user-registration", (req, res) => {
 
                 console.log(result);
 
-                if (Array.isArray(result) && Array.length == 0) {
+                if (result.length == 0) {
                     response.error = false;
                     response.message = "Ready to sent firebase OTP request!";
                     res.send(response);
@@ -1432,7 +1433,7 @@ router.post("/api-firebase/user-registration", (req, res) => {
                             street: street,
                             pincode: pincode,
                             apikey: "",
-                            balance: "",
+                            balance: 0,
                             refferal_code: refferal_code,
                             friends_code: friends_code,
                             fcm_id: fcm_id,
@@ -1858,28 +1859,36 @@ router.post("/api-firebase/get-user-data", (req, res) => {
             res.send(response);
             console.log(response);
         } else {
-            console.log("done!!");
-            response.error = false;
-            response.name = result.name;
-            response.email = result.email;
-            response.country_code = result.country_code;
-            response.mobile = result.mobile;
-            response.dob = result.dob;
-            response.city = result.city;
-            response.area = result.area;
-            response.street = result.street;
-            response.pincode = result.pincode;
-            response.apikey = result.apikey;
-            response.balance = result.balance;
-            response.refferal_code = result.refferal_code;
-            response.friends_code = result.friends_code;
-            response.latitude = result.latitude;
-            response.longitude = result.longitude;
-            response.password = result.password;
-            response.status = result.status;
-            response.created_at = result.created_at;
-            res.send(response);
-            console.log(response);
+
+            console.log(result);
+
+            if (result == null) {
+                response.error = true;
+                response.message = "no user found!!";
+            } else {
+                console.log("done!!");
+                response.error = false;
+                response.name = result.name;
+                response.email = result.email;
+                response.country_code = result.country_code;
+                response.mobile = result.mobile;
+                response.dob = result.dob;
+                response.city = result.city;
+                response.area = result.area;
+                response.street = result.street;
+                response.pincode = result.pincode;
+                response.apikey = result.apikey;
+                response.balance = result.balance;
+                response.refferal_code = result.refferal_code;
+                response.friends_code = result.friends_code;
+                response.latitude = result.latitude;
+                response.longitude = result.longitude;
+                response.password = result.password;
+                response.status = result.status;
+                response.created_at = result.created_at;
+                res.send(response);
+                console.log(response);
+            }
         }
     });
 
@@ -1894,7 +1903,7 @@ router.post("/api-firebase/get-subcategories-by-category-id", (req, res) => {
         "data": null,
     };
 
-    models.subCategory.find({category_id: category_id}, (err, result) => {
+    models.subCategory.find({ category_id: category_id }, (err, result) => {
         if (err) {
             console.log(err);
             response.error = true;
@@ -1918,20 +1927,81 @@ router.post("/api-firebase/get-products-by-subcategory-id", (req, res) => {
 
         // 9828012129
     };
-    
-    models.product.find({sub_category_id: subcategoryid}, (err, result) => {
+
+
+    var variants = [];
+
+
+    models.product.find({ sub_category_id: subcategoryid }, (err, products) => {
         if (err) {
             console.log(err);
             response.error = true;
             response.message = "some error occoured!!";
             res.send(response);
         } else {
-            response.error = false;
-            response.total = result.length;
-            response.data = result;
-            res.send(response);
+            for (let index = 0; index < products.length; index++) {
+                models.productVariant.find({ product_id: products[index].id }, (err2, result) => {
+                    if (err2) {
+                        console.log(err2);
+                    } else {
+                        // products[index].set("variants", result, { strict: false });
+                        products[index].variants = result;
+                    }
+                });
+            }
+
+            // console.log(products);
+
+            var obj = {
+                "key": "val",
+            };
+
+            obj["key3"] = "val3";
+            console.log(obj);
+
+            // models.productVariant.find({product_id: products[0].id}, (err2, result) => {
+            //     if (err2) {
+            //         console.log(err);
+            //     } else {
+            //         console.log(result);
+            //     }
+            // });
         }
     });
+
+    // function addVariant(obj) {
+    //     variants.push(obj);
+    //     console.log(variants);
+    // }
+
+    // models.productVariant.find({}, (err, result) => {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         console.log(result);
+    //     }
+    // });
+
+    // var variants = {
+    //     "product_id": "5f59d139b13e5e2c31320071",
+    //     "type": "packet",
+    //     "measurment": 2,
+    //     "measurment_unit_id": "5f48d146f6bb622c74492049",
+    //     "price": 100,
+    //     "discounted_price": 50,
+    //     "serve_for": 2,
+    //     "stock": 20,
+    //     "stock_unit_id": "5f48d146f6bb622c74492049"
+    // };
+
+    // var variant = new models.productVariant(variants);
+    // variant.save((err, result) => {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         console.log(result);
+    //     }
+    // });
 });
 
 module.exports = router;
