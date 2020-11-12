@@ -4,7 +4,7 @@
   "description": "admin panel in node js",
   "main": "index.js",
   "scripts": {
-    "deploy": "node index.js",
+    "start": "node index.js",
     "test": "nodemon index.js"
   },
   "author": "THEMESBRAND",
