@@ -14,7 +14,7 @@ const util = require('util');
 const { response } = require("express");
 
 
-mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
+mongoose.connect("mongodb://122.180.84.21:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
