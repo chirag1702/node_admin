@@ -163,13 +163,13 @@ const product_schema = new schema({
     description: String,
     status: Number,
     date_added: Date,
-}, { toJSON: true });
+});
 
 const product_variants_schema = new schema({
     product_id: String,
     type: String,
-    measurment: Number,
-    measurment_unit_id: String,
+    measurement: Number,
+    measurement_unit_id: String,
     price: Number,
     discounted_price: Number,
     serve_for: String,

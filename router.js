@@ -1,20 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const bodyParser = require('body-parser');
-// const parse = require('querystring');
 const mongoose = require("mongoose");
 const models = require("./models");
-// const fs = require("file-system");
-// const multer = require("multer");
-// const { count, info } = require("console");
 const formidable = require("formidable");
-// const multiparty = require("multiparty");
 const url = require("url");
 const util = require('util');
 const { response } = require("express");
 
 
-mongoose.connect("mongodb://122.180.84.21:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
+mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -1924,84 +1919,34 @@ router.post("/api-firebase/get-products-by-subcategory-id", (req, res) => {
         "error": true,
         "total": null,
         "data": null,
-
-        // 9828012129
     };
 
+    var otherimages = [];
 
-    var variants = [];
-
-
-    models.product.find({ sub_category_id: subcategoryid }, (err, products) => {
+    models.product.find({ sub_category_id: subcategoryid }).lean().exec((err, products) => {
         if (err) {
             console.log(err);
-            response.error = true;
-            response.message = "some error occoured!!";
-            res.send(response);
         } else {
             for (let index = 0; index < products.length; index++) {
-                models.productVariant.find({ product_id: products[index].id }, (err2, result) => {
+                models.productVariant.find({ product_id: products[index]._id }, (err2, result) => {
                     if (err2) {
                         console.log(err2);
                     } else {
-                        // products[index].set("variants", result, { strict: false });
-                        products[index].variants = result;
+                        response.error = false;
+                        response.total = products.length;
+                        products[index].variants = JSON.parse(JSON.stringify(result));
+                        products[index].other_images = otherimages;
+                        response.data = products;
+                        if (index == products.length - 1) {
+                            console.log("if executed")
+                            console.log(response);
+                            res.send(response);
+                        }
                     }
                 });
             }
-
-            // console.log(products);
-
-            var obj = {
-                "key": "val",
-            };
-
-            obj["key3"] = "val3";
-            console.log(obj);
-
-            // models.productVariant.find({product_id: products[0].id}, (err2, result) => {
-            //     if (err2) {
-            //         console.log(err);
-            //     } else {
-            //         console.log(result);
-            //     }
-            // });
         }
     });
-
-    // function addVariant(obj) {
-    //     variants.push(obj);
-    //     console.log(variants);
-    // }
-
-    // models.productVariant.find({}, (err, result) => {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         console.log(result);
-    //     }
-    // });
-
-    // var variants = {
-    //     "product_id": "5f59d139b13e5e2c31320071",
-    //     "type": "packet",
-    //     "measurment": 2,
-    //     "measurment_unit_id": "5f48d146f6bb622c74492049",
-    //     "price": 100,
-    //     "discounted_price": 50,
-    //     "serve_for": 2,
-    //     "stock": 20,
-    //     "stock_unit_id": "5f48d146f6bb622c74492049"
-    // };
-
-    // var variant = new models.productVariant(variants);
-    // variant.save((err, result) => {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         console.log(result);
-    //     }
-    // });
 });
 
 module.exports = router;
