@@ -20,7 +20,71 @@ router.post("/add-variation", (req, res) => {
 });
 
 router.post("/add-product", (req, res) => {
-    res.send("Added!!");
+    console.log(req);
+    models.category.findOne({ name: req.body.category }, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            models.subCategory.findOne({ name: req.body.subcategory }, (err2, result2) => {
+                if (err2) {
+                    console.log(err2);
+                } else {
+                    var product = models.product({
+                        name: req.body.productname,
+                        slug: req.body.productname,
+                        category_id: result.id,
+                        sub_category_id: result2.id,
+                        indicator: 1,
+                        image: req.body.image,
+                        other_images: "",
+                        description: req.body.description,
+                        status: req.body.availability == "Available" ? 1 : 0,
+                        date_added: Date.now(),
+                    });
+
+                    product.save((err3, result3) => {
+                        if (err3) {
+                            console.log(err3);
+                        } else {
+                            models.unit.findOne({ short_code: req.body.measurmentunit }, (err4, result4) => {
+                                if (err4) {
+                                    console.log(err4);
+                                } else {
+                                    models.unit.findOne({ short_code: req.body.stockunit }, (err5, result5) => {
+                                        if (err5) {
+                                            console.log(err5);
+                                        } else {
+                                            var variant = models.productVariant({
+                                                product_id: result3.id,
+                                                type: req.body.type,
+                                                measurement: req.body.measurement,
+                                                measurement_unit_id: result4.id,
+                                                measurement_unit_name: result4.name,
+                                                price: req.body.price,
+                                                discounted_price: req.body.discountprice,
+                                                serve_for: 2,
+                                                stock: req.body.stock,
+                                                stock_unit_id: result5.id,
+                                                stock_unit_name: result5.name,
+                                            });
+
+                                            variant.save((err6, result6) => {
+                                                if (err) {
+                                                    console.log(err6);
+                                                } else {
+                                                    res.redirect("/add-product");
+                                                }
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
 
 router.post("/upload-slider-image", (req, res) => {
@@ -443,7 +507,14 @@ router.get("/store-settings", (req, res) => {
 });
 
 router.get("/payment-methods", (req, res) => {
-    res.render("system/payment-methods");
+    models.paymentSettings.findOne((err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("system/payment-methods", { data: result });
+            console.log(result);
+        }
+    });
 });
 
 router.get("/time-slots", (req, res) => {
@@ -620,7 +691,31 @@ router.post("/update-settings", (req, res) => {
 });
 
 router.post("/update-payment-methods", (req, res) => {
-    res.send("payment method updated!!");
+    console.log(req.body);
+    var paypal_method = typeof (req.body.paypal) != undefined ? 1 : 0;
+    var paypalmode = req.body.paypalmode;
+    var paypalid = req.body.paypalid;
+    var payu_method = typeof (req.body.payu) != undefined ? 1 : 0;
+    var payumoneymode = req.body.payumoneymode;
+    var payumerchentkey = req.body.payumerchentkey;
+    var payumerchentid = req.body.payumerchentid;
+    var payusalt = req.body.payusalt;
+    var razormode = typeof (req.body.razor) != undefined ? 1 : 0;
+    var razorpaykeyid = req.body.razorpaykeyid;
+    var razorpaysecretkey = req.body.razorpaysecretkey;
+    var setting = models.paymentSettings({
+        paypal_payment_method: paypal_method,
+        paypal_mode: paypalmode,
+        paypal_buisness_email: paypalid,
+        payumoney_payment_method: payu_method,
+        payumoney_mode: payumoneymode,
+        payumoney_merchent_key: payumerchentkey,
+        payumoney_merchent_id: payumerchentid,
+        payumoney_salt: payusalt,
+        razorpay_payment_method: razormode,
+        razorpay_key: razorpaykeyid,
+        razorpay_secret_key: razorpaysecretkey,
+    });
 });
 
 router.post("/add-time-slots", (req, res) => {
@@ -727,11 +822,11 @@ router.post("/add-unit", (req, res) => {
     })
 });
 
-router.get("/", function (req, res) {
+router.get("/", (req, res) => {
     res.render("Dashboard/dashboard");
 });
 
-router.get("/home-slider-images", function (req, res) {
+router.get("/home-slider-images", (req, res) => {
     models.slider.find({}, (err, result) => {
         if (err) {
             console.log(err);
@@ -743,29 +838,40 @@ router.get("/home-slider-images", function (req, res) {
     })
 });
 
-router.get("/add-product", function (req, res) {
-    var units = models.unit.find({}, (err, result) => {
+router.get("/add-product", (req, res) => {
+    models.unit.find({}, (err, result) => {
         if (err) {
             console.log(err);
         }
 
         else {
-            models.taxes.find({ status: 1 }, (err, result2) => {
-                var information = {
-                    unit: result,
-                    tax: result2
+            models.category.find({}, (err2, result2) => {
+                if (err2) {
+                    console.log(err2);
+                } else {
+                    models.subCategory.find({}, (err3, result3) => {
+                        if (err3) {
+                            console.log(err3);
+                        } else {
+                            var information = {
+                                unit: result,
+                                category: result2,
+                                subcategory: result3
+                            }
+                            res.render("Products/add-product", { data: information });
+                        }
+                    });
                 }
-                res.render("Products/add-product", { data: information });
             });
         }
     })
 });
 
-router.get("/product-orders", function (req, res) {
+router.get("/product-orders", (req, res) => {
     res.render("Products/product-orders");
 });
 
-router.get("/manage-product", function (req, res) {
+router.get("/manage-product", (req, res) => {
     models.product.find({}, (err, result) => {
         if (err) {
             console.log(err);
@@ -1947,6 +2053,17 @@ router.post("/api-firebase/get-products-by-subcategory-id", (req, res) => {
             }
         }
     });
+});
+
+router.post("//api-firebase/settings", (req, res) => {
+    var paymentURL = req.body.get_payment_methods;
+    var response = {
+        "error": true,
+        "payment_methods": null,
+    };
+    if (paymentURL == 1) {
+
+    }
 });
 
 module.exports = router;

@@ -75,6 +75,7 @@ app.get("/taxes", router);
 app.get("add-taxes", router);
 app.get("/delete-tax", router);
 app.get("/edit-tax", router);
+app.post("/admin-login", Authrouter);
 app.post("/login", router);
 app.post("/add-variation", router);
 app.post("/add-product", router);
@@ -114,6 +115,7 @@ app.post("/api-firebase/login", router);
 app.post("/api-firebase/get-user-data", router);
 app.post("/api-firebase/get-subcategories-by-category-id", router);
 app.post("/api-firebase/get-products-by-subcategory-id", router);
+app.post("/api-firebase/settings", router);
 
 
 http.listen(8000, function () {

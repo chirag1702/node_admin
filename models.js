@@ -17,6 +17,7 @@ const notification = model("notifications", schema.notificationSchema);
 const offer = model("offers", schema.offersSchema);
 const order = model("orders", schema.ordersSchema);
 const orderItem = model("order_items", schema.orderItemsSchema);
+const paymentSettings = model("payment_settings", schema.paymentSettingsSchema);
 const paymentRequest = model("payment_requests", schema.paymentRequestSchema);
 const product = model("products", schema.productSchema);
 const productVariant = model("product_variant", schema.productVariantsSchema);
@@ -48,6 +49,7 @@ const MODELS = {
     "offer": offer,
     "order": order,
     "orderItem": orderItem,
+    "paymentSettings": paymentSettings,
     "paymentRequest": paymentRequest,
     "product": product,
     "productVariant": productVariant,

@@ -152,6 +152,20 @@ const payment_request_schema = new schema({
     date_created: Date,
 });
 
+const payment_settings_schema = new schema({
+    paypal_payment_method: Number,
+    paypal_mode: String,
+    paypal_buisness_email: String,
+    payumoney_payment_method: Number,
+    payumoney_mode: String,
+    payumoney_merchent_key: String,
+    payumoney_merchent_id: String,
+    payumoney_salt: String,
+    razorpay_payment_method: Number,
+    razorpay_key: String,
+    razorpay_secret_key: String,
+});
+
 const product_schema = new schema({
     name: String,
     slug: String,
@@ -170,11 +184,13 @@ const product_variants_schema = new schema({
     type: String,
     measurement: Number,
     measurement_unit_id: String,
+    measurement_unit_name: String,
     price: Number,
     discounted_price: Number,
     serve_for: String,
     stock: Number,
     stock_unit_id: String,
+    stock_unit_name: String,
 });
 
 const promo_codes_schema = new schema({
@@ -349,6 +365,7 @@ const SCHEMAS = {
     "offersSchema": offers_schema,
     "ordersSchema": orders_schema,
     "orderItemsSchema": order_items_schema,
+    "paymentSettingsSchema": payment_settings_schema,
     "paymentRequestSchema": payment_request_schema,
     "productSchema": product_schema,
     "productVariantsSchema": product_variants_schema,
