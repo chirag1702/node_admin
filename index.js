@@ -116,6 +116,7 @@ app.post("/api-firebase/get-user-data", router);
 app.post("/api-firebase/get-subcategories-by-category-id", router);
 app.post("/api-firebase/get-products-by-subcategory-id", router);
 app.post("/api-firebase/settings", router);
+app.post("/api-firebase/get-product-by-id", router);
 
 
 http.listen(8000, function () {

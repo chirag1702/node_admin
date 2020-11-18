@@ -30,9 +30,10 @@ contentFor('breadcrumb') %>
                     <div class="form-group row">
                         <label for="paypal" class="col-sm-2 col-form-label">Paypal Payments [ Enable / Disable ]</label>
                         <div class="col-sm-10">
-                            <input type="checkbox" name="paypal" id="paypal" switch="success" checked />
-                            <label for="paypal" data-on-label="Yes" data-off-label="No"></label>
-
+                            <select class="form-control" name="paypal">
+                                <option><%= data.paypal_payment_method == 1 ? "Enable" : "Disable" %></option>
+                                <option><%= data.paypal_payment_method == 1 ? "Disable" : "Enable" %></option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -57,8 +58,10 @@ contentFor('breadcrumb') %>
                         <label for="payumoney" class="col-sm-2 col-form-label">PayUMoney Payments [ Enable / Disable
                             ]</label>
                         <div class="col-sm-10">
-                            <input type="checkbox" name="payu" id="payu" switch="success" checked />
-                            <label for="payu" data-on-label="Yes" data-off-label="No"></label>
+                            <select class="form-control" name="payu">
+                                <option><%= data.payumoney_payment_method == 1 ? "Enable" : "Disable" %></option> 
+                                <option><%= data.payumoney_payment_method == 1 ? "Disable" : "Enable"%></option>
+                            </select>
 
                         </div>
                     </div>
@@ -67,7 +70,7 @@ contentFor('breadcrumb') %>
                             ]</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="payumoneymode">
-                                <option><%= data.payumoney_payment_method %></option>
+                                <option><%= data.payumoney_mode %></option>
                                 <option><%= data.payumoney_mode == "Sandbox [testing]" ? "Production [live]" : "Sandbox [testing]" %></option>
                             </select>
                         </div>
@@ -75,13 +78,13 @@ contentFor('breadcrumb') %>
                     <div class="form-group row">
                         <label for="merchent-key" class="col-sm-2 col-form-label">Merchant key</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="payumerchentkey" name="payumerchentkey" value=<%= data.payumoney_merchent_key %> />
+                            <input class="form-control" type="text" id="payumerchentkey" name="payumerchentkey" value=<%= data.payumoney_merchant_key %> />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="merchent-id" class="col-sm-2 col-form-label">Merchant ID</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="payumerchentid" value=<%= data.payumoney_merchent_id %> />
+                            <input class="form-control" type="text" name="payumerchentid" value=<%= data.payumoney_merchant_id %> />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -97,8 +100,10 @@ contentFor('breadcrumb') %>
                         <label for="razorpay" class="col-sm-2 col-form-label">Razorpay Payments [ Enable / Disable
                             ]</label>
                         <div class="col-sm-10">
-                            <input type="checkbox" name="razor" id="razor" switch="success" checked />
-                            <label for="razor" data-on-label="Yes" data-off-label="No"></label>
+                            <select class="form-control" name="razor">
+                                <option><%= data.razorpay_payment_method == 1 ? "Enable" : "Disable" %></option>
+                                <option><%= data.razorpay_payment_method == 1 ? "Disable" : "Enable"%></option>
+                            </select>
 
                         </div>
                     </div>
@@ -111,7 +116,7 @@ contentFor('breadcrumb') %>
                     <div class="form-group row">
                         <label for="secret-key" class="col-sm-2 col-form-label">Secret Key</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" name="razorsecretkey" />
+                            <input class="form-control" type="text" name="razorsecretkey" value=<%= data.razorpay_secret_key %> />
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary" name="update-payment-btn">Update</button>

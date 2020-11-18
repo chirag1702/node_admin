@@ -692,29 +692,46 @@ router.post("/update-settings", (req, res) => {
 
 router.post("/update-payment-methods", (req, res) => {
     console.log(req.body);
-    var paypal_method = typeof (req.body.paypal) != undefined ? 1 : 0;
+    var paypal_method = req.body.paypal == "Enable" ? 1 : 0;
     var paypalmode = req.body.paypalmode;
     var paypalid = req.body.paypalid;
-    var payu_method = typeof (req.body.payu) != undefined ? 1 : 0;
+    var payu_method = req.body.payu == "Enable" ? 1 : 0;
     var payumoneymode = req.body.payumoneymode;
     var payumerchentkey = req.body.payumerchentkey;
     var payumerchentid = req.body.payumerchentid;
     var payusalt = req.body.payusalt;
-    var razormode = typeof (req.body.razor) != undefined ? 1 : 0;
+    var razormode = req.body.razor == "Enable" ? 1 : 0;
     var razorpaykeyid = req.body.razorpaykeyid;
-    var razorpaysecretkey = req.body.razorpaysecretkey;
-    var setting = models.paymentSettings({
+    var razorpaysecretkey = req.body.razorsecretkey;
+    var setting = {
         paypal_payment_method: paypal_method,
         paypal_mode: paypalmode,
         paypal_buisness_email: paypalid,
         payumoney_payment_method: payu_method,
         payumoney_mode: payumoneymode,
-        payumoney_merchent_key: payumerchentkey,
-        payumoney_merchent_id: payumerchentid,
+        payumoney_merchant_key: payumerchentkey,
+        payumoney_merchant_id: payumerchentid,
         payumoney_salt: payusalt,
         razorpay_payment_method: razormode,
         razorpay_key: razorpaykeyid,
         razorpay_secret_key: razorpaysecretkey,
+    }
+
+
+    console.log(setting);
+
+    models.paymentSettings.findOne({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            models.paymentSettings.findByIdAndUpdate(result.id, setting, (err2, result2) => {
+                if (err2) {
+                    console.log(err2);
+                } else {
+                    res.redirect("/payment-methods");
+                }
+            });
+        }
     });
 });
 
@@ -2055,15 +2072,67 @@ router.post("/api-firebase/get-products-by-subcategory-id", (req, res) => {
     });
 });
 
-router.post("//api-firebase/settings", (req, res) => {
+router.post("/api-firebase/settings", (req, res) => {
     var paymentURL = req.body.get_payment_methods;
+    
     var response = {
         "error": true,
         "payment_methods": null,
+        "message": null,
     };
     if (paymentURL == 1) {
-
+        models.paymentSettings.findOne({}, (err, result) => {
+            if (err) {
+                response.error = false;
+                response.message = "some error occoured!!";
+                console.log(err);
+                res.send(response);
+            } else {
+                response.error = false;
+                response.payment_methods = result;
+                response.message = "data found successfully!!";
+                res.send(response);
+            }
+        });
     }
+});
+
+router.post("/api-firebase/get-product-by-id", (req, res) => {
+    var productID = req.body.product_id;
+    console.log(productID);
+
+    var response = {
+        "error": true,
+        "data": null,
+    };
+
+    var images = [];
+
+    models.product.findById(productID).lean().exec((err, result) => {
+        if (err) {
+            response.error = true;
+            res.send(response);
+            console.log(err);
+        } else {
+            models.productVariant.find({ product_id: productID }).lean().exec((err2, result2) => {
+                if (err2) {
+                    response.error = true;
+                    res.send(response);
+                    console.log(err2);
+                } else {
+                    result.variants = JSON.parse(JSON.stringify(result2));
+                    result.other_images = images;
+                    result2[0].serve_for = "Available";
+                    delete result.name;
+                    response.error = true;
+                    response.data = result;
+                    res.send(response);
+                    console.log(response);
+                    console.log(result2);
+                }
+            });
+        }
+    });
 });
 
 module.exports = router;
