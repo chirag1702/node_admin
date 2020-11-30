@@ -21,55 +21,57 @@ contentFor('breadcrumb') %>
                 <h4>Store Settings</h4>
                 <hr>
                 <% if (data != null) { %>
-                <% data.forEach(result => { %>
                 <form action="/update-settings" method="POST">
                     <div class="form-group row">
                         <label for="appname" class="col-sm-2 col-form-label">App Name:</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.app_name %> name="appname" />
+                            <input class="form-control" type="text" value=<%= data.app_name %> name="appname" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="supportnumber" class="col-sm-2 col-form-label">Support Number:</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.support_number %>
+                            <input class="form-control" type="text" value=<%= data.support_number %>
                                 name="supportnumber" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="supportemail" class="col-sm-2 col-form-label">Support Email:</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.support_email %>
+                            <input class="form-control" type="text" value=<%= data.support_email %>
                                 name="supportemail" />
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <!--<div class="form-group row">
                         <label for="logo" class="col-sm-2 col-form-label">Logo:</label>
                         <div class="col-sm-10">
                             <input type="file" class="filestyle" data-input="false" />
                         </div>
-                    </div>
+                    </div>-->
                     <h4>Version Settings</h4>
                     <hr>
                     <div class="form-group row">
                         <label for="currentversion" class="col-sm-2 col-form-label">Current Version of App:</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.current_version %>
+                            <input class="form-control" type="text" value=<%= data.current_version %>
                                 name="currentversion" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="minversion" class="col-sm-2 col-form-label">Minimum Version Required:</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.min_version %> name="minversion" />
+                            <input class="form-control" type="text"
+                                value=<%= data.min_version == null ? data.current_version : data.min_version %>
+                                name="minversion" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="versionsystemstatus" class="col-sm-2 col-form-label"> Version System Status</label>
                         <div class="col-sm-10">
-                            <input type="checkbox" id="versionStatus" switch="success" />
-                            <label for="versionStatus" data-on-label="Yes" data-off-label="No"
-                                name="version_value"></label>
+                            <select class="form-control" name="versionsystemstatus">
+                                <option><%= data.version_status_check == 1 ? "Enable" : "Disable"%></option>
+                                <option><%= data.version_status_check == 1 ? "Disable" : "Enable"%></option>
+                            </select>
                         </div>
                     </div>
                     <hr>
@@ -78,38 +80,38 @@ contentFor('breadcrumb') %>
                             -
                             Anyone ):</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value="₹" name="currency" />
+                            <input class="form-control" type="text" value="<%= data.currency %>" name="currencycode" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="gst" class="col-sm-2 col-form-label">GST ( in percentage % ):</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.gst %> name="gst" />
+                            <input class="form-control" type="text" value="<%= data.tax %>" name="gst" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="cgst" class="col-sm-2 col-form-label">CGST ( in percentage % ):</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.cgst %> name="cgst" />
+                            <input class="form-control" type="text" value=<%= data.cgst %> name="cgst" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="sgst" class="col-sm-2 col-form-label">SGST ( in percentage % ):</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.sgst %> name="sgst" />
+                            <input class="form-control" type="text" value=<%= data.sgst %> name="sgst" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="igst" class="col-sm-2 col-form-label">IGST ( in percentage % ):</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.igst %> name="igst" />
+                            <input class="form-control" type="text" value=<%= data.igst %> name="igst" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="deliverychargeamt" class="col-sm-2 col-form-label">Delivery Charge Amount
                             (₹)</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value="30" name="devliverychargeamt" />
+                            <input class="form-control" type="text" value="<%= data.delivery_charge %>" name="devliverychargeamt" />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -117,7 +119,7 @@ contentFor('breadcrumb') %>
                             (₹)
                             ( Below this user will be charged based on Delivery Charge)</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.min_free_delivery_amount %>
+                            <input class="form-control" type="text" value=<%= data.min_free_delivery_amount %>
                                 name="minfreedelivery" />
                         </div>
                     </div>
@@ -125,9 +127,7 @@ contentFor('breadcrumb') %>
                         <label for="timezone" class="col-sm-2 col-form-label">System Time Zone</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="timezone">
-                                <option selected><%= result.system_time_zone %></option>
-                                <option>Zone 2</option>
-                                <option>Zone 3</option>
+                                <option><%= data.system_time_zone %>
                             </select>
                         </div>
                     </div>
@@ -136,23 +136,24 @@ contentFor('breadcrumb') %>
                     <div class="form-group row">
                         <label for="refer" class="col-sm-2 col-form-label"> Refer and Earn System </label>
                         <div class="col-sm-10">
-                            <input type="checkbox" id="refer" switch="success" checked />
-                            <label for="switch4" data-on-label="Yes" data-off-label="No"></label>
-
+                            <select class="form-control" name="referandearnsystem">
+                                <option><%= data.refer_and_earn_enable == 1 ? "Enable" : "Disable"%></option>
+                                <option><%= data.refer_and_earn_enable == 1 ? "Disable" : "Enable" %></option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="minreferamt" class="col-sm-2 col-form-label">Minimum Refer & Earn Order Amount
                             (₹)</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.min_refer_and_earn_amount %>
+                            <input class="form-control" type="text" value=<%= data.min_refer_and_earn_amount %>
                                 name="minreferamt" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="referbonus" class="col-sm-2 col-form-label">Refer & Earn Bonus (₹ OR %)</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.refer_and_earn_bonus %>
+                            <input class="form-control" type="text" value=<%= data.refer_and_earn_bonus %>
                                 name="referbonus" />
                         </div>
                     </div>
@@ -160,9 +161,8 @@ contentFor('breadcrumb') %>
                         <label for="refermethod" class="col-sm-2 col-form-label">Refer & Earn Method</label>
                         <div class="col-sm-10">
                             <select class="form-control" name="refermethod">
-                                <option selected><%= result.refer_and_earn_method %></option>
-                                <option>
-                                    <%= result.refer_and_earn_method.localeCompare("Rupees") == 0 ? "Percentage" : "Rupees" %>
+                                <option selected><%= data.refer_and_earn_method %></option>
+                                <option><%= data.refer_and_earn_method == "Percentage" ? "Rupees" : "Percentage" %>
                                 </option>
                             </select>
                         </div>
@@ -170,27 +170,27 @@ contentFor('breadcrumb') %>
                     <div class="form-group row">
                         <label for="maxreferamt" class="col-sm-2 col-form-label">Maximum Refer & Earn Amount (₹)</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.max_refer_and_earn_amount %>
+                            <input class="form-control" type="text" value=<%= data.max_refer_and_earn_amount %>
                                 name="maxreferamt" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="minwithdrawamt" class="col-sm-2 col-form-label">Minimum Withdrawal Amount</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.min_withdraw_amount %>
+                            <input class="form-control" type="text" value=<%= data.min_withdraw_amount %>
                                 name="minwithdrawamt" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="maxdaysreturn" class="col-sm-2 col-form-label">Max days to return item</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value="1500" name="maxdaysreturn" />
+                            <input class="form-control" type="text" value="<%= data.max_days_to_return_item %>" name="maxdaysreturn" />
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="deliveryboybonus" class="col-sm-2 col-form-label">Delivery Boy Bonus (%)</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.delivery_boy_bonus %>
+                            <input class="form-control" type="text" value=<%= data.delivery_boy_bonus %>
                                 name="deliveryboybonus" />
                         </div>
                     </div>
@@ -201,7 +201,7 @@ contentFor('breadcrumb') %>
                             used
                             in Mail System )</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.from_email %> name="fromemail" />
+                            <input class="form-control" type="text" value=<%= data.from_email %> name="fromemail" />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -209,16 +209,16 @@ contentFor('breadcrumb') %>
                             be
                             used in Mail System )</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" value=<%= result.reply_to_email %>
+                            <input class="form-control" type="text" value=<%= data.reply_to_email %>
                                 name="replyemail" />
                         </div>
                     </div>
+
                     <hr>
                     <button type="submit" class="btn btn-primary waves-effect waves-light" id="sa-success">
                         Update
                     </button>
                 </form>
-                <% }); %>
                 <% } %>
 
             </div>

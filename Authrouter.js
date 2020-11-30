@@ -4,12 +4,15 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const models = require("./models");
 
-mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
-
+mongoose.connect("mongodb://localhost:27017/ekart_DB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(console.log("Connected!!"));
 
 
 Authrouter.use(bodyParser.json());
-Authrouter.use(bodyParser.urlencoded({ extended: true }));
+Authrouter.use(bodyParser.urlencoded({extended: true}));
 
 
 //Authentications all TABs.
@@ -52,14 +55,32 @@ Authrouter.get("/pages-register-2", function (req, res) {
     res.render("Authentication/pages-register-2");
 });
 
-Authrouter.post("/admin-login", function (req, res) {
-    var username = req.body.username;
-    var password = req.body.userpassword;
-    if (!username || !password) {
-        var error = "All fields are required!!";
-        res.redirect("/", { data: error});
-    }
-    res.send("login!!");
+Authrouter.get("/admin-login", function (req, res) {
+    // res.render("Authentication/login");
+    let info = {
+        error: false
+    };
+    res.render("Authentication/pages-login", {data: info});
+});
+
+Authrouter.post("/login", (req, res) => {
+    let username = req.body.username;
+    let password = req.body.userpassword;
+
+    models.admin.find({username: username, password: password}, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            if (result.length == 1) {
+                res.redirect("/home");
+            } else {
+                let info = {
+                    error: true
+                };
+                res.render("Authentication/pages-login", {data: info});
+            }
+        }
+    });
 });
 
 module.exports = Authrouter;

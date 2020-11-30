@@ -5,27 +5,30 @@ const mongoose = require("mongoose");
 const models = require("./models");
 const formidable = require("formidable");
 const url = require("url");
-const util = require('util');
-const { response } = require("express");
+// const {response} = require("express");
+const services = require("./services");
 
-
-mongoose.connect("mongodb://localhost:27017/ekart_DB", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }).then(console.log("Connected!!"));
+mongoose.connect("mongodb://localhost:27017/ekart_DB", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+}).then(console.log("Connected!!"));
 
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: true }));
+router.use(bodyParser.urlencoded({extended: true}));
 
 
 router.post("/add-variation", (req, res) => {
-    res.render("./views/Forms/form-elements.ejs", { "additionData": variationData });
+    res.render("./views/Forms/form-elements.ejs", {"additionData": variationData});
 });
 
 router.post("/add-product", (req, res) => {
     console.log(req);
-    models.category.findOne({ name: req.body.category }, (err, result) => {
+    models.category.findOne({name: req.body.category}, (err, result) => {
         if (err) {
             console.log(err);
         } else {
-            models.subCategory.findOne({ name: req.body.subcategory }, (err2, result2) => {
+            models.subCategory.findOne({name: req.body.subcategory}, (err2, result2) => {
                 if (err2) {
                     console.log(err2);
                 } else {
@@ -46,11 +49,11 @@ router.post("/add-product", (req, res) => {
                         if (err3) {
                             console.log(err3);
                         } else {
-                            models.unit.findOne({ short_code: req.body.measurmentunit }, (err4, result4) => {
+                            models.unit.findOne({short_code: req.body.measurmentunit}, (err4, result4) => {
                                 if (err4) {
                                     console.log(err4);
                                 } else {
-                                    models.unit.findOne({ short_code: req.body.stockunit }, (err5, result5) => {
+                                    models.unit.findOne({short_code: req.body.stockunit}, (err5, result5) => {
                                         if (err5) {
                                             console.log(err5);
                                         } else {
@@ -108,9 +111,7 @@ router.post("/upload-slider-image", (req, res) => {
         sliderImage.save((err, result) => {
             if (err) {
                 console.log(err);
-            }
-
-            else {
+            } else {
                 res.redirect("home-slider-images");
             }
         });
@@ -134,9 +135,7 @@ router.post("/upload-offer-image", (req, res) => {
         offerImage.save((err, result) => {
             if (err) {
                 console.log(err);
-            }
-
-            else {
+            } else {
                 res.redirect("new-offer-images");
             }
         });
@@ -150,9 +149,7 @@ router.get("/delete-offer-image", (req, res) => {
     models.offer.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("new-offer-images");
         }
 
@@ -163,10 +160,8 @@ router.get("/promo-codes", (req, res) => {
     models.promoCode.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("promo-codes", { data: result });
+        } else {
+            res.render("promo-codes", {data: result});
         }
     })
 });
@@ -175,10 +170,8 @@ router.get("/featured-section", (req, res) => {
     models.section.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("featured-section", { data: result });
+        } else {
+            res.render("featured-section", {data: result});
         }
     })
 });
@@ -187,10 +180,8 @@ router.get("/customers", (req, res) => {
     models.user.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("customers/customers", { data: result });
+        } else {
+            res.render("customers/customers", {data: result});
         }
     });
 });
@@ -206,35 +197,27 @@ router.post("/add-wallet", (req, res) => {
     var message = req.body.message;
     var newAmount;
     var oldAmount;
-    models.user.findOne({ name: customerName }).select("balance -_id").exec((err, result) => {
+    models.user.findOne({name: customerName}).select("balance -_id").exec((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             oldAmount = result.balance;
             console.log(oldAmount);
             if (txnType == "credit") {
                 newAmount = (oldAmount - 0) + (amount - 0); //subtraction is done because js don't support addition
-                models.user.updateOne({ name: customerName }, { $set: { balance: newAmount } }, (err, doc) => {
+                models.user.updateOne({name: customerName}, {$set: {balance: newAmount}}, (err, doc) => {
                     if (err) {
                         console.log(err);
-                    }
-
-                    else {
+                    } else {
                         console.log(doc);
                     }
                 });
-            }
-
-            else if (txnType == "debit") {
+            } else if (txnType == "debit") {
                 newAmount = oldAmount - amount;
-                models.user.updateOne({ name: customerName }, { $set: { balance: newAmount } }, (err, docu) => {
+                models.user.updateOne({name: customerName}, {$set: {balance: newAmount}}, (err, docu) => {
                     if (err) {
                         console.log(err);
-                    }
-
-                    else {
+                    } else {
                         console.log(docu);
                     }
                 });
@@ -254,9 +237,7 @@ router.post("/add-wallet", (req, res) => {
         transaction.save((err, resul) => {
             if (err) {
                 console.log(err);
-            }
-
-            else {
+            } else {
                 res.redirect("manage-customer-wallet");
             }
         });
@@ -285,29 +266,23 @@ router.post("/add-promo-code", (req, res) => {
     var status_code = 0;
     var status = req.body.status;
     var promoCodeID = 0;
-    models.promoCode.find({}).sort({ _id: -1 }).limit(1).exec((err, result) => {
+    models.promoCode.find({}).sort({_id: -1}).limit(1).exec((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             promoCodeID = result.code_id + 1;
         }
     });
 
     if (repeat == "Allowed") {
         repeat_code = 1;
-    }
-
-    else if (repeat == "Not Allowed") {
+    } else if (repeat == "Not Allowed") {
         repeat_code = 0;
     }
 
     if (status == "Active") {
         status_code = 1;
-    }
-
-    else if (status == "Deactive") {
+    } else if (status == "Deactive") {
         status_code = 0;
     }
 
@@ -330,9 +305,7 @@ router.post("/add-promo-code", (req, res) => {
     promoCode.save((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("promo-codes");
         }
     });
@@ -354,9 +327,7 @@ router.post("/add-featured-section", (req, res) => {
     featuredSection.save((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("featured-section");
         }
     });
@@ -366,10 +337,8 @@ router.get("/new-offer-images", (req, res) => {
     models.offer.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("app-images/new-offer-images", { data: result });
+        } else {
+            res.render("app-images/new-offer-images", {data: result});
         }
     });
 });
@@ -391,9 +360,7 @@ router.post("/add-delivery-boy", (req, res) => {
     var bonus = req.body.bonus;
     if (pass != confirmPass) {
         res.send("passwords dont match!!");
-    }
-
-    else {
+    } else {
 
         var deliveryBoy = models.deliveryBoy({
             name: deliveryBoyName,
@@ -410,9 +377,7 @@ router.post("/add-delivery-boy", (req, res) => {
         deliveryBoy.save((err, result) => {
             if (err) {
                 console.log(err);
-            }
-
-            else {
+            } else {
                 res.redirect("manage-delivery-boys");
             }
         });
@@ -423,10 +388,8 @@ router.get("/manage-delivery-boys", (req, res) => {
     models.deliveryBoy.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("delivery-boys/manage-delivery-boys", { data: result });
+        } else {
+            res.render("delivery-boys/manage-delivery-boys", {data: result});
         }
     });
 });
@@ -438,9 +401,7 @@ router.get("/delete-delivery-boy", (req, res) => {
     models.deliveryBoy.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("manage-delivery-boys");
         }
 
@@ -470,38 +431,39 @@ router.post("/send-message", (req, res) => {
     notification.save((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("/send-notification");
         }
     });
 });
 
 router.get("/transaction", (req, res) => {
-    res.render("transaction");
+    models.transaction.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("transaction", {data: result});
+        }
+    });
 });
 
 router.get("/wallet-transactions", (req, res) => {
     models.walletTransaction.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("wallet-transactions", { data: result });
+        } else {
+            res.render("wallet-transactions", {data: result});
         }
     });
 });
 
 router.get("/store-settings", (req, res) => {
-    models.setting.find({}).sort({ _id: -1 }).limit(1).exec((err, result) => {
+    models.setting.findOne({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("settings", { data: result });
+        } else {
+            console.log(result);
+            res.render("settings", {data: result});
         }
     });
 });
@@ -511,14 +473,20 @@ router.get("/payment-methods", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("system/payment-methods", { data: result });
+            res.render("system/payment-methods", {data: result});
             console.log(result);
         }
     });
 });
 
 router.get("/time-slots", (req, res) => {
-    res.render("system/time-slots");
+    models.timeSlot.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("system/time-slots", {data: result});
+        }
+    });
 });
 
 router.get("/notification-settings", (req, res) => {
@@ -541,10 +509,8 @@ router.get("/cities", (req, res) => {
     models.city.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("locations/cities", { data: result });
+        } else {
+            res.render("locations/cities", {data: result});
             console.log(result);
         }
     });
@@ -554,10 +520,8 @@ router.get("/areas", (req, res) => {
     models.area.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("locations/areas", { data: result });
+        } else {
+            res.render("locations/areas", {data: result});
             console.log(result);
         }
     });
@@ -571,10 +535,8 @@ router.get("/add-areas", (req, res) => {
     models.city.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("locations/add-area", { data: result });
+        } else {
+            res.render("locations/add-area", {data: result});
         }
     });
 });
@@ -583,10 +545,8 @@ router.get("/categories", (req, res) => {
     var categories = models.category.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("categories", { data: result });
+        } else {
+            res.render("categories", {data: result});
         }
     });
 });
@@ -595,10 +555,8 @@ router.get("/sub-categories", (req, res) => {
     var subCategories = models.subCategory.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("sub-categories", { data: result });
+        } else {
+            res.render("sub-categories", {data: result});
         }
     });
 });
@@ -611,10 +569,8 @@ router.get("/add-sub-categories", (req, res) => {
     var categories = models.category.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("add-sub-categories", { data: result });
+        } else {
+            res.render("add-sub-categories", {data: result});
         }
     })
 });
@@ -623,43 +579,45 @@ router.get("/units", (req, res) => {
     var units = models.unit.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("units", { data: result });
+        } else {
+            res.render("units", {data: result});
         }
     })
 });
 
 router.post("/update-settings", (req, res) => {
-    var appName = req.body.appname;
-    var supportNumber = req.body.supportnumber;
-    var supportEmail = req.body.supportemail;
-    var currentversion = req.body.currentversion;
-    var minversion = req.body.minversion;
-    var currency = req.body.currency;
-    var gst = req.body.gst;
-    var cgst = req.body.cgst;
-    var sgst = req.body.sgst;
-    var igst = req.body.igst;
-    var deliverychargeamt = req.body.deliverychargeamt;
-    var minfreedelivery = req.body.minfreedelivery;
-    var timezone = req.body.timezone;
-    var minreferamt = req.body.minreferamt;
-    var referbonus = req.body.referbonus;
-    var refermethod = req.body.refermethod;
-    var maxreferamt = req.body.maxreferamt;
-    var minwithdrawamt = req.body.minwithdrawamt;
-    var maxreturndays = req.body.maxreturndays;
-    var deliveryboybonus = req.body.deliveryboybonus;
-    var fromemail = req.body.fromemail;
-    var replyemail = req.body.replyemail;
-    var setting = models.setting({
+    console.log(req.body)
+    let appName = req.body.appname;
+    let supportNumber = req.body.supportnumber;
+    let supportEmail = req.body.supportemail;
+    let currentversion = req.body.currentversion;
+    let minversion = req.body.minversion;
+    let versionStatusCheck = req.body.versionsystemstatus == "Enable" ? 1 : 0;
+    let currency = req.body.currencycode;
+    let gst = req.body.gst;
+    let cgst = req.body.cgst;
+    let sgst = req.body.sgst;
+    let igst = req.body.igst;
+    let deliverychargeamt = req.body.devliverychargeamt;
+    let minfreedelivery = req.body.minfreedelivery;
+    let timezone = req.body.timezone;
+    let referEarnEnable = req.body.referandearnsystem == "Enable" ? 1 : 0;
+    let minreferamt = req.body.minreferamt;
+    let referbonus = req.body.referbonus;
+    let refermethod = req.body.refermethod;
+    let maxreferamt = req.body.maxreferamt;
+    let minwithdrawamt = req.body.minwithdrawamt;
+    let maxreturndays = req.body.maxdaysreturn;
+    let deliveryboybonus = req.body.deliveryboybonus;
+    let fromemail = req.body.fromemail;
+    let replyemail = req.body.replyemail;
+    let setting = {
         app_name: appName,
         support_number: supportNumber,
         support_email: supportEmail,
         current_version: currentversion,
         min_version: minversion,
+        version_status_check: versionStatusCheck,
         currency: currency,
         gst: gst,
         cgst: cgst,
@@ -668,7 +626,7 @@ router.post("/update-settings", (req, res) => {
         delivery_charge: deliverychargeamt,
         min_free_delivery_amount: minfreedelivery,
         system_time_zone: timezone,
-        refer_and_earn_enable: 0,
+        refer_and_earn_enable: referEarnEnable,
         min_refer_and_earn_amount: minreferamt,
         refer_and_earn_bonus: referbonus,
         refer_and_earn_method: refermethod,
@@ -678,32 +636,38 @@ router.post("/update-settings", (req, res) => {
         delivery_boy_bonus: deliveryboybonus,
         from_email: fromemail,
         reply_to_email: replyemail
-    });
-    setting.save(function (err, result) {
+    }
+
+    models.setting.findOne({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.redirect("store-settings");
+        } else {
+            models.setting.findByIdAndUpdate(result.id, setting, (err2, result2) => {
+                if (err2) {
+                    console.log(err2);
+                } else {
+                    console.log(result2);
+                    res.redirect("/store-settings");
+                }
+            });
         }
     });
 });
 
 router.post("/update-payment-methods", (req, res) => {
     console.log(req.body);
-    var paypal_method = req.body.paypal == "Enable" ? 1 : 0;
-    var paypalmode = req.body.paypalmode;
-    var paypalid = req.body.paypalid;
-    var payu_method = req.body.payu == "Enable" ? 1 : 0;
-    var payumoneymode = req.body.payumoneymode;
-    var payumerchentkey = req.body.payumerchentkey;
-    var payumerchentid = req.body.payumerchentid;
-    var payusalt = req.body.payusalt;
-    var razormode = req.body.razor == "Enable" ? 1 : 0;
-    var razorpaykeyid = req.body.razorpaykeyid;
-    var razorpaysecretkey = req.body.razorsecretkey;
-    var setting = {
+    let paypal_method = req.body.paypal == "Enable" ? 1 : 0;
+    let paypalmode = req.body.paypalmode;
+    let paypalid = req.body.paypalid;
+    let payu_method = req.body.payu == "Enable" ? 1 : 0;
+    let payumoneymode = req.body.payumoneymode;
+    let payumerchentkey = req.body.payumerchentkey;
+    let payumerchentid = req.body.payumerchentid;
+    let payusalt = req.body.payusalt;
+    let razormode = req.body.razor == "Enable" ? 1 : 0;
+    let razorpaykeyid = req.body.razorpaykeyid;
+    let razorpaysecretkey = req.body.razorsecretkey;
+    let setting = {
         paypal_payment_method: paypal_method,
         paypal_mode: paypalmode,
         paypal_buisness_email: paypalid,
@@ -736,7 +700,26 @@ router.post("/update-payment-methods", (req, res) => {
 });
 
 router.post("/add-time-slots", (req, res) => {
-    res.send("time slot added!!");
+    var title = req.body.title;
+    var fromTime = req.body.from;
+    var toTime = req.body.to;
+    var lastOrderTime = req.body.lastordertime;
+    var status = req.body.status == "Active" ? 1 : 0;
+    var timeSlot = models.timeSlot({
+        title: title,
+        from_time: fromTime,
+        to_time: toTime,
+        last_order_time: lastOrderTime,
+        status: status
+    });
+
+    timeSlot.save((err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/time-slots");
+        }
+    });
 });
 
 router.post("/update-fcm-key", (req, res) => {
@@ -757,13 +740,11 @@ router.post("/update-about-us", (req, res) => {
 
 router.post("/add-city", (req, res) => {
     var cityName = req.body.cityname;
-    var city = new models.city({ name: cityName });
+    var city = new models.city({name: cityName});
     city.save((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("/cities");
         }
     });
@@ -772,13 +753,11 @@ router.post("/add-city", (req, res) => {
 router.post("/add-area", (req, res) => {
     var areaname = req.body.areaname;
     var cityName = req.body.city;
-    var area = new models.area({ name: areaname, city_name: cityName });
+    var area = new models.area({name: areaname, city_name: cityName});
     area.save((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("/areas");
         }
     });
@@ -788,12 +767,11 @@ router.post("/add-category", (req, res) => {
     var catName = req.body.categoryName;
     var catImage = req.body.image;
     var catSubtitle = req.body.subtitle;
-    var category = new models.category({ name: catName, image: catImage, subtitle: catSubtitle });
+    var category = new models.category({name: catName, image: catImage, subtitle: catSubtitle});
     category.save(function (err, result) {
         if (err) {
             console.log(err);
-        }
-        else {
+        } else {
             res.redirect("add-categories");
             console.log(result);
         }
@@ -808,14 +786,19 @@ router.post("/add-sub-category", (req, res) => {
     var subtitle = req.body.subSubtitle;
     var image = req.body.image;
 
-    models.category.find({ name: mainCategory }, (err, result) => {
-        var subCategory = models.subCategory({ category_id: result[0].id, name: name, subtitle: subtitle, image: image, main_category: mainCategory, slug: name });
+    models.category.find({name: mainCategory}, (err, result) => {
+        var subCategory = models.subCategory({
+            category_id: result[0].id,
+            name: name,
+            subtitle: subtitle,
+            image: image,
+            main_category: mainCategory,
+            slug: name
+        });
         subCategory.save(function (err2, result2) {
             if (err) {
                 console.log(err2);
-            }
-
-            else {
+            } else {
                 res.redirect("add-sub-categories");
             }
         });
@@ -827,19 +810,24 @@ router.post("/add-unit", (req, res) => {
 
     var unitName = req.body.name;
     var unitCode = req.body.code;
-    var unit = models.unit({ "unit_id": 1, "name": unitName, "short_code": unitCode });
+    var unit = models.unit({"unit_id": 1, "name": unitName, "short_code": unitCode});
     unit.save(function (err, result) {
         if (err) {
             console.log(err);
-        }
+        } else {
+            console.log("noerror");
+            //     }
 
-        else {
-            res.redirect("units");
+            //     else {
+            //         // res.redirect("/promo-codes");
+            //         console.log(result);
+            //     }
         }
-    })
+    });
+
 });
 
-router.get("/", (req, res) => {
+router.get("/home", (req, res) => {
     res.render("Dashboard/dashboard");
 });
 
@@ -847,10 +835,8 @@ router.get("/home-slider-images", (req, res) => {
     models.slider.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("app-images/home-slider-images", { data: result });
+        } else {
+            res.render("app-images/home-slider-images", {data: result});
         }
     })
 });
@@ -859,9 +845,7 @@ router.get("/add-product", (req, res) => {
     models.unit.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             models.category.find({}, (err2, result2) => {
                 if (err2) {
                     console.log(err2);
@@ -875,7 +859,7 @@ router.get("/add-product", (req, res) => {
                                 category: result2,
                                 subcategory: result3
                             }
-                            res.render("Products/add-product", { data: information });
+                            res.render("Products/add-product", {data: information});
                         }
                     });
                 }
@@ -892,10 +876,8 @@ router.get("/manage-product", (req, res) => {
     models.product.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("Products/manage-product", { data: result });
+        } else {
+            res.render("Products/manage-product", {data: result});
         }
     });
 });
@@ -907,9 +889,7 @@ router.get("/delete-slider-image", (req, res, next) => {
     models.slider.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("home-slider-images");
         }
 
@@ -923,9 +903,7 @@ router.get("/delete-category", (req, res) => {
     models.category.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("categories");
         }
 
@@ -939,9 +917,7 @@ router.get("/delete-sub-category", (req, res) => {
     models.subCategory.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("sub-categories");
         }
 
@@ -955,9 +931,7 @@ router.get("/delete-promo-code", (req, res) => {
     models.promoCode.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("promo-codes");
         }
 
@@ -971,9 +945,7 @@ router.get("/delete-featured-section", (req, res) => {
     models.section.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("featured-section");
         }
 
@@ -987,10 +959,8 @@ router.get("/edit-promo-code", (req, res) => {
     models.promoCode.findById(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("edit-promo-code", { data: result });
+        } else {
+            res.render("edit-promo-code", {data: result});
         }
     })
 });
@@ -1014,17 +984,13 @@ router.post("/update-promo-code", (req, res) => { //some work pending in this pa
     var statusCode;
     if (repeatUsage == "Allowed") {
         repeatUsageCode = 1;
-    }
-
-    else {
+    } else {
         repeatUsageCode = 0;
     }
 
     if (status == "Active") {
         statusCode = 1;
-    }
-
-    else {
+    } else {
         statusCode = 0;
     }
 
@@ -1056,11 +1022,9 @@ router.post("/update-promo-code", (req, res) => { //some work pending in this pa
     models.promoCode.findByIdAndUpdate(id, update, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("/promo-codes");
-        }
+        }s
     });
 });
 
@@ -1068,10 +1032,8 @@ router.get("/orders", (req, res) => {
     models.order.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            res.render("orders", { data: result });
+        } else {
+            res.render("orders", {data: result});
         }
     });
 });
@@ -1103,9 +1065,7 @@ router.get("/testorder", (req, res) => {
     order.save((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             console.log(result);
         }
     });
@@ -1131,9 +1091,7 @@ router.get("/testorderitem", (req, res) => {
     item.save((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.send(result);
             console.log(result);
         }
@@ -1144,23 +1102,35 @@ router.get("/view-order", (req, res) => {
     var urlParsed = url.parse(req.url, true);
     var urlQuery = urlParsed.query;
     var id = urlQuery.id;
-    models.order.findById(id, (err, result) => {
+    models.order.findById(id).lean().exec((err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
-            models.deliveryBoy.find({}, (err, result2) => {
+        } else {
+            models.deliveryBoy.find({}, (err2, result2) => {
                 if (err) {
                     console.log(err);
-                }
+                } else {
+                    models.user.findById(result.user_id, (err3, result3) => {
+                        if (err3) {
+                            console.log(err3);
+                        } else {
 
-                else {
-                    var information = {
-                        deliveryBoys: result2,
-                        order: result
-                    };
-                    res.render("order-details", { data: information });
+                            models.orderItem.find({order_id: id}, (err4, result4) => {
+                                if (err4) {
+                                    console.log(err4);
+                                } else {
+                                    let information = {
+                                        order: result,
+                                        deliveryBoys: result2,
+                                        user: result3,
+                                        items: result4
+                                    };
+                                    res.render("order-details", {data: information});
+                                }
+                            });
+
+                        }
+                    });
                 }
             });
         }
@@ -1176,51 +1146,126 @@ router.post("/update-order", (req, res) => {
     var status = req.body.status;
     var totalPayable;
     var final_total;
-    var update = {};
+    let update = {};
     models.order.findById(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             if (discount != result.discount) {
                 totalPayable = result.total + result.tax_amount;
                 final_total = (totalPayable - 0) - (totalPayable * (discount / 100));
+            } else {
+                final_total = result.final_total;
             }
 
-            update = {
-                delivery_boy_id: deliverBy,
-                discount: discount,
-                final_total: final_total,
-                active_status: status
-            };
+            let statusArray = [];
 
-            models.order.findByIdAndUpdate(id, update, (err, result) => {
-                if (err) {
-                    console.log(err);
+            let updateStatus = true;
+
+            statusArray = result.status.split(",");
+
+            for (let i = 0; i <= statusArray.length; i++) {
+                if (i % 2 == 0) {
+                    if (statusArray[i] == status.toLowerCase()) {
+                        updateStatus = false;
+                        break;
+                    }
                 }
+            }
 
-                else {
-                    res.redirect("/orders");
+            statusArray.push(status.toLowerCase());
+            statusArray.push(Date.now());
+
+            if (updateStatus) {
+                update = {
+                    delivery_boy_id: deliverBy,
+                    discount: discount,
+                    final_total: final_total,
+                    status: statusArray.toString(),
+                    active_status: status
+                };
+            } else {
+                update = {
+                    delivery_boy_id: deliverBy,
+                    discount: discount,
+                    final_total: final_total,
+                };
+            }
+
+            let orderItemStatusArray = [];
+
+            models.orderItem.find({order_id: result.id}, (err2, result2) => {
+                if (err2) {
+                    console.log(err2);
+                } else {
+
+                    let orderItemUpdate = {
+                        discount: discount,
+                        deliver_by: deliverBy,
+                        status: null,
+                        active_status: status,
+                    };
+
+                    if (updateStatus) {
+                        for (let i = 0; i < result2.length; i++) {
+                            orderItemStatusArray = [];
+                            orderItemStatusArray = result2[i].status.split(",");
+                            orderItemStatusArray.push(status.toLowerCase());
+                            orderItemStatusArray.push(Date.now());
+                            orderItemUpdate.status = orderItemStatusArray.toString();
+
+                            console.log(orderItemUpdate);
+
+                            models.orderItem.findByIdAndUpdate(result2[i].id, orderItemUpdate, (err3, result3) => {
+                                if (err3) {
+                                    console.log(err3);
+                                }
+                            });
+                        }
+                    }
+
+
+                    console.log(update);
+
+                    models.order.findByIdAndUpdate(id, update, (err, result) => {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            res.redirect("/orders");
+                        }
+                    });
                 }
             });
+
+
         }
     });
 });
 
 router.get("/delete-order", (req, res) => {
+
     var urlParsed = url.parse(req.url, true);
     var urlQuery = urlParsed.query;
     var id = urlQuery.id;
-    var urlParsed = url.parse(req.url, true);
-    var urlQuery = urlParsed.query;
-    var id = urlQuery.id;
+
+    models.orderItem.find({order_id: id}, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            for (let i = 0; i < result.length; i++) {
+                models.orderItem.findByIdAndRemove(result[i].id, (err2, result2) => {
+                    if (err2) {
+                        console.log(err2);
+                    }
+                });
+            }
+        }
+    });
+
     models.order.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("orders");
         }
     });
@@ -1233,16 +1278,25 @@ router.get("/generate-invoice", (req, res) => {
     models.order.findById(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
+        } else {
+            models.orderItem.find({order_id: id, active_status: {"$ne": "cancelled"}}, (err2, result2) => {
+                if (err2) {
+                    console.log(err2);
+                } else {
+                    models.user.findById(result.user_id, (err3, result3) => {
+                        if (err3) {
+                            console.log(err3);
+                        } else {
+                            var info = {
+                                order: result,
+                                items: result2,
+                                user: result3,
+                            };
 
-        else {
-            models.orderItem.find({ order_id: id }, (err, result2) => {
-                var info = {
-                    order: result,
-                    items: result2
-                };
-
-                res.render("invoice", { data: info });
+                            res.render("invoice", {data: info});
+                        }
+                    });
+                }
             });
         }
     });
@@ -1255,9 +1309,7 @@ router.get("/delete-city", (req, res) => {
     models.city.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("/cities");
         }
     });
@@ -1270,9 +1322,7 @@ router.get("/delete-area", (req, res) => {
     models.area.findByIdAndRemove(id, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             res.redirect("/areas");
         }
     });
@@ -1291,9 +1341,7 @@ router.post("/api-firebase/get-categories", (req, res) => {
     models.category.find().lean().exec((err, result) => {
         if (err) {
             console.log(err)
-        }
-
-        else {
+        } else {
 
             response.error = false;
             response.data = result;
@@ -1317,9 +1365,7 @@ router.post("/api-firebase/offer-images", (req, res) => {
     models.offer.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             response.error = false;
             response.data = result;
             // console.log(response);
@@ -1342,17 +1388,13 @@ router.post("/api-firebase/sections", (req, res) => {
     models.product.find({}, (err, productResult) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
 
             for (let index = 0; index < productResult.length; index++) {
                 models.productVariant.findOne({}, (err2, variantsResult) => {
                     if (err2) {
                         console.log(err2);
-                    }
-
-                    else {
+                    } else {
                         if (variantsResult != null) {
                             for (let i = 0; i < variantsResult.length; i++) {
                                 variantsObject = {
@@ -1394,9 +1436,7 @@ router.post("/api-firebase/sections", (req, res) => {
             models.section.find({}, (err3, sectionsResult) => {
                 if (err3) {
                     console.log(err3);
-                }
-
-                else {
+                } else {
                     for (let j = 0; j < sectionsResult.length; j++) {
                         sectionObject = {
                             "id": sectionsResult[j].id,
@@ -1415,10 +1455,6 @@ router.post("/api-firebase/sections", (req, res) => {
     });
 });
 
-router.post("/api-firebase/order-process", (req, res) => {
-    res.send("");
-});
-
 router.post("/api-firebase/slider-images", (req, res) => {
     var urlParsed = url.parse(req.url, true);
     var urlQuery = urlParsed.query;
@@ -1431,9 +1467,7 @@ router.post("/api-firebase/slider-images", (req, res) => {
     models.slider.find({}, (err, result) => {
         if (err) {
             console.log(err);
-        }
-
-        else {
+        } else {
             response.error = false;
             response.data = result;
             // console.log(response);
@@ -1443,9 +1477,7 @@ router.post("/api-firebase/slider-images", (req, res) => {
     })
 });
 
-
-//World's most annoying code below: (from line 1324 to 1562)
-
+//World's most annoying code below: (from line 1324 to 1687)
 router.post("/api-firebase/user-registration", (req, res) => {
 
     console.log("api accessed!!");
@@ -1465,7 +1497,7 @@ router.post("/api-firebase/user-registration", (req, res) => {
     };
 
     if (requestType == "verify-user") {
-        models.user.find({ mobile: mobileNumber }, (err, result) => {
+        models.user.find({mobile: mobileNumber}, (err, result) => {
             if (err) {
                 console.log(err);
                 response.error = true;
@@ -1602,8 +1634,6 @@ router.post("/api-firebase/user-registration", (req, res) => {
         });
 
 
-
-
     } else if (requestType == "change-password") {
 
         var newPassword = req.body.password;
@@ -1684,7 +1714,7 @@ router.get("/taxes", (req, res) => {
         if (err) {
             console.log(err)
         } else {
-            res.render("taxes.ejs", { data: result });
+            res.render("taxes.ejs", {data: result});
         }
     });
 });
@@ -1732,7 +1762,7 @@ router.get("/edit-tax", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("edit-tax.ejs", { data: result });
+            res.render("edit-tax.ejs", {data: result});
         }
     });
 });
@@ -1815,7 +1845,7 @@ router.post("/api-firebase/get-areas-by-city-id", (req, res) => {
 
                 console.log(result);
 
-                models.area.find({ city_name: result.name }, (err2, result2) => {
+                models.area.find({city_name: result.name}, (err2, result2) => {
                     if (err2) {
                         console.log(err2);
                         response.error = true;
@@ -1839,8 +1869,6 @@ router.post("/api-firebase/get-areas-by-city-id", (req, res) => {
             }
         });
     }
-
-
 
 
 });
@@ -1943,7 +1971,6 @@ router.post("/api-firebase/login", (req, res) => {
 router.post("/api-firebase/get-user-data", (req, res) => {
 
 
-
     console.log(req.body);
 
     var userID = req.body.user_id;
@@ -2021,7 +2048,7 @@ router.post("/api-firebase/get-subcategories-by-category-id", (req, res) => {
         "data": null,
     };
 
-    models.subCategory.find({ category_id: category_id }, (err, result) => {
+    models.subCategory.find({category_id: category_id}, (err, result) => {
         if (err) {
             console.log(err);
             response.error = true;
@@ -2046,12 +2073,12 @@ router.post("/api-firebase/get-products-by-subcategory-id", (req, res) => {
 
     var otherimages = [];
 
-    models.product.find({ sub_category_id: subcategoryid }).lean().exec((err, products) => {
+    models.product.find({sub_category_id: subcategoryid}).lean().exec((err, products) => {
         if (err) {
             console.log(err);
         } else {
             for (let index = 0; index < products.length; index++) {
-                models.productVariant.find({ product_id: products[index]._id }, (err2, result) => {
+                models.productVariant.find({product_id: products[index]._id}, (err2, result) => {
                     if (err2) {
                         console.log(err2);
                     } else {
@@ -2073,13 +2100,17 @@ router.post("/api-firebase/get-products-by-subcategory-id", (req, res) => {
 });
 
 router.post("/api-firebase/settings", (req, res) => {
+    console.log("settings api");
     var paymentURL = req.body.get_payment_methods;
-    
+    var timeSlotURL = req.body.get_time_slots;
+
     var response = {
         "error": true,
-        "payment_methods": null,
+        // "payment_methods": null,
         "message": null,
     };
+
+
     if (paymentURL == 1) {
         models.paymentSettings.findOne({}, (err, result) => {
             if (err) {
@@ -2094,10 +2125,25 @@ router.post("/api-firebase/settings", (req, res) => {
                 res.send(response);
             }
         });
+    } else if (timeSlotURL == 1) {
+        models.timeSlot.find({}, (err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!"
+                res.send(response);
+            } else {
+                response.error = false;
+                response.message = "data found!!";
+                response.time_slots = result;
+                res.send(response);
+            }
+        });
     }
 });
 
 router.post("/api-firebase/get-product-by-id", (req, res) => {
+    console.log("get product by id!!");
     var productID = req.body.product_id;
     console.log(productID);
 
@@ -2108,13 +2154,15 @@ router.post("/api-firebase/get-product-by-id", (req, res) => {
 
     var images = [];
 
+    var data = [];
+
     models.product.findById(productID).lean().exec((err, result) => {
         if (err) {
             response.error = true;
             res.send(response);
             console.log(err);
         } else {
-            models.productVariant.find({ product_id: productID }).lean().exec((err2, result2) => {
+            models.productVariant.find({product_id: productID}).lean().exec((err2, result2) => {
                 if (err2) {
                     response.error = true;
                     res.send(response);
@@ -2123,9 +2171,9 @@ router.post("/api-firebase/get-product-by-id", (req, res) => {
                     result.variants = JSON.parse(JSON.stringify(result2));
                     result.other_images = images;
                     result2[0].serve_for = "Available";
-                    delete result.name;
-                    response.error = true;
-                    response.data = result;
+                    response.error = false;
+                    data.push(result);
+                    response.data = data;
                     res.send(response);
                     console.log(response);
                     console.log(result2);
@@ -2133,6 +2181,542 @@ router.post("/api-firebase/get-product-by-id", (req, res) => {
             });
         }
     });
+});
+
+router.post("/api-firebase/order-process", (req, res) => {
+    console.log(req.body);
+    var settingsURL = req.body.get_settings;
+    var transactionURL = req.body.add_transaction;
+    var placeOrderURL = req.body.place_order;
+    var getOrderURL = req.body.get_orders;
+    var updateOrderStatusURL = req.body.update_order_status;
+    var updateOrderItemStatusURL = req.body.update_order_item_status;
+
+    var response = {
+        "error": true,
+        "message": null,
+    };
+
+
+    if (settingsURL == 1) {
+        models.setting.findOne({}).lean().exec((err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!";
+                res.send(response);
+            } else {
+                result.is_version_system_on = result.version_status_check;
+                result.delivery_charge = 30;
+                response.error = false;
+                response.message = "data found!!";
+                response.settings = result;
+                res.send(response);
+                console.log(response);
+            }
+        });
+    } else if (transactionURL == 1) {
+        console.log(req.body);
+
+        let userID = req.body.user_id;
+        let orderID = req.body.order_id;
+        let type = req.body.type;
+        let txnID = req.body.txn_id;
+        let amount = req.body.amount
+        let status = req.body.status;
+        let message = req.body.message;
+        let txnDate = req.body.transaction_date;
+
+        var transaction = models.transaction({
+            user_id: userID,
+            order_id: orderID,
+            type: type,
+            txn_id: txnID,
+            amount: amount,
+            status: status,
+            message: message,
+            transaction_date: txnDate,
+            date_created: Date.now(),
+        });
+
+        transaction.save((err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!";
+            } else {
+                response.error = false;
+                response.message = "transaction added successfully!!";
+                res.send(response);
+            }
+        });
+
+    } else if (placeOrderURL == 1) {
+        console.log(req.body.promo_code);
+        console.log(req.body.promo_discount);
+        var userID = req.body.user_id;
+        var taxPercent = req.body.tax_percentage;
+        var taxAmt = req.body.tax_amount;
+        var total = req.body.total;
+        var finalTotal = req.body.final_total;
+        var productVariantID = req.body.product_variant_id;
+        var quantity = req.body.quantity;
+        var mobile = req.body.mobile;
+        var deliveryCharge = req.body.delivery_charge;
+        var deliveryTime = req.body.delivery_time;
+        var walletUsed = req.body.wallet_used;
+        var walletBalance = req.body.wallet_balance;
+        var paymentMethod = req.body.payment_method;
+        var promoCode = req.body.promo_code;
+        var promoDiscount = req.body.promo_discount;
+        var address = req.body.address;
+        var longitude = req.body.longitude;
+        var latitude = req.body.latitude;
+        var email = req.body.email;
+        var productVariantsString = productVariantID.replace("[", "").replace("]", "").replace(/['"]+/g, '');
+        var productVariantIDArray = productVariantsString.split(",");
+        var quantityString = quantity.replace("[", "").replace("]", "").replace(/['"]+/g, '');
+        var quantityArray = quantityString.split(",");
+
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = mm + '/' + dd + '/' + yyyy;
+        var statusArray = ["recived", today];
+
+
+
+
+        models.user.findById(userID, (userError, user) => {
+            if (userError) {
+                console.log(userError);
+                response.error = true;
+                response.message = "some error occoured!!";
+                res.send(response);
+            } else {
+
+                let order = models.order({
+                    user_id: userID,
+                    user_name: user.name,
+                    delivery_boy_id: "",
+                    mobile: mobile,
+                    total: total,
+                    delivery_charge: deliveryCharge,
+                    tax_amount: taxAmt,
+                    tax_percentage: taxPercent,
+                    wallet_balance: walletBalance,
+                    discount: promoDiscount,
+                    promo_code: promoCode,
+                    promo_discount: promoDiscount,
+                    final_total: finalTotal,
+                    payment_method: paymentMethod,
+                    address: address,
+                    latitude: latitude,
+                    longitude: longitude,
+                    delivery_time: deliveryTime,
+                    status: statusArray.toString(),
+                    active_status: "Recived",
+                    date_added: Date.now(),
+                });
+
+                order.save((err, result) => {
+                    if (err) {
+                        console.log(err);
+                        response.error = true;
+                        response.message = "some error occoured!!";
+                        res.send(response);
+                    } else {
+                        for (let i = 0; i < productVariantIDArray.length; i++) {
+                            models.productVariant.findById(productVariantIDArray[i], (err2, result2) => {
+                                if (err2) {
+                                    console.log(err2);
+                                    response.error = true;
+                                    response.message = "some error occoured!!";
+                                    res.send(response);
+                                } else {
+                                    models.product.findById(result2.product_id, (err3, result3) => {
+
+                                        if (err3) {
+                                            console.log(err3);
+                                            response.error = true;
+                                            response.message = "some error occoured!!";
+                                            res.send(response);
+                                        } else {
+                                            var orderItems = models.orderItem({
+                                                user_id: userID,
+                                                order_id: result.id,
+                                                name: result3.name,
+                                                image: result3.image,
+                                                measurement: result2.measurement,
+                                                unit: result2.measurement_unit_name,
+                                                product_variant_id: result2.id,
+                                                quantity: quantityArray[i],
+                                                price: result2.price,
+                                                discounted_price: result2.discounted_price,
+                                                discount: promoDiscount,
+                                                sub_total: total,
+                                                deliver_by: "",
+                                                status: statusArray.toString(),
+                                                active_status: "Recived",
+                                                date_added: Date.now(),
+                                            });
+
+                                            orderItems.save((err4, result4) => {
+                                                if (err4) {
+                                                    console.log(err4);
+                                                    response.error = true;
+                                                    response.message = "some error occoured!!";
+                                                    if (i == productVariantIDArray.length - 1) {
+                                                        res.send(response);
+                                                    }
+                                                } else {
+                                                    response.error = false;
+                                                    response.order_id = result.id;
+                                                    response.message = "order placed successfully!!";
+                                                    if (i == productVariantIDArray.length - 1) {
+                                                        res.send(response);
+                                                        services.sendNotification(user.fcm_id, "Order placed!!", "Order placed successfully!!");
+                                                    }
+                                                }
+                                            });
+
+
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+
+
+    } else if (getOrderURL == 1) {
+        var userID = req.body.user_id;
+
+        models.order.find({user_id: userID}).lean().exec((err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!";
+                res.send(response);
+            } else {
+
+                var orderStatus = [];
+                var orderItemStatus = [];
+
+                console.log(result);
+                for (let i = 0; i < result.length; i++) {
+
+                    models.orderItem.find({order_id: result[i]._id}).lean().exec((err2, result2) => {
+                        if (err2) {
+                            console.log(err2);
+                            response.error = true;
+                            response.message = "some error occoured!!";
+                            res.send(response);
+                        } else {
+                            models.user.findById(userID, (err3, result3) => {
+                                if (err3) {
+                                    console.log(err3);
+                                    response.error = true;
+                                    response.message = "some error occoured!!";
+                                    res.send(response);
+                                } else {
+
+                                    orderStatus = [];
+
+                                    var oStatus = result[i].status.split(",");
+                                    for (let m = 0; m < oStatus.length; m++) {
+                                        let oTempArray = [];
+                                        if (m % 2 != 0) {
+                                            oTempArray.push(oStatus[m - 1]);
+                                            oTempArray.push(oStatus[m]);
+                                            orderStatus.push(oTempArray);
+                                        }
+                                    }
+
+                                    orderStatus = orderStatus.filter((n) => {
+                                        return Array.isArray(n) && n.length != 0
+                                    });
+
+                                    console.log(orderStatus);
+                                    result[i].status = orderStatus;
+                                    result[i].user_name = result3.name;
+                                    result[i].discount_rupees = 20
+                                    result[i].items = result2;
+                                    for (let j = 0; j < result2.length; j++) {
+                                        // for (let l = 0; l < result2[j].status; l++) {
+                                        //     var array = [];
+                                        //     if (k % 2 == 0) {
+                                        //         array.push(result2[j].status[l - 1]);
+                                        //         array.push(result2[j].status[l]);
+                                        //     }
+                                        //     orderItemStatus.push(array);
+                                        // }
+
+                                        orderItemStatus = [];
+
+                                        var oItemStatus = result2[j].status.split(",");
+
+                                        for (let m = 0; m < oItemStatus.length; m++) {
+                                            let oTempArray = [];
+                                            if (m % 2 != 0) {
+                                                oTempArray.push(oItemStatus[m - 1]);
+                                                oTempArray.push(oItemStatus[m]);
+                                                orderItemStatus.push(oTempArray);
+                                            }
+                                        }
+
+                                        orderItemStatus = orderItemStatus.filter((n) => {
+                                            return Array.isArray(n) && n.length != 0
+                                        });
+
+                                        result2[j].status = orderItemStatus;
+                                        if (i == result.length - 1 && j == result2.length - 1) {
+                                            response.error = false;
+                                            response.message = "Data found!!";
+                                            response.data = result;
+                                            res.send(response);
+                                            console.log(response);
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+    } else if (updateOrderStatusURL == 1) {
+        var orderID = req.body._id;
+        var status = req.body.status;
+        if (status == "cancelled") {
+            models.order.findById(orderID, (err, result) => {
+                if (err) {
+                    console.log(err);
+                    response.error = true;
+                    response.message = "some error occoured!!";
+                    res.send(response);
+                } else {
+                    var statusArray = result.status.split(",");
+                    statusArray.push("cancelled");
+                    statusArray.push(Date.now());
+                    var update = {
+                        "status": statusArray.toString(),
+                        "active_status": "cancelled",
+                    };
+                    models.order.findByIdAndUpdate(orderID, update, (err2, result2) => {
+                        if (err2) {
+                            console.log(err2)
+                            response.error = true;
+                            response.message = "some error occoured!!";
+                            res.send(response);
+                        } else {
+                            models.orderItem.find({order_id: orderID}, (err3, result3) => {
+                                if (err3) {
+                                    console.log(err3);
+                                    response.error = true;
+                                    response.message = "some error occoured!!";
+                                    res.send(resposne);
+                                } else {
+                                    for (let i = 0; i < result3.length; i++) {
+                                        models.orderItem.findByIdAndUpdate(result3[i].id, update, (err4, result4) => {
+                                            if (err4) {
+                                                console.log(err4);
+                                                response.error = true;
+                                                response.message = "some error occoured!!";
+                                            } else {
+                                                response.error = false;
+                                                response.message = "order cancelled!!";
+                                                res.send(response);
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
+    } else if (updateOrderItemStatusURL == 1) {
+        var orderItemID = req.body.order_item_id;
+        var status = req.body.status;
+
+
+        let orderItemStatusArray = [];
+
+        models.orderItem.findById(orderItemID, (err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!";
+                res.send(response);
+            } else {
+                orderItemStatusArray = result.status.split(",");
+                orderItemStatusArray.push(status.toLowerCase());
+                orderItemStatusArray.push(Date.now());
+
+                let update = {
+                    status: orderItemStatusArray.toString(),
+                    active_status: status.toLowerCase(),
+                };
+
+                models.orderItem.findByIdAndUpdate(orderItemID, update, (err2, result2) => {
+                    if (err2) {
+                        console.log(err2);
+                        response.error = true;
+                        response.message = "some error occoured!!";
+                        res.send(response);
+                    } else {
+                        models.order.findById(result.order_id, (err3, result3) => {
+                            if (err) {
+                                console.log(err);
+                                console.log(err2);
+                                response.error = true;
+                                response.message = "some error occoured!!";
+                                res.send(response);
+                            } else {
+                                let oldTotal = result3.total;
+                                let oldTaxAmt = result3.tax_amount;
+                                let oldFinalTotal = result3.final_total;
+                                let newTotal = oldTotal -  result.discounted_price * result.quantity;
+                                let newTax = (newTotal * result3.tax_percentage) / 100;
+                                let newFinalTotal = newTotal + newTax;
+                                let orderUpdate = {
+                                    total: newTotal,
+                                    tax_amount: newTax,
+                                    final_total: newFinalTotal
+                                };
+
+                                models.order.findByIdAndUpdate(result.order_id, orderUpdate, (err4, result4) => {
+                                    if (err4) {
+                                        console.log(err4)
+                                        console.log(err2);
+                                        response.error = true;
+                                        response.message = "some error occoured!!";
+                                        res.send(response);
+                                    } else {
+                                        response.error = false;
+                                        response.message = "order item cancelled successfully";
+                                        res.send(response);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+});
+
+router.post("/api-firebase/validate-promo-code", (req, res) => {
+    var promoCodeURL = req.body.validate_promo_code;
+    // var userID = req.body.userID;
+    var promoCode = req.body.promo_code;
+    var total = req.body.total;
+
+    var response = {
+        "error": true,
+        "message": null,
+    };
+
+    if (promoCodeURL == 1) {
+        models.promoCode.find({promo_code: promoCode}, (err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occoured!!";
+                res.send(response);
+            } else if (result.length == 1) {
+                response.error = false;
+                response.message = "promo code applied successfully.";
+                response.promo_code = promoCode;
+                response.total = total;
+                var discount = result.discount_type == "Amount" ? result[0].discount : ((total - 0) * result[0].discount) / 100;
+                var discounted = (total - 0) - (discount - 0);
+                response.discount = discount;
+                response.discounted_amount = discounted;
+                res.send(response);
+            } else {
+                response.error = true;
+                response.message = "Invalid promo code!!";
+                res.send(response);
+            }
+        });
+    }
+});
+
+router.get("/delete-time-slot", (req, res) => {
+    var urlParsed = url.parse(req.url, true);
+    var urlQuery = urlParsed.query;
+    var id = urlQuery.id;
+    models.timeSlot.findByIdAndRemove(id, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/time-slots");
+        }
+    });
+});
+
+router.post("/api-firebase/products-search", (req, res) => {
+    console.log(req.body);
+    let productSearchURL = req.body.type;
+
+    const response = {
+        "error": false,
+        "message": null,
+        "data": null
+    };
+
+
+    var otherImages = [];
+
+
+    if (productSearchURL == "products-search") {
+        let searchQuery = req.body.search;
+
+        // res.send(response);
+
+        models.product.find({name: {$regex: ".*" + searchQuery + ".*"}}).lean().exec((err, result) => {
+            if (err) {
+                console.log(err);
+                response.error = true;
+                response.message = "some error occurred!! block 1";
+                res.send(response);
+            } else {
+                for (let i = 0; i < result.length; i++) {
+                    models.productVariant.find({product_id: result[i]._id}).lean().exec((err2, result2) => {
+                        if (err2) {
+                            console.log(err2);
+                            response.error = true;
+                            response.message = "some error occurred!! block 2";
+                            res.send(response);
+                        } else {
+                            result[i].variants = result2;
+                            result[i].other_images = otherImages;
+                            response.error = false;
+                            response.message = "data found!!";
+                            response.data = result;
+
+                            if (i == result.length - 1) {
+                                console.log(response);
+                                res.send(response);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+    }
+
+
 });
 
 module.exports = router;

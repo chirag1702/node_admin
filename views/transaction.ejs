@@ -2,35 +2,31 @@
 contentFor('breadcrumb') %>
 
 <!-- Responsive Table css -->
-<link href="public/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
+<link href="public/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css"/>
 
 <div class="col-sm-6">
-  <div class="page-title-box">
-    <h4 class="font-size-18">Email Read</h4>
-    <ol class="breadcrumb mb-0">
-      <li class="breadcrumb-item">
-        <a href="javascript: void(0);">Veltrix</a>
-      </li>
-      <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
-      <li class="breadcrumb-item active">Transactions</li>
-    </ol>
-  </div>
+    <div class="page-title-box">
+        <h4 class="font-size-18">Email Read</h4>
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="javascript: void(0);">Veltrix</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
+            <li class="breadcrumb-item active">Transactions</li>
+        </ol>
+    </div>
 </div>
 
 <%- contentFor('body') %>
 
 <div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-body">
-        <h4>Transactions</h4>
-        <hr>
-        <div class="table-rep-plugin">
-            <div class="table-responsive mb-0" data-pattern="priority-columns">
-                <table id="tech-companies-1" class="table table-striped">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>Transactions</h4>
+                <table id="transaction" class="table table-hover">
                     <thead>
                     <tr>
-                        <th data-priority="1">Transaction ID</th>
                         <th data-priority="3">User Name</th>
                         <th data-priority="1">Order ID</th>
                         <th data-priority="3">Type</th>
@@ -42,27 +38,27 @@ contentFor('breadcrumb') %>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>TXN1</td>
-                        <td>chirag</td>
-                        <td>ORD1</td>
-                        <td>type</td>
-                        <td></td>
-                        <td>4000000</td>
-                        <td>status</td>
-                        <td>message</td>
-                        <td>date</td>
-                    </tr>
+                    <% if (data != null) { %>
+                        <% data.forEach(result => { %>
+                            <tr>
+                                <td><%= result.user_id %></td>
+                                <td><%= result.order_id %></td>
+                                <td><%= result.type %></td>
+                                <td><%= result.txn_id %></td>
+                                <td><%= result.amount %></td>
+                                <td><%= result.status %></td>
+                                <td><%= result.message %></td>
+                                <td><%= result.transaction_date %></td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
                     </tbody>
                 </table>
+
             </div>
-
         </div>
-
-      </div>
     </div>
-  </div>
-  <!-- end col -->
+    <!-- end col -->
 </div>
 
 <%- contentFor('FooterJs') %> <%- contentFor('BottomJs') %>

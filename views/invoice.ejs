@@ -22,78 +22,78 @@ contentFor('breadcrumb') %>
         <div class="card">
             <div class="card-body">
                 <% if (data != null) { %>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="invoice-title">
-                            <h4 class="float-right font-size-16">
-                                <strong>Order # 12345</strong>
-                            </h4>
-                            <h3 class="mt-0">
-                                <img src="public/images/logo-sm.png" alt="logo" height="24" />
-                            </h3>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-6">
-                                <address>
-                                    <strong>Billed To:</strong><br />
-                                    <%= data.order.user_id %><br />
-                                    <%= data.order.address %>
-                                </address>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="invoice-title">
+                                <h4 class="float-right font-size-16">
+                                    <strong>Order # <%= data.order.id %></strong>
+                                </h4>
+                                <h3 class="mt-0">
+                                    <img src="public/images/logo-sm.png" alt="logo" height="24"/>
+                                </h3>
                             </div>
-                            <div class="col-6 text-right">
-                                <address>
-                                    <strong>Shipped To:</strong><br />
-                                    <%= data.order.address %>
-                                </address>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-6">
+                                    <address>
+                                        <strong>Billed To:</strong><br/>
+                                        <%= data.user.name %><br/>
+                                        <%= data.order.address %>
+                                    </address>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <address>
+                                        <strong>Shipped To:</strong><br/>
+                                        <%= data.order.address %>
+                                    </address>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6 mt-4">
-                                <address>
-                                    <strong>Payment Method:</strong><br />
-                                    <%= data.order.payment_method %><br />
-                                    <%= data.order.email %>
-                                </address>
-                            </div>
-                            <div class="col-6 mt-4 text-right">
-                                <address>
-                                    <strong>Order Date:</strong><br />
-                                    <%= data.order.date_added %><br /><br />
-                                </address>
+                            <div class="row">
+                                <div class="col-6 mt-4">
+                                    <address>
+                                        <strong>Payment Method:</strong><br/>
+                                        <%= data.order.payment_method %><br/>
+                                        <%= data.order.email %>
+                                    </address>
+                                </div>
+                                <div class="col-6 mt-4 text-right">
+                                    <address>
+                                        <strong>Order Date:</strong><br/>
+                                        <%= data.order.date_added %><br/><br/>
+                                    </address>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-12">
-                        <div>
-                            <div class="p-2">
-                                <h3 class="font-size-16"><strong>Order summary</strong></h3>
-                            </div>
-                            <div class="">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
+                    <div class="row">
+                        <div class="col-12">
+                            <div>
+                                <div class="p-2">
+                                    <h3 class="font-size-16"><strong>Order summary</strong></h3>
+                                </div>
+                                <div class="">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
                                             <tr>
                                                 <td><strong>Item</strong></td>
                                                 <td class="text-center"><strong>Price</strong></td>
                                                 <td class="text-center"><strong>Quantity</strong></td>
                                                 <td class="text-right"><strong>Totals</strong></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
+                                            </thead>
+                                            <tbody>
                                             <!-- foreach ($order->lineItems as $line) or some such thing here -->
                                             <% data.items.forEach(result2 => { %>
 
 
-                                            <tr>
-                                                <td><%= result2.item_name %></td>
-                                                <td class="text-center">&#x20b9 <%= result2.price %></td>
-                                                <td class="text-center"><%= result2.quantity %></td>
-                                                <td class="text-right">&#x20b9 <%= result2.sub_total %></td>
-                                            </tr>
+                                                <tr>
+                                                    <td><%= result2.name %></td>
+                                                    <td class="text-center">&#x20b9 <%= result2.discounted_price %></td>
+                                                    <td class="text-center"><%= result2.quantity %></td>
+                                                    <td class="text-right">&#x20b9 <%= result2.discounted_price * result2.quantity %></td>
+                                                </tr>
                                             <% }); %>
 
                                             <tr>
@@ -135,23 +135,23 @@ contentFor('breadcrumb') %>
                                                     <h4 class="m-0">&#x20b9 <%= data.order.final_total %></h4>
                                                 </td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                                <div class="d-print-none">
-                                    <div class="float-right">
-                                        <a href="javascript:window.print()"
-                                            class="btn btn-success waves-effect waves-light"><i
-                                                class="fa fa-print"></i></a>
-                                        <a href="#" class="btn btn-primary waves-effect waves-light">Send</a>
+                                    <div class="d-print-none">
+                                        <div class="float-right">
+                                            <a href="javascript:window.print()"
+                                               class="btn btn-success waves-effect waves-light"><i
+                                                        class="fa fa-print"></i></a>
+                                            <a href="#" class="btn btn-primary waves-effect waves-light">Send</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- end row -->
+                    <!-- end row -->
                 <% } %>
             </div>
         </div>

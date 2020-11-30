@@ -2,7 +2,7 @@
 contentFor('breadcrumb') %>
 
 <!-- Responsive Table css -->
-<link href="public/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
+<link href="public/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css"/>
 
 <div class="col-sm-6">
     <div class="page-title-box">
@@ -26,22 +26,22 @@ contentFor('breadcrumb') %>
                 <h4 class="card-title">Edit Order</h4>
                 <hr>
                 <% if (data != null) { %>
-                <form action="/update-order?id=<%= data.order.id %>" method="POST">
-                    <table id="order-details-table" class="table table-hover">
-                        <thead>
+                    <form action="/update-order?id=<%= data.order._id %>" method="POST">
+                        <table id="order-details-table" class="table table-hover">
+                            <thead>
                             <tr>
                                 <th><strong>ID</strong></th>
                                 <th><%= data.order.id %></th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             <tr>
                                 <td><strong>Name</strong></td>
-                                <td><%= data.order.user_id %></td>
+                                <td><%= data.order.user_name %></td>
                             </tr>
                             <tr>
                                 <td><strong>Email</strong></td>
-                                <td>Email</td>
+                                <td><%= data.user.email %></td>
                             </tr>
                             <tr>
                                 <td><strong>Contact</strong></td>
@@ -49,7 +49,13 @@ contentFor('breadcrumb') %>
                             </tr>
                             <tr>
                                 <td><strong>Items</strong></td>
-                                <td>Item</td>
+                                <td>
+                                    <% data.items.forEach(result4 =>{ %>
+                                        <strong>Product ID: </strong> <%= result4.product_variant_id %>  <strong>Name: </strong> <%= result4.name %>  <strong>Quantity: </strong> <%= result4.quantity %> <br>
+                                        <strong>Price: </strong> <%= result4.price %>  <strong>Discount price: </strong> <%= result4.discounted_price %>  <strong>Subtotal: </strong> <%= result4.sub_total %>  <strong>Active status: </strong> <% if (result4.active_status == "cancelled")  { %> <span class="badge badge-danger"><%= result4.active_status %></span> <%} else { %> <span class="badge badge-primary"><%= result4.active_status %></span> <% } %> <br>
+                                        <strong>-----------------------------</strong> <br>
+                                    <% }) %>
+                                </td>
                             </tr>
                             <tr>
                                 <td><strong>Total</strong></td>
@@ -65,7 +71,7 @@ contentFor('breadcrumb') %>
                             </tr>
                             <tr>
                                 <td><strong>Disc</strong></td>
-                                <td><%= data.order.discount_amount %>(<%= data.order.discount_percentage %>%)</td>
+                                <td><%= data.order.discount %> %</td>
                             </tr>
                             <tr>
                                 <td><strong>Promo Disc</strong></td>
@@ -77,20 +83,21 @@ contentFor('breadcrumb') %>
                             </tr>
                             <tr>
                                 <td><strong>Discount</strong></td>
-                                <td><input class="form-control" type="text" name="discount" value=<%= data.order.discount %> /></td>
+                                <td><input class="form-control" type="text" name="discount"
+                                           value=<%= data.order.discount %> /></td>
                             </tr>
                             <tr>
                                 <td><strong>Payable Total</strong></td>
                                 <td><input class="form-control" type="text" name="total_payable"
-                                        value=<%= data.order.final_total %> readonly /></td>
+                                           value=<%= data.order.final_total %> readonly/></td>
                             </tr>
                             <tr>
                                 <td><strong>Deliver By</strong></td>
                                 <td><select name="deliver_by" class="form-control">
-                                    <option selected><%= data.order.delivery_boy_id %></option>
-                                    <% data.deliveryBoys.forEach(result2 => { %>
-                                        <option><%= result2.name %></option>
-                                    <% }); %>
+                                        <option selected><%= data.order.delivery_boy_id %></option>
+                                        <% data.deliveryBoys.forEach(result2 => { %>
+                                            <option><%= result2.name %></option>
+                                        <% }); %>
                                     </select></td>
                             </tr>
                             <tr>
@@ -120,14 +127,17 @@ contentFor('breadcrumb') %>
                                 <td><strong>Order Date</strong></td>
                                 <td><%= data.order.date_added %></td>
                             </tr>
-                        </tbody>
-                    </table>
-                    <button type="submit" class="btn btn-primary waves-effect waves-light" name="order-update-btn">Update</button>
-                </form>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light" name="order-update-btn">
+                            Update
+                        </button>
+                    </form>
                 <% } %>
                 <div class="d-print-none">
                     <div class="float-right">
-                        <a href="/generate-invoice?id=<%= data.order.id %>" class="btn btn-primary waves-effect waves-light">Generate Invoice</a>
+                        <a href="/generate-invoice?id=<%= data.order._id %>"
+                           class="btn btn-primary waves-effect waves-light">Generate Invoice</a>
                     </div>
                 </div>
             </div>

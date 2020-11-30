@@ -23,8 +23,10 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 
 // Add Route file with app
-app.use("/", router);
-// app.get("/", router);
+// app.use("/home", router);
+app.get("/", (req, res) => {
+    res.redirect("/admin-login");
+});
 app.get("/pages-login-2", router);
 app.get("/home-slider-images", router);
 app.get("/new-offer-images", router);
@@ -75,8 +77,11 @@ app.get("/taxes", router);
 app.get("add-taxes", router);
 app.get("/delete-tax", router);
 app.get("/edit-tax", router);
+app.get("/delete-time-slot", router);
+app.get("/admin-login", Authrouter);
+app.get("/home", router);
 app.post("/admin-login", Authrouter);
-app.post("/login", router);
+app.post("/login", Authrouter);
 app.post("/add-variation", router);
 app.post("/add-product", router);
 app.post("/delete", router);
@@ -104,7 +109,6 @@ app.post("/update-order", router);
 app.post("/api-firebase/get-categories", router);
 app.post("/api-firebase/get-offer-images", router);
 app.post("/api-firebase/sections", router);
-app.post("/api-firebase/order-process", router);
 app.post("/api-firebase/slider-images", router);
 app.post("/api-firebase/user-registration", router);
 app.post("/add-tax", router);
@@ -117,6 +121,9 @@ app.post("/api-firebase/get-subcategories-by-category-id", router);
 app.post("/api-firebase/get-products-by-subcategory-id", router);
 app.post("/api-firebase/settings", router);
 app.post("/api-firebase/get-product-by-id", router);
+app.post("/api-firebase/order-process", router);
+app.post("/api-firebase/validate-promo-code", router);
+app.post("/api-firebase/products-search", router);
 
 
 http.listen(8000, function () {

@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
-const { Timestamp } = require("mongodb");
+const {Timestamp} = require("mongodb");
 const schema = mongoose.Schema;
+const mongooseAutoIncrement = require("mongoose-auto-increment");
+
+const connection = mongoose.createConnection("mongodb://localhost:27017/ekartDB", {useNewUrlParser: true, useUnifiedTopology: true});
+
+mongooseAutoIncrement.initialize(connection);
 
 
 const category_schema = new schema({
@@ -105,6 +110,7 @@ const offers_schema = new schema({
 
 const orders_schema = new schema({
     user_id: String,
+    user_name: String,
     delivery_boy_id: String,
     mobile: String,
     total: Number,
@@ -129,8 +135,11 @@ const orders_schema = new schema({
 const order_items_schema = new schema({
     user_id: String,
     order_id: String,
-    item_name: String,
-    product_variant_id: Number,
+    name: String,
+    image: String,
+    measurement: String,
+    unit: String,
+    product_variant_id: String,
     quantity: Number,
     price: Number,
     discounted_price: Number,
@@ -254,7 +263,7 @@ const settings_schema = new schema({
     support_number: Number,
     support_email: String,
     current_version: String,
-    min_version: String,
+    minimum_version_required: String,
     version_status_check: Number,
     store_currency: String,
     gst: Number,
@@ -293,13 +302,12 @@ const time_slots_schema = new schema({
 });
 
 const transactions_schema = new schema({
-    user_id: Number,
+    user_id: String,
     order_id: String,
     type: String,
     txn_id: String,
-    payu_txn_id: String,
     amount: Number,
-    status: Number,
+    status: String,
     message: String,
     transaction_date: Date,
     date_created: Date,
@@ -349,6 +357,8 @@ const taxes_schema = new schema({
     percentage: Number,
     status: Number,
 });
+
+orders_schema.plugin(mongooseAutoIncrement.plugin, "orders");
 
 const SCHEMAS = {
     "categotySchema": category_schema,

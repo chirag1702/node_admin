@@ -2,7 +2,7 @@
 contentFor('breadcrumb') %>
 
 <!-- Responsive Table css -->
-<link href="public/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css" />
+<link href="public/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css"/>
 
 <div class="col-sm-6">
     <div class="page-title-box">
@@ -24,11 +24,10 @@ contentFor('breadcrumb') %>
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Orders</h4>
-                <hr>
                 <% if (data != null) { %>
-                <% data.forEach(result => { %>
-                <table id="orders" class="table table-hover">
-                    <thead>
+
+                    <table id="orders" class="table table-hover">
+                        <thead>
                         <tr>
                             <th>O.ID</th>
                             <th>U.Name</th>
@@ -44,27 +43,30 @@ contentFor('breadcrumb') %>
                             <th>A.Status</th>
                             <th>Action</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><%= result.id %></td>
-                            <td><%= result.user_id %></td>
-                            <td><%= result.mobile %></td>
-                            <td><%= result.total %></td>
-                            <td><%= result.delivery_charge %></td>
-                            <td><%= result.tax_amount %>(<%= result.tax_percentage %>%)</td>
-                            <td><%= result.discount %></td>
-                            <td><%= result.promo_discount %></td>
-                            <td><%= result.wallet_balance %></td>
-                            <td><%= result.final_total %></td>
-                            <td><%= result.payment_method %></td>
-                            <td><span class="badge badge-pill badge-primary"><%= result.active_status %></span></td>
-                            <td><a href="/view-order?id=<%= result.id %>"><i class="ti-eye"></i> View</a> <a href="/delete-order?id=<%= result.id %>"
-                                    onclick="return confirm('Are you sure ?');"><i class="ti-trash"></i> Delete</a></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <% }); %>
+                        </thead>
+                        <tbody>
+                        <% data.forEach(result => { %>
+                            <tr>
+                                <td><%= result._id %></td>
+                                <td><%= result.user_name %></td>
+                                <td><%= result.mobile %></td>
+                                <td><%= result.total %></td>
+                                <td><%= result.delivery_charge %></td>
+                                <td><%= result.tax_amount %>(<%= result.tax_percentage %>%)</td>
+                                <td><%= result.discount %></td>
+                                <td><%= result.promo_discount %></td>
+                                <td><%= result.wallet_balance %></td>
+                                <td><%= result.final_total %></td>
+                                <td><%= result.payment_method %></td>
+                                <td><span class="badge badge-pill badge-primary"><%= result.active_status %></span></td>
+                                <td><a href="/view-order?id=<%= result.id %>"><i class="ti-eye"></i> View</a> <a
+                                            href="/delete-order?id=<%= result.id %>"
+                                            onclick="return confirm('Are you sure ?');"><i class="ti-trash"></i> Delete</a>
+                                </td>
+                            </tr>
+                        <% }); %>
+                        </tbody>
+                    </table>
                 <% } %>
             </div>
         </div>
