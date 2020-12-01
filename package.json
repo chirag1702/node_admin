@@ -41,6 +41,7 @@
   },
   "repository": {},
   "devDependencies": {
+    "nodemailer": "^6.4.16",
     "nodemon": "^1.19.4"
   }
 }

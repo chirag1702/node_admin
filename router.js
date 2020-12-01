@@ -1024,7 +1024,8 @@ router.post("/update-promo-code", (req, res) => { //some work pending in this pa
             console.log(err);
         } else {
             res.redirect("/promo-codes");
-        }s
+        }
+        s
     });
 });
 
@@ -1147,6 +1148,7 @@ router.post("/update-order", (req, res) => {
     var totalPayable;
     var final_total;
     let update = {};
+    let canUpdateOrderStatus;
     models.order.findById(id, (err, result) => {
         if (err) {
             console.log(err);
@@ -1177,6 +1179,7 @@ router.post("/update-order", (req, res) => {
             statusArray.push(Date.now());
 
             if (updateStatus) {
+                canUpdateOrderStatus = true;
                 update = {
                     delivery_boy_id: deliverBy,
                     discount: discount,
@@ -1185,6 +1188,7 @@ router.post("/update-order", (req, res) => {
                     active_status: status
                 };
             } else {
+                canUpdateOrderStatus = false;
                 update = {
                     delivery_boy_id: deliverBy,
                     discount: discount,
@@ -1227,13 +1231,24 @@ router.post("/update-order", (req, res) => {
 
                     console.log(update);
 
-                    models.order.findByIdAndUpdate(id, update, (err, result) => {
+                    models.user.findById(result.user_id, (err, user) => {
                         if (err) {
                             console.log(err);
                         } else {
-                            res.redirect("/orders");
+                            models.order.findByIdAndUpdate(id, update, (err, ordrRslt) => {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    if (canUpdateOrderStatus) {
+                                        services.OrderStatusUpdateEmail(user.email, user.name, ordrRslt.id, update.active_status);
+                                    }
+                                    res.redirect("/orders");
+                                }
+                            });
                         }
                     });
+
+
                 }
             });
 
@@ -2287,8 +2302,6 @@ router.post("/api-firebase/order-process", (req, res) => {
         var statusArray = ["recived", today];
 
 
-
-
         models.user.findById(userID, (userError, user) => {
             if (userError) {
                 console.log(userError);
@@ -2377,7 +2390,8 @@ router.post("/api-firebase/order-process", (req, res) => {
                                                     response.message = "order placed successfully!!";
                                                     if (i == productVariantIDArray.length - 1) {
                                                         res.send(response);
-                                                        services.sendNotification(user.fcm_id, "Order placed!!", "Order placed successfully!!");
+                                                        services.OrderRecivedEmail(user.email, user.name, result.id);
+                                                        services.SendOrderPlacedNotification(user.fcm_id, result.id);
                                                     }
                                                 }
                                             });
@@ -2583,7 +2597,7 @@ router.post("/api-firebase/order-process", (req, res) => {
                                 let oldTotal = result3.total;
                                 let oldTaxAmt = result3.tax_amount;
                                 let oldFinalTotal = result3.final_total;
-                                let newTotal = oldTotal -  result.discounted_price * result.quantity;
+                                let newTotal = oldTotal - result.discounted_price * result.quantity;
                                 let newTax = (newTotal * result3.tax_percentage) / 100;
                                 let newFinalTotal = newTotal + newTax;
                                 let orderUpdate = {
