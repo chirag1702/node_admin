@@ -1,0 +1,61 @@
+<%- contentFor('HeaderCss') %>
+<!-- Plugins css -->
+<link
+  href="../../../public/libs/dropzone/min/dropzone.min.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+
+<%- contentFor('title') %> Form Uploads <%- contentFor('breadcrumb') %>
+<div class="col-sm-6">
+  <div class="page-title-box">
+    <h4 class="font-size-18">File Upload</h4>
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a href="javascript: void(0);">Veltrix</a>
+      </li>
+      <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+      <li class="breadcrumb-item active">File Upload</li>
+    </ol>
+  </div>
+</div>
+
+<%- contentFor('body') %>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Dropzone</h4>
+        <p class="card-title-desc">
+          DropzoneJS is an open source library that provides drag’n’drop file
+          uploads with image previews.
+        </p>
+
+        <div class="mb-5">
+          <form action="#" class="dropzone">
+            <div class="fallback">
+              <input name="file" type="file" multiple="multiple" />
+            </div>
+          </form>
+        </div>
+
+        <div class="text-center mt-3">
+          <button
+            type="button"
+            class="btn btn-primary waves-effect waves-light"
+          >
+            Send Files
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end col -->
+</div>
+<!-- end row -->
+
+<%- contentFor('FooterJs') %>
+<!-- Plugins js -->
+<script src="../../../public/libs/dropzone/min/dropzone.min.js"></script>
+
+<%- contentFor('BottomJs') %>

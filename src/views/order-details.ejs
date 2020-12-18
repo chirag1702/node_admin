@@ -1,0 +1,159 @@
+<%- contentFor('HeaderCss') %> <%- contentFor('title') %> Email Read <%-
+contentFor('breadcrumb') %>
+
+<!-- Responsive Table css -->
+<link href="../../public/libs/admin-resources/rwd-table/rwd-table.min.css" rel="stylesheet" type="text/css"/>
+
+<div class="col-sm-6">
+    <div class="page-title-box">
+        <h4 class="font-size-18">Email Read</h4>
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="javascript: void(0);">Veltrix</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Email</a></li>
+            <li class="breadcrumb-item active">Email Read</li>
+        </ol>
+    </div>
+</div>
+
+<%- contentFor('body') %>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Edit Order</h4>
+                <hr>
+                <% if (data != null) { %>
+                    <form action="/update-order?id=<%= data.order._id %>" method="POST">
+                        <table id="order-details-table" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th><strong>ID</strong></th>
+                                <th><%= data.order.id %></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><strong>Name</strong></td>
+                                <td><%= data.order.user_name %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email</strong></td>
+                                <td><%= data.user.email %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Contact</strong></td>
+                                <td><%= data.order.mobile %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Items</strong></td>
+                                <td>
+                                    <% data.items.forEach(result4 =>{ %>
+                                        <strong>Product ID: </strong> <%= result4.product_variant_id %>  <strong>Name: </strong> <%= result4.name %>  <strong>Quantity: </strong> <%= result4.quantity %> <br>
+                                        <strong>Price: </strong> <%= result4.price %>  <strong>Discount price: </strong> <%= result4.discounted_price %>  <strong>Subtotal: </strong> <%= result4.sub_total %>  <strong>Active status: </strong> <% if (result4.active_status == "cancelled")  { %> <span class="badge badge-danger"><%= result4.active_status %></span> <%} else { %> <span class="badge badge-primary"><%= result4.active_status %></span> <% } %> <br>
+                                        <strong>-----------------------------</strong> <br>
+                                    <% }) %>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td><%= data.order.total %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>D.Charge</strong></td>
+                                <td><%= data.order.delivery_charge %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tax</strong></td>
+                                <td><%= data.order.tax_amount %>(<%= data.order.tax_percentage %>%)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Disc</strong></td>
+                                <td><%= data.order.discount %> %</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Promo Disc</strong></td>
+                                <td><%= data.order.promo_discount %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wallet Used</strong></td>
+                                <td><%= data.order.wallet_balance %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Discount</strong></td>
+                                <td><input class="form-control" type="text" name="discount"
+                                           value=<%= data.order.discount %> /></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Payable Total</strong></td>
+                                <td><input class="form-control" type="text" name="total_payable"
+                                           value=<%= data.order.final_total %> readonly/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Deliver By</strong></td>
+                                <td><select name="deliver_by" class="form-control">
+                                        <option selected><%= data.order.delivery_boy_id %></option>
+                                        <% data.deliveryBoys.forEach(result2 => { %>
+                                            <option><%= result2.name %></option>
+                                        <% }); %>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Payment Method</strong></td>
+                                <td><%= data.order.payment_method %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Promo Code</strong></td>
+                                <td><%= data.order.promo_code %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Address</strong></td>
+                                <td><%= data.order.address %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status</strong></td>
+                                <td><select name="status" class="form-control">
+                                        <option selected><%= data.order.active_status %></option>
+                                        <option>Process</option>
+                                        <option>Shipped</option>
+                                        <option>Delivered</option>
+                                        <option>Canceled</option>
+                                        <option>Returned</option>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Order Date</strong></td>
+                                <td><%= data.order.date_added %></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light" name="order-update-btn">
+                            Update
+                        </button>
+                    </form>
+                <% } %>
+                <div class="d-print-none">
+                    <div class="float-right">
+                        <a href="/generate-invoice?id=<%= data.order._id %>"
+                           class="btn btn-primary waves-effect waves-light">Generate Invoice</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+</div>
+
+<%- contentFor('FooterJs') %> <%- contentFor('BottomJs') %>
+
+<script src="../../public/libs/sweetalert2/sweetalert2.min.js"></script>
+
+<script src="../../public/js/pages/sweet-alerts.init.js"></script>
+
+<!-- Responsive Table js -->
+<script src="../../public/libs/admin-resources/rwd-table/rwd-table.min.js"></script>
+
+<!-- Init js -->
+<script src="../../public/js/pages/table-responsive.init.js"></script>

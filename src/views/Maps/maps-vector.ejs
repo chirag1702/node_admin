@@ -1,0 +1,91 @@
+<%- contentFor('HeaderCss') %>
+<!-- plugin css -->
+<link
+  href="../../../public/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css"
+  rel="stylesheet"
+  type="text/css"
+/>
+
+<%- contentFor('title') %> Vector Map <%- contentFor('breadcrumb') %>
+<div class="col-sm-6">
+  <div class="page-title-box">
+    <h4 class="font-size-18">Vector Map</h4>
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item">
+        <a href="javascript: void(0);">Veltrix</a>
+      </li>
+      <li class="breadcrumb-item"><a href="javascript: void(0);">Maps</a></li>
+      <li class="breadcrumb-item active">Vector Map</li>
+    </ol>
+  </div>
+</div>
+
+<%- contentFor('body') %>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">World Map</h4>
+        <p class="card-title-desc">Example of vector map.</p>
+
+        <div id="world-map-markers" style="height: 420px"></div>
+      </div>
+    </div>
+  </div>
+  <!-- end col -->
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">USA Map</h4>
+        <p class="card-title-desc">Example of vector map.</p>
+
+        <div id="usa-vectormap" style="height: 420px"></div>
+      </div>
+    </div>
+  </div>
+  <!-- end col -->
+</div>
+<!-- end row -->
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">UK Map</h4>
+        <p class="card-title-desc">Example of vector map.</p>
+
+        <div id="uk-vectormap" style="height: 420px"></div>
+      </div>
+    </div>
+  </div>
+  <!-- end col -->
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Chicago Map</h4>
+        <p class="card-title-desc">Example of vector map.</p>
+
+        <div id="chicago-vectormap" style="height: 420px"></div>
+      </div>
+    </div>
+  </div>
+  <!-- end col -->
+</div>
+<!-- end row -->
+
+<%- contentFor('FooterJs') %>
+<!-- Plugins js-->
+<script src="../../../public/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="../../../public/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-world-mill-en.js"></script>
+<script src="../../../public/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-merc-en.js"></script>
+<script src="../../../public/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-in-mill-en.js"></script>
+<script src="../../../public/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-au-mill-en.js"></script>
+<script src="../../../public/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-us-il-chicago-mill-en.js"></script>
+<script src="../../../public/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-uk-mill-en.js"></script>
+<script src="../../../public/libs/admin-resources/jquery.vectormap/maps/jquery-jvectormap-ca-lcc-en.js"></script>
+
+<!-- Init js-->
+<script src="../../../public/js/pages/vector-maps.init.js"></script>
+
+<%- contentFor('BottomJs') %>

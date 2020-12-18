@@ -3,8 +3,8 @@ var express = require("express");
 var path = require("path");
 var http = require("http").Server(app);
 var bCrypt = require("bcryptjs");
-var router = require("./router.js");
-var Authrouter = require("./Authrouter.js");
+var router = require("./src/router.js");
+var Authrouter = require("./src/Authrouter.js");
 
 // Access public folder from root
 app.use("/public", express.static("public"));
@@ -18,7 +18,7 @@ app.use("/", Authrouter);
 
 //For set layouts of html view
 var expressLayouts = require("express-ejs-layouts");
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "src/views"));
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 
@@ -80,6 +80,8 @@ app.get("/edit-tax", router);
 app.get("/delete-time-slot", router);
 app.get("/admin-login", Authrouter);
 app.get("/home", router);
+app.get("/add-product", router);
+app.get("/manage-product", router);
 app.post("/admin-login", Authrouter);
 app.post("/login", Authrouter);
 app.post("/add-variation", router);
@@ -124,6 +126,8 @@ app.post("/api-firebase/get-product-by-id", router);
 app.post("/api-firebase/order-process", router);
 app.post("/api-firebase/validate-promo-code", router);
 app.post("/api-firebase/products-search", router);
+
+app.post("/fetching", router);
 
 
 http.listen(8000, function () {

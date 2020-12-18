@@ -1,0 +1,70 @@
+<%- contentFor('HeaderCss') %> <%- contentFor('title') %> Form Elements <%-
+contentFor('breadcrumb') %>
+<link href="../../public/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+<div class="col-sm-6">
+    <div class="page-title-box">
+        <h4 class="font-size-18">Add Products</h4>
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="javascript: void(0);">Veltrix</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+            <li class="breadcrumb-item active"></li>
+        </ol>
+    </div>
+</div>
+
+<%- contentFor('body') %>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Taxes</h4>
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Percentage</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (data != null) { %>
+
+                        <% data.forEach(result => { %>
+
+                        <tr>
+                            <td><%= result.title %></td>
+                            <td><%= result.percentage %></td>
+                            <td><% if(result.status == 1) { %><span
+                                    class="badge badge-pill badge-success">Active</span><% } else { %><span
+                                    class="badge badge-pill badge-danger">Deactive</span><% } %></td>
+                            <td><i class="ti-pencil"> <a href="/edit-tax?id=<%= result.id %>">Edit</a></i> <i
+                                    class="ti-trash"> <a href="/delete-tax?id=<%= result.id %>"
+                                        onclick="return confirm('Are you sure ?');">Delete</a></i>
+                            </td>
+                        </tr>
+
+                        <% }); %>
+
+                        <% } %>
+                    </tbody>
+                </table>
+                <form action="/add-taxes" method="GET">
+                    <button type="submit" class="btn btn-primary waves-effect waves-light">Add taxes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+
+<%- contentFor('FooterJs') %> <%- contentFor('BottomJs') %>
+
+<!-- Sweet Alerts js -->
+<script src="../../public/libs/sweetalert2/sweetalert2.min.js"></script>
+
+<!-- Sweet alert init js-->
+<script src="../../public/js/pages/sweet-alerts.init.js"></script>

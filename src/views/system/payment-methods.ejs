@@ -1,0 +1,138 @@
+<%- contentFor('HeaderCss') %> <%- contentFor('title') %> Form Elements <%-
+contentFor('breadcrumb') %>
+<div class="col-sm-6">
+    <div class="page-title-box">
+        <h4 class="font-size-18">Add Products</h4>
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a href="javascript: void(0);">Veltrix</a>
+            </li>
+            <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
+            <li class="breadcrumb-item active"></li>
+        </ol>
+    </div>
+</div>
+
+
+<%- contentFor('body') %>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4>Payment Settings</h4>
+                <hr>
+                <h5>Paypal Payments</h5>
+                <hr>
+                <% if (data != null) { %>
+
+
+                <form action="/update-payment-methods" method="POST">
+                    <div class="form-group row">
+                        <label for="paypal" class="col-sm-2 col-form-label">Paypal Payments [ Enable / Disable ]</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="paypal">
+                                <option><%= data.paypal_payment_method == 1 ? "Enable" : "Disable" %></option>
+                                <option><%= data.paypal_payment_method == 1 ? "Disable" : "Enable" %></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="mode-paypal" class="col-sm-2 col-form-label">Payment Mode [ sandbox / live ]</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="paypalmode">
+                                <option><%= data.paypal_mode %></option>
+                                <option><%= data.paypal_mode == "Sandbox [testing]" ? "Production [live]" : "Sandbox [testing]" %></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="paypal-id" class="col-sm-2 col-form-label">Paypal Business Email</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="paypalid" value=<%= data.paypal_buisness_email %> />
+                        </div>
+                    </div>
+                    <hr>
+                    <h5>PayUMoney Payments</h5>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="payumoney" class="col-sm-2 col-form-label">PayUMoney Payments [ Enable / Disable
+                            ]</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="payu">
+                                <option><%= data.payumoney_payment_method == 1 ? "Enable" : "Disable" %></option> 
+                                <option><%= data.payumoney_payment_method == 1 ? "Disable" : "Enable"%></option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="mode-payumoney" class="col-sm-2 col-form-label">Payment Mode [ sandbox / live
+                            ]</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="payumoneymode">
+                                <option><%= data.payumoney_mode %></option>
+                                <option><%= data.payumoney_mode == "Sandbox [testing]" ? "Production [live]" : "Sandbox [testing]" %></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="merchent-key" class="col-sm-2 col-form-label">Merchant key</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="payumerchentkey" name="payumerchentkey" value=<%= data.payumoney_merchant_key %> />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="merchent-id" class="col-sm-2 col-form-label">Merchant ID</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="payumerchentid" value=<%= data.payumoney_merchant_id %> />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="salt" class="col-sm-2 col-form-label">Salt</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="payusalt" value=<%= data.payumoney_salt %> />
+                        </div>
+                    </div>
+                    <hr>
+                    <h5>Razorpay Payments</h5>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="razorpay" class="col-sm-2 col-form-label">Razorpay Payments [ Enable / Disable
+                            ]</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="razor">
+                                <option><%= data.razorpay_payment_method == 1 ? "Enable" : "Disable" %></option>
+                                <option><%= data.razorpay_payment_method == 1 ? "Disable" : "Enable"%></option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="razorpay-key-id" class="col-sm-2 col-form-label">Razorpay key ID</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="razorpaykeyid" value=<%= data.razorpay_key %> />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="secret-key" class="col-sm-2 col-form-label">Secret Key</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" name="razorsecretkey" value=<%= data.razorpay_secret_key %> />
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary" name="update-payment-btn">Update</button>
+                </form>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <!-- end col -->
+</div>
+<!-- end row -->
+
+<%- contentFor('FooterJs') %> <%- contentFor('BottomJs') %>
+
+<script src="../../../public/libs/sweetalert2/sweetalert2.min.js"></script>
+
+<script src="../../../public/js/pages/sweet-alerts.init.js"></script>
+
+<script src="../../../public/libs/admin-resources/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
