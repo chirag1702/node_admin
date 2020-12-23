@@ -25,165 +25,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65cc1c76-41a6-4e30-b753-39ae77c83d36" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controllers/Admin/AdminController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controllers/Api/AreaController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controllers/Api/ImagesController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controllers/Api/OrderController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controllers/Api/ProductController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controllers/Api/SettingsController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controllers/Api/UserController.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Partials/FooterScript.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Authrouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Authrouter.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/firebase.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/models.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/router.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/schema.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/serviceAccount.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/serviceAccount.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/temp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/temp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/logo_login.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/uploads/logo_login.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/uploads/placeholder.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/uploads/placeholder.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/admin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-404.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-404.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-500.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-500.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-blank.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-blank.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-comingsoon.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-comingsoon.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-directory.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-directory.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-faq.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-faq.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-gallery.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-gallery.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-lock-screen-2.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-lock-screen-2.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-lock-screen.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-lock-screen.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-maintenance.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-maintenance.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-pricing.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-pricing.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-recoverpw-2.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-recoverpw-2.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-recoverpw.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-recoverpw.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-register-2.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-register-2.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-register.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-register.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Authentication/pages-timeline.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Authentication/pages-timeline.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Chart/charts-chartist.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Chart/charts-chartist.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Chart/charts-chartjs.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Chart/charts-chartjs.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Chart/charts-flot.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Chart/charts-flot.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Chart/charts-knob.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Chart/charts-knob.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Chart/charts-morris.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Chart/charts-morris.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Chart/charts-sparkline.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Chart/charts-sparkline.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Dashboard/dashboard-boxed.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Dashboard/dashboard-boxed.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Dashboard/dashboard-compact.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Dashboard/dashboard-compact.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Dashboard/dashboard-horizontal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Dashboard/dashboard-horizontal.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Dashboard/dashboard-icon.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Dashboard/dashboard-icon.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Dashboard/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Email-template/email-template-Alert.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Email-template/email-template-Alert.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Email-template/email-template-Billing.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Email-template/email-template-Billing.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Email-template/email-template-basic.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Email-template/email-template-basic.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/form-advanced.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/form-advanced.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/form-editors.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/form-editors.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/form-elements.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/form-elements.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/form-mask.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/form-mask.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/form-repeater.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/form-repeater.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/form-uploads.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/form-uploads.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/form-validation.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/form-validation.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/form-wizard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/form-wizard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/form-xeditable.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/form-xeditable.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Forms/variation.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Forms/variation.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Icons/icons-dripicons.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Icons/icons-dripicons.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Icons/icons-fontawesome.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Icons/icons-fontawesome.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Icons/icons-ion.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Icons/icons-ion.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Icons/icons-material.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Icons/icons-material.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Icons/icons-themify.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Icons/icons-themify.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Icons/icons-typicons.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Icons/icons-typicons.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Maps/maps-google.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Maps/maps-google.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Maps/maps-vector.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Maps/maps-vector.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/Footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/Footer.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/FooterScript.ejs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/HeaderStyle.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/HeaderStyle.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/Horizontal/Header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/Horizontal/Header.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/Horizontal/TopNavigation.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/Horizontal/TopNavigation.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/Rightbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/Rightbar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/RightbarDark.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/RightbarDark.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/RightbarRtl.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/RightbarRtl.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/Settings.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/Settings.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/Vertical/Header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/Vertical/Header.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Partials/Vertical/Sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Partials/Vertical/Sidebar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Products/add-product.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Products/add-product.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Products/manage-product.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Products/manage-product.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Products/product-orders.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Products/product-orders.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Tables/tables-basic.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Tables/tables-basic.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Tables/tables-datatable.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Tables/tables-datatable.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Tables/tables-editable.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Tables/tables-editable.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Tables/tables-responsive.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Tables/tables-responsive.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-alerts.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-alerts.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-buttons.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-buttons.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-cards.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-cards.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-carousel.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-carousel.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-colors.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-colors.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-dropdowns.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-dropdowns.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-general.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-general.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-grid.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-grid.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-images.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-images.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-lightbox.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-lightbox.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-modals.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-modals.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-progressbars.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-progressbars.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-rangeslider.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-rangeslider.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-rating.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-rating.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-session-timeout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-session-timeout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-sweet-alert.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-sweet-alert.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-tabs-accordions.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-tabs-accordions.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-typography.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-typography.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/Ui/ui-video.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Ui/ui-video.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/add-categories.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/add-categories.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/add-sub-categories.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/add-sub-categories.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/add-taxes.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/add-taxes.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/app-images/home-slider-images.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/app-images/home-slider-images.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/app-images/new-offer-images.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/app-images/new-offer-images.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/boxed-layout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/boxed-layout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/categories.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/categories.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/compact-layout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/compact-layout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/customers/customers.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customers/customers.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/customers/manage-customer-wallet.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/customers/manage-customer-wallet.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/delivery-boys/fund-transfer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/delivery-boys/fund-transfer.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/delivery-boys/manage-delivery-boys.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/delivery-boys/manage-delivery-boys.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/edit-promo-code.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/edit-promo-code.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/edit-tax.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/edit-tax.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/featured-section.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/featured-section.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/horizontal-dark-layout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/horizontal-dark-layout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/horizontal-layout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/horizontal-layout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/horizontal-layouts-boxed.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/horizontal-layouts-boxed.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/horizontal-layouts-topbar-light.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/horizontal-layouts-topbar-light.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/horizontal-rtl-layout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/horizontal-rtl-layout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/icon-layout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/icon-layout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/invoice.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/invoice.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/layout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/layouts-compact-sidebar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/layouts-compact-sidebar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/locations/add-area.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/locations/add-area.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/locations/add-city.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/locations/add-city.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/locations/areas.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/locations/areas.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/locations/cities.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/locations/cities.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/order-details.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/order-details.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/orders.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/orders.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/payment-requests.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/payment-requests.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/promo-codes.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/promo-codes.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/return-requests.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/return-requests.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/send-notification.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/send-notification.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/settings.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/settings.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/sub-categories.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/sub-categories.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/system/about-us.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/system/about-us.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/system/contact-us.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/system/contact-us.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/system/notification-settings.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/system/notification-settings.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/system/payment-methods.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/system/payment-methods.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/system/privacy-policy.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/system/privacy-policy.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/system/time-slots.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/system/time-slots.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/taxes.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/taxes.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/transaction.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/transaction.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/units.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/units.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/vertical-dark-layout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/vertical-dark-layout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/vertical-rtl-layout.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/vertical-rtl-layout.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/wallet-transactions.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/wallet-transactions.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +56,7 @@
     <property name="js.last.introduce.type" value="VAR" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -253,7 +95,13 @@
       <workItem from="1607512986233" duration="3147000" />
       <workItem from="1607593126049" duration="2615000" />
       <workItem from="1608193482717" duration="8351000" />
-      <workItem from="1608272744723" duration="11055000" />
+      <workItem from="1608272744723" duration="12203000" />
+      <workItem from="1608620841449" duration="7000" />
+      <workItem from="1608621042406" duration="71000" />
+      <workItem from="1608621185183" duration="49000" />
+      <workItem from="1608621255894" duration="115000" />
+      <workItem from="1608621391837" duration="119000" />
+      <workItem from="1608622698805" duration="17000" />
     </task>
     <servers />
   </component>
@@ -281,26 +129,30 @@
       <screen x="0" y="27" width="1024" height="741" />
     </state>
     <state x="295" y="155" width="424" height="486" key="FileChooserDialogImpl/0.27.1024.741@0.27.1024.741" timestamp="1607593167677" />
-    <state width="1001" height="174" key="GridCell.Tab.0.bottom" timestamp="1608289339233">
+    <state width="1001" height="174" key="GridCell.Tab.0.bottom" timestamp="1608293175579">
       <screen x="0" y="27" width="1024" height="741" />
     </state>
-    <state width="1001" height="174" key="GridCell.Tab.0.bottom/0.27.1024.741@0.27.1024.741" timestamp="1608289339233" />
-    <state width="1001" height="174" key="GridCell.Tab.0.center" timestamp="1608289339233">
+    <state width="1001" height="174" key="GridCell.Tab.0.bottom/0.27.1024.741@0.27.1024.741" timestamp="1608293175579" />
+    <state width="1001" height="174" key="GridCell.Tab.0.center" timestamp="1608293175578">
       <screen x="0" y="27" width="1024" height="741" />
     </state>
-    <state width="1001" height="174" key="GridCell.Tab.0.center/0.27.1024.741@0.27.1024.741" timestamp="1608289339233" />
-    <state width="1001" height="174" key="GridCell.Tab.0.left" timestamp="1608289339232">
+    <state width="1001" height="174" key="GridCell.Tab.0.center/0.27.1024.741@0.27.1024.741" timestamp="1608293175578" />
+    <state width="1001" height="174" key="GridCell.Tab.0.left" timestamp="1608293175578">
       <screen x="0" y="27" width="1024" height="741" />
     </state>
-    <state width="1001" height="174" key="GridCell.Tab.0.left/0.27.1024.741@0.27.1024.741" timestamp="1608289339232" />
-    <state width="1001" height="174" key="GridCell.Tab.0.right" timestamp="1608289339233">
+    <state width="1001" height="174" key="GridCell.Tab.0.left/0.27.1024.741@0.27.1024.741" timestamp="1608293175578" />
+    <state width="1001" height="174" key="GridCell.Tab.0.right" timestamp="1608293175578">
       <screen x="0" y="27" width="1024" height="741" />
     </state>
-    <state width="1001" height="174" key="GridCell.Tab.0.right/0.27.1024.741@0.27.1024.741" timestamp="1608289339233" />
-    <state x="1" y="31" width="1022" height="737" key="SettingsEditor" timestamp="1606567013230">
+    <state width="1001" height="174" key="GridCell.Tab.0.right/0.27.1024.741@0.27.1024.741" timestamp="1608293175578" />
+    <state x="95" y="134" width="824" height="528" key="IDE.errors.dialog" timestamp="1608621281819">
       <screen x="0" y="27" width="1024" height="741" />
     </state>
-    <state x="1" y="31" width="1022" height="737" key="SettingsEditor/0.27.1024.741@0.27.1024.741" timestamp="1606567013230" />
+    <state x="95" y="134" width="824" height="528" key="IDE.errors.dialog/0.27.1024.741@0.27.1024.741" timestamp="1608621281819" />
+    <state x="1" y="31" width="1022" height="737" key="SettingsEditor" timestamp="1608621430976">
+      <screen x="0" y="27" width="1024" height="741" />
+    </state>
+    <state x="1" y="31" width="1022" height="737" key="SettingsEditor/0.27.1024.741@0.27.1024.741" timestamp="1608621430976" />
     <state x="176" y="174" key="run.anything.popup" timestamp="1606566891931">
       <screen x="0" y="27" width="1024" height="741" />
     </state>
