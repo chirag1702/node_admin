@@ -18,6 +18,7 @@ const ProductController = require("./Controllers/Api/ProductController");
 const ImagesController = require("./Controllers/Api/ImagesController");
 const SettingsController = require("./Controllers/Api/SettingsController");
 const OrderController = require("./Controllers/Api/OrderController");
+const DataController = require("./Controllers/Api/DataController");
 const AdminProductController = require("./Controllers/Admin/ProductController");
 const AppUiController = require("./Controllers/Admin/AppUiController");
 const CustomersController = require("./Controllers/Admin/CustomersController");
@@ -329,7 +330,7 @@ router.get("/view-order", AdminOrderController.ViewOrder);
 
 router.post("/update-order", AdminOrderController.updateOrder);
 
-router.post("/delete-order", AdminOrderController.DeleteOrder);
+router.get("/delete-order", AdminOrderController.DeleteOrder);
 
 router.get("/generate-invoice", AdminOrderController.GenerateInvoice);
 
@@ -412,6 +413,8 @@ router.post("/api-firebase/order-process", OrderController.processOrder);
 router.post("/api-firebase/validate-promo-code", OrderController.validatePromoCode);
 
 router.post("/api-firebase/products-search", ProductController.search);
+
+router.post("/api-firebase/get-all-data", DataController.getData);
 
 //API endpoints end here.
 

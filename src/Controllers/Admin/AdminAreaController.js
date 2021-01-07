@@ -1,3 +1,4 @@
+const Core = require("../../../public/js/pages/core");
 const models = require("../../models");
 const url = require("url");
 
@@ -6,7 +7,7 @@ exports.GetCities = (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("locations/cities", {data: result});
+            res.render("locations/cities", { data: result });
             console.log(result);
         }
     });
@@ -17,7 +18,7 @@ exports.GetAreas = (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("locations/areas", {data: result});
+            res.render("locations/areas", { data: result });
             console.log(result);
         }
     });
@@ -25,7 +26,7 @@ exports.GetAreas = (req, res) => {
 
 exports.AddCity = (req, res) => {
     var cityName = req.body.cityname;
-    var city = new models.city({name: cityName});
+    var city = new models.city({ name: cityName });
     city.save((err, result) => {
         if (err) {
             console.log(err);
@@ -38,7 +39,7 @@ exports.AddCity = (req, res) => {
 exports.AddArea = (req, res) => {
     var areaname = req.body.areaname;
     var cityName = req.body.city;
-    var area = new models.area({name: areaname, city_name: cityName});
+    var area = new models.area({ name: areaname, city_name: cityName });
     area.save((err, result) => {
         if (err) {
             console.log(err);

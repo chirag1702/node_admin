@@ -48,6 +48,7 @@ exports.getAreaByCityID = (req, res) => {
                 console.log(err);
             } else {
 
+                console.log("city result");
                 console.log(result);
 
                 models.area.find({city_name: result.name}, (err2, result2) => {
@@ -58,7 +59,8 @@ exports.getAreaByCityID = (req, res) => {
                         res.send(response);
                     } else {
 
-                        // console.log(result2);
+                        console.log("area result");
+                        console.log(result2);
 
                         if (result2 != null) {
                             response.error = false;

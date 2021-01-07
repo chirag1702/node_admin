@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const models = require("./models");
 const AdminController = require("./Controllers/Admin/AdminController")
+const AuthFile = require("../public/js/pages/Auth-folder/AuthFile")
 
 mongoose.connect("mongodb://localhost:27017/ekart_DB", {
     useNewUrlParser: true,
@@ -43,6 +44,10 @@ Authrouter.get("/pages-maintenance", function (req, res) {
     res.render("Authentication/pages-maintenance");
 });
 
+Authrouter.get("/activate", function (req, res) {
+    res.render("Authentication/activate");
+});
+
 Authrouter.get("/pages-recoverpw", function (req, res) {
     res.render("Authentication/pages-recoverpw");
 });
@@ -61,6 +66,7 @@ Authrouter.get("/admin-login", function (req, res) {
     let info = {
         error: false
     };
+
     res.render("Authentication/pages-login", {data: info});
 });
 

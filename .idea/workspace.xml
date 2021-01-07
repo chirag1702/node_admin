@@ -26,6 +26,14 @@
   <component name="ChangeListManager">
     <list default="true" id="65cc1c76-41a6-4e30-b753-39ae77c83d36" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Authrouter.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Authrouter.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/Admin/AdminOrderController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/Admin/AdminOrderController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controllers/Api/AreaController.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controllers/Api/AreaController.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/schema.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/schema.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +69,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/js/pages" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/Controllers/Api" />
@@ -102,6 +111,12 @@
       <workItem from="1608621255894" duration="115000" />
       <workItem from="1608621391837" duration="119000" />
       <workItem from="1608622698805" duration="17000" />
+      <workItem from="1608890475989" duration="48000" />
+      <workItem from="1608890684428" duration="861000" />
+      <workItem from="1608891625015" duration="33000" />
+      <workItem from="1609912802695" duration="38000" />
+      <workItem from="1609914472781" duration="220000" />
+      <workItem from="1609914714223" duration="342000" />
     </task>
     <servers />
   </component>

@@ -275,6 +275,7 @@ const settings_schema = new schema({
     system_time_zone: String,
     refer_and_earn_enable: Number,
     min_refer_and_earn_amount: Number,
+    scl_key: String,
     refer_and_earn_bonus: Number,
     refer_and_earn_method: String,
     max_refer_and_earn_amount: Number,
@@ -358,7 +359,29 @@ const taxes_schema = new schema({
     status: Number,
 });
 
-orders_schema.plugin(mongooseAutoIncrement.plugin, "orders");
+category_schema.plugin(mongooseAutoIncrement.plugin, "categories")
+sub_category_schema.plugin(mongooseAutoIncrement.plugin, "subcategories")
+admin_schema.plugin(mongooseAutoIncrement.plugin, "admins")
+area_schema.plugin(mongooseAutoIncrement.plugin, "areas")
+city_schema.plugin(mongooseAutoIncrement.plugin, "cities")
+delivery_boys_schema.plugin(mongooseAutoIncrement.plugin, "delivery_boys")
+delivery_boy_notifications_schema.plugin(mongooseAutoIncrement.plugin, "delivery_boy_notifications")
+faq_schema.plugin(mongooseAutoIncrement.plugin, "faq")
+fund_transfers_schema.plugin(mongooseAutoIncrement.plugin, "fund_transfers")
+invoice_schema.plugin(mongooseAutoIncrement.plugin, "invoice")
+notification_schema.plugin(mongooseAutoIncrement.plugin, "notifications")
+offers_schema.plugin(mongooseAutoIncrement.plugin, "offers")
+orders_schema.plugin(mongooseAutoIncrement.plugin, "orders")
+order_items_schema.plugin(mongooseAutoIncrement.plugin, "order_items")
+payment_settings_schema.plugin(mongooseAutoIncrement.plugin, "payment_settings")
+payment_request_schema.plugin(mongooseAutoIncrement.plugin, "payment_request")
+product_schema.plugin(mongooseAutoIncrement.plugin, "products")
+product_variants_schema.plugin(mongooseAutoIncrement.plugin, "product_variants")
+promo_codes_schema.plugin(mongooseAutoIncrement.plugin, "promocodes")
+return_request_schema.plugin(mongooseAutoIncrement.plugin, "return_requests")
+sections_schema.plugin(mongooseAutoIncrement.plugin, "sections")
+seller_schema.plugin(mongooseAutoIncrement.plugin, "seller")
+users_schema.plugin(mongooseAutoIncrement.plugin, "users")
 
 const SCHEMAS = {
     "categotySchema": category_schema,
