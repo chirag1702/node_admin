@@ -67,7 +67,7 @@ Authrouter.get("/admin-login", function (req, res) {
         error: false
     };
 
-    res.render("Authentication/pages-login", {data: info});
+   res.render("Authentication/pages-login", {data: info});
 });
 
 Authrouter.post("/login", AdminController.AdminLogin);

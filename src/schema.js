@@ -111,6 +111,7 @@ const offers_schema = new schema({
 const orders_schema = new schema({
     user_id: String,
     user_name: String,
+    delivery_boy: String,
     delivery_boy_id: String,
     mobile: String,
     total: Number,
@@ -146,6 +147,7 @@ const order_items_schema = new schema({
     discount: Number,
     sub_total: Number,
     deliver_by: String,
+    delivery_boy_id: String,
     status: String,
     active_status: String,
     date_added: Date,
@@ -359,6 +361,11 @@ const taxes_schema = new schema({
     status: Number,
 });
 
+const zoom_schema = new schema({
+    meetind_id: String,
+    meeting_password: String,
+});
+
 category_schema.plugin(mongooseAutoIncrement.plugin, "categories")
 sub_category_schema.plugin(mongooseAutoIncrement.plugin, "subcategories")
 admin_schema.plugin(mongooseAutoIncrement.plugin, "admins")
@@ -414,6 +421,7 @@ const SCHEMAS = {
     "usersSchema": users_schema,
     "walletTransacionsSchema": wallet_transactions_schema,
     "taxesSchema": taxes_schema,
+    "zoomSchema": zoom_schema
 };
 
 

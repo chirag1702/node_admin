@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var http = require("http").Server(app);
 var bCrypt = require("bcryptjs");
+var cors = require("cors");
 var router = require("./src/router.js");
 var Authrouter = require("./src/Authrouter.js");
 
@@ -15,6 +16,7 @@ app.get("/layouts/", function (req, res) {
 // app.use(bodyParser.urlencoded({ extended : true }));
 // Add Authentication Route file with app
 app.use("/", Authrouter);
+app.use(cors());
 
 //For set layouts of html view
 var expressLayouts = require("express-ejs-layouts");
@@ -83,6 +85,8 @@ app.get("/home", router);
 app.get("/add-product", router);
 app.get("/manage-product", router);
 app.get("/activate", Authrouter);
+app.get("/zoom-meeting", router);
+app.get("/get-zoom-details", router);
 app.post("/admin-login", Authrouter);
 app.post("/login", Authrouter);
 app.post("/add-variation", router);
@@ -129,6 +133,9 @@ app.post("/api-firebase/order-process", router);
 app.post("/api-firebase/validate-promo-code", router);
 app.post("/api-firebase/products-search", router);
 app.post("/api-firebase/get-all-data", router);
+app.post("/delivery-boy", router);
+
+app.post("/add-zoom", router);
 
 app.post("/fetching", router);
 

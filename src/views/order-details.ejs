@@ -94,9 +94,9 @@ contentFor('breadcrumb') %>
                             <tr>
                                 <td><strong>Deliver By</strong></td>
                                 <td><select name="deliver_by" class="form-control">
-                                        <option selected><%= data.order.delivery_boy_id %></option>
+                                        <option selected><%= data.order.delivery_boy %></option>
                                         <% data.deliveryBoys.forEach(result2 => { %>
-                                            <option><%= result2.name %></option>
+                                            <option><%= result2.name %> (<%= result2.id %>)</option>
                                         <% }); %>
                                     </select></td>
                             </tr>

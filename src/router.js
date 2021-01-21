@@ -19,6 +19,7 @@ const ImagesController = require("./Controllers/Api/ImagesController");
 const SettingsController = require("./Controllers/Api/SettingsController");
 const OrderController = require("./Controllers/Api/OrderController");
 const DataController = require("./Controllers/Api/DataController");
+const DeliveryBoyApiController = require("./Controllers/Api/DeliveryBoyController");
 const AdminProductController = require("./Controllers/Admin/ProductController");
 const AppUiController = require("./Controllers/Admin/AppUiController");
 const CustomersController = require("./Controllers/Admin/CustomersController");
@@ -41,7 +42,7 @@ mongoose.connect("mongodb://localhost:27017/" + Constants.DB_NAME, {
 
 
 router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({extended: true}));
+router.use(bodyParser.urlencoded({ extended: true }));
 
 
 /*
@@ -57,7 +58,49 @@ router.use(bodyParser.urlencoded({extended: true}));
 // Admin panel routes
 
 router.get("/home", (req, res) => {
-    res.render("Dashboard/dashboard");
+
+    models.order.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+
+            models.user.find({}, (err2, result2) => {
+                if (err2) {
+                    console.log(err2);
+                } else {
+
+                    models.product.find({}, (err3, result3) => {
+                        if (err3) {
+                            console.log(err3);
+                        } else {
+
+                            models.order.find().sort({_id: -1}).limit(20).exec((err4, result4) => {
+                                if (err4) {
+                                    console.log(err4);
+                                } else {
+                                    
+                                    var info = {
+                                        total_orders: result.length,
+                                        total_users: result2.length,
+                                        total_products: result3.length,
+                                        orders: result4
+                                    };
+
+                                    console.log(result4);
+        
+                                    res.render("Dashboard/dashboard", { data: info });
+                                    
+                                }
+                            })
+
+                        }
+                    });
+
+                }
+            });
+
+        }
+    });
 });
 
 router.post("/add-product", AdminProductController.AddProduct);
@@ -73,7 +116,7 @@ router.get("/promo-codes", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("promo-codes", {data: result});
+            res.render("promo-codes", { data: result });
         }
     })
 });
@@ -108,7 +151,7 @@ router.get("/return-requests", (req, res) => {
 
 router.post("/add-delivery-boy", DeliveryBoyController.AddDeliveryBoy);
 
-router.post("/manage-delivery-boys", DeliveryBoyController.ManageDeliveryBoy);
+router.get("/manage-delivery-boys", DeliveryBoyController.ManageDeliveryBoy);
 
 router.get("/delete-delivery-boy", DeliveryBoyController.DeleteDeliveryBoy);
 
@@ -159,7 +202,7 @@ router.get("/add-areas", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("locations/add-area", {data: result});
+            res.render("locations/add-area", { data: result });
         }
     });
 });
@@ -169,7 +212,7 @@ router.get("/categories", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("categories", {data: result});
+            res.render("categories", { data: result });
         }
     });
 });
@@ -179,7 +222,7 @@ router.get("/sub-categories", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("sub-categories", {data: result});
+            res.render("sub-categories", { data: result });
         }
     });
 });
@@ -193,7 +236,7 @@ router.get("/add-sub-categories", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("add-sub-categories", {data: result});
+            res.render("add-sub-categories", { data: result });
         }
     })
 });
@@ -203,7 +246,7 @@ router.get("/units", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("units", {data: result});
+            res.render("units", { data: result });
         }
     })
 });
@@ -245,7 +288,7 @@ router.get("/home-slider-images", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("app-images/home-slider-images", {data: result});
+            res.render("app-images/home-slider-images", { data: result });
         }
     })
 });
@@ -268,7 +311,7 @@ router.get("/add-product", (req, res) => {
                                 category: result2,
                                 subcategory: result3
                             }
-                            res.render("Products/add-product", {data: information});
+                            res.render("Products/add-product", { data: information });
                         }
                     });
                 }
@@ -286,7 +329,7 @@ router.get("/manage-product", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("Products/manage-product", {data: result});
+            res.render("Products/manage-product", { data: result });
         }
     });
 });
@@ -309,7 +352,7 @@ router.get("/edit-promo-code", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("edit-promo-code", {data: result});
+            res.render("edit-promo-code", { data: result });
         }
     })
 });
@@ -321,7 +364,7 @@ router.get("/orders", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("orders", {data: result});
+            res.render("orders", { data: result });
         }
     });
 });
@@ -343,7 +386,7 @@ router.get("/taxes", (req, res) => {
         if (err) {
             console.log(err)
         } else {
-            res.render("taxes.ejs", {data: result});
+            res.render("taxes.ejs", { data: result });
         }
     });
 });
@@ -364,7 +407,7 @@ router.get("/edit-tax", (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render("edit-tax.ejs", {data: result});
+            res.render("edit-tax.ejs", { data: result });
         }
     });
 });
@@ -415,6 +458,71 @@ router.post("/api-firebase/validate-promo-code", OrderController.validatePromoCo
 router.post("/api-firebase/products-search", ProductController.search);
 
 router.post("/api-firebase/get-all-data", DataController.getData);
+
+router.post("/delivery-boy", DeliveryBoyApiController.HandleDeliveryBoys);
+
+router.get("/zoom-meeting", (req, res) => {
+
+    models.zoom.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("zoom-meeting.ejs", { data: result[0]});
+        }
+    });
+});
+
+router.post("/add-zoom", (req, res) => {
+
+    var meetingID = req.body.meetingid;
+    var meetingPassword = req.body.meetingpassword;
+
+    var update = {
+        meetind_id: meetingID,
+        meeting_password: meetingPassword,
+    }
+
+    models.zoom.findByIdAndUpdate("5ffc2b78dbab0a61c4faee4f", update, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect("/zoom-meeting");
+        }
+    });
+
+    // zoom.save((err, result) => {
+    //     if (err) {
+    //         console.log(err);
+    //     } else {
+    //         res.redirect("/zoom-meeting");
+    //         console.log(result);
+    //     }
+    // });
+
+});
+
+router.get("/get-zoom-details", (req, res) => {
+
+    console.log("zoom api accssed!!");
+
+    var response = {
+        error: true,
+        data: null,
+    };
+
+    models.zoom.find({}, (err, result) => {
+        if (err) {
+            console.log(err);
+            response.error = true;
+            res.send(response);
+        } else {
+            response.error = false;
+            response.data = result;
+            res.send(response);
+        }
+    });
+
+});
 
 //API endpoints end here.
 

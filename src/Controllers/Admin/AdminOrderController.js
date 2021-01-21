@@ -50,8 +50,19 @@ exports.updateOrder = (req, res) => {
     var status = req.body.status;
     var totalPayable;
     var final_total;
+    var deliveryBoyId = "";
+    let idArray = [];
     let update = {};
     let canUpdateOrderStatus;
+
+    for (let i = 0; i < deliverBy.length; i++) {
+        if (deliverBy.charAt(i - 1) == '(' && deliverBy.charAt(i) != ')') {
+            idArray.push(deliverBy.charAt(i));
+        }
+    }
+
+    deliveryBoyId = idArray.toString();
+
     models.order.findById(id, (err, result) => {
         if (err) {
             console.log(err);
@@ -84,7 +95,8 @@ exports.updateOrder = (req, res) => {
             if (updateStatus) {
                 canUpdateOrderStatus = true;
                 update = {
-                    delivery_boy_id: deliverBy,
+                    delivery_boy_id: deliveryBoyId,
+                    delivery_boy: deliverBy,
                     discount: discount,
                     final_total: final_total,
                     status: statusArray.toString(),
@@ -93,7 +105,8 @@ exports.updateOrder = (req, res) => {
             } else {
                 canUpdateOrderStatus = false;
                 update = {
-                    delivery_boy_id: deliverBy,
+                    delivery_boy_id: deliveryBoyId,
+                    delivery_boy: deliverBy,
                     discount: discount,
                     final_total: final_total,
                 };
@@ -109,6 +122,7 @@ exports.updateOrder = (req, res) => {
                     let orderItemUpdate = {
                         discount: discount,
                         deliver_by: deliverBy,
+                        delivery_boy_id: deliveryBoyId,
                         status: null,
                         active_status: status,
                     };

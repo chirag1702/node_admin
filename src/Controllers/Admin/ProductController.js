@@ -181,7 +181,7 @@ exports.AddUnit = (req, res) => {
             //     }
 
             //     else {
-            //         // res.redirect("/promo-codes");
+                    res.redirect("/units");
             //         console.log(result);
             //     }
         }

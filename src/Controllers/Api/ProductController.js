@@ -25,6 +25,7 @@ exports.getCategories = (req, res) => {
 
 exports.getSubCategoriesByCategoryID = (req, res) => {
     var category_id = req.body.category_id;
+    console.log(req);
 
     var response = {
         "error": true,
@@ -48,7 +49,7 @@ exports.getSubCategoriesByCategoryID = (req, res) => {
 
 exports.getProductsBySubCategoryID = (req, res) => {
     var subcategoryid = req.body.subcategory_id;
-    console.log(subcategoryid);
+    console.log("product get api sccessed");
     var response = {
         "error": true,
         "total": null,
